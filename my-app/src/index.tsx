@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Analytics } from '@vercel/analytics/next';
+// import { Analytics } from '@vercel/analytics/next';
 
 import App from './App';
 
@@ -15,7 +15,7 @@ root.render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <App />
-      <Analytics />
+      {/* <Analytics /> */}
     </ThemeProvider>
   </React.StrictMode>
 );
