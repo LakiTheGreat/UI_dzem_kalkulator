@@ -69,22 +69,32 @@ const fruits: MenuItemType[] = [
   {
     key: 1,
     value: 1,
-    menuItemLabel: 'Jagode',
+    menuItemLabel: 'Šljiva',
   },
   {
     key: 2,
     value: 2,
-    menuItemLabel: 'Šljive',
+    menuItemLabel: 'Kruška',
   },
   {
     key: 3,
     value: 3,
-    menuItemLabel: 'Pomorandže',
+    menuItemLabel: 'Narandža',
   },
   {
     key: 4,
     value: 4,
-    menuItemLabel: 'Kajsije',
+    menuItemLabel: 'Jagoda',
+  },
+  {
+    key: 5,
+    value: 5,
+    menuItemLabel: 'Kupina',
+  },
+  {
+    key: 6,
+    value: 6,
+    menuItemLabel: 'Malina',
   },
 ];
 
