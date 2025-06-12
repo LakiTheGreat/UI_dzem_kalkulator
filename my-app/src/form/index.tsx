@@ -526,7 +526,7 @@ export default function Form() {
         <Stack gap={3}>
           <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
             <Typography variant='body1' sx={{ width: 200 }}>
-              Ukupni prihodi:
+              Ukupni prihod:
             </Typography>
             <FormattedPrice price={totalIncome} />
           </Stack>
@@ -538,7 +538,7 @@ export default function Form() {
             sx={{ p: 1, border: '2px solid lightGreen', borderRadius: 1 }}
           >
             <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
-              UKUPNA ZARADA:
+              UKUPAN PROFIT:
             </Typography>
             <FormattedPrice price={totalProfit} />
           </Stack>
