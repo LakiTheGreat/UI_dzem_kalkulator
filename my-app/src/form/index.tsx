@@ -497,14 +497,14 @@ export default function Form() {
             <Typography variant='body1' sx={{ width: 200 }}>
               Fiksni troškovi:
             </Typography>
-            <Typography>{`${fixedExpences} din`}</Typography>
+            <FormattedPrice price={fixedExpences} />
           </Stack>
 
           <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
             <Typography variant='body1' sx={{ width: 200 }}>
               Ostali troškovi (20%):
             </Typography>
-            <Typography>{`${additionalExpences} din`}</Typography>
+            <FormattedPrice price={additionalExpences} />
           </Stack>
 
           <Stack
@@ -516,9 +516,7 @@ export default function Form() {
             <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
               UKUPNI TROŠKOVI:
             </Typography>
-            <Typography
-              sx={{ fontWeight: 'bold' }}
-            >{`${totalExpences} din`}</Typography>
+            <FormattedPrice price={totalExpences} />
           </Stack>
         </Stack>
 
@@ -529,7 +527,7 @@ export default function Form() {
             <Typography variant='body1' sx={{ width: 200 }}>
               Ukupni prihodi:
             </Typography>
-            <Typography>{`${totalIncome} din`}</Typography>
+            <FormattedPrice price={totalIncome} />
           </Stack>
 
           <Stack
@@ -541,9 +539,7 @@ export default function Form() {
             <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
               UKUPNA ZARADA:
             </Typography>
-            <Typography
-              sx={{ fontWeight: 'bold' }}
-            >{`${totalProfit} din`}</Typography>
+            <FormattedPrice price={totalProfit} />
           </Stack>
         </Stack>
 
