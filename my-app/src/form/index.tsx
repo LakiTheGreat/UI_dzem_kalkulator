@@ -281,6 +281,8 @@ export default function Form() {
           <RHFTextInput name='buyer' label='Kupac' />
         </Stack>
 
+        <Divider sx={{ bgcolor: colors.secondary }} />
+
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
@@ -308,7 +310,7 @@ export default function Form() {
               <FormattedPrice price={priceOfCups} />
             </Stack>
           </Stack>
-          <Divider />
+          <Divider variant='middle' />
           <Stack gap={1} direction={'row'}>
             <Stack sx={{ width: '35%' }}>
               <RHFTextInput name='numOfCups1' label='Broj' type='number' />
@@ -333,7 +335,7 @@ export default function Form() {
           </Stack>
         </Stack>
 
-        <Divider />
+        <Divider sx={{ bgcolor: colors.secondary }} />
 
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
@@ -367,7 +369,7 @@ export default function Form() {
               <FormattedPrice price={fruits1Total} />
             </Stack>
           </Stack>
-          <Divider />
+          <Divider variant='middle' />
           {/* DRUGA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
@@ -394,7 +396,7 @@ export default function Form() {
             <Typography>{`Ukupno:`}</Typography>
             <FormattedPrice price={fruits2Total} />
           </Stack>
-          <Divider />
+          <Divider variant='middle' />
           {/* TRECA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
@@ -423,7 +425,7 @@ export default function Form() {
           </Stack>
         </Stack>
 
-        <Divider />
+        <Divider sx={{ bgcolor: colors.secondary }} />
 
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
@@ -487,7 +489,7 @@ export default function Form() {
           </Stack>
         </Stack>
 
-        <Divider />
+        <Divider sx={{ bgcolor: colors.secondary }} />
 
         {/* ----------------------------------------------------------------------- */}
         <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
@@ -566,7 +568,7 @@ export default function Form() {
           }}
         />
 
-        <Stack gap={3}>
+        <Stack gap={3} sx={{ mt: 2 }}>
           <RHFTextInput name='email' label='Email' />
           <Button
             type='submit'
