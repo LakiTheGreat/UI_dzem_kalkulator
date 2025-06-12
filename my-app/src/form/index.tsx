@@ -40,6 +40,7 @@ type FormData = {
   totalIncome: number | string;
   totalProfit: number | string;
   buyer: string;
+  email: string;
 };
 
 export default function Form() {
@@ -75,6 +76,7 @@ export default function Form() {
       totalIncome: '',
       totalProfit: '',
       buyer: '',
+      email: 'dusan.pantelic7@gmail.com',
     },
   });
 
@@ -120,8 +122,7 @@ export default function Form() {
         'service_prb7u5o', // from EmailJS dashboard
         'template_opdxwmi',
         {
-          // email: 'lakobrija93@gmail.com',
-          email: 'dusan.pantelic7@gmail.com',
+          email: data.email,
           date: formattedDateTime,
           expences_cups: 110,
           expences_fruits:
@@ -551,13 +552,16 @@ export default function Form() {
           }}
         />
 
-        <Button
-          type='submit'
-          variant='contained'
-          sx={{ fontWeight: 'bold', bgcolor: colors.main }}
-        >
-          Pošalji mi na mejl
-        </Button>
+        <Stack gap={3}>
+          <RHFTextInput name='email' label='Email' />
+          <Button
+            type='submit'
+            variant='contained'
+            sx={{ fontWeight: 'bold', bgcolor: colors.main }}
+          >
+            Pošalji mi na mejl
+          </Button>
+        </Stack>
       </Stack>
     </FormProvider>
   );
