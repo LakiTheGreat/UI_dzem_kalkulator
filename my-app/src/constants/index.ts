@@ -29,32 +29,32 @@ export const cupPrice: MenuItemType[] = [
 export const fruits: MenuItemType[] = [
   {
     key: 1,
-    value: 1,
+    value: 'Šljiva',
     menuItemLabel: 'Šljiva',
   },
   {
     key: 2,
-    value: 2,
+    value: 'Kruška',
     menuItemLabel: 'Kruška',
   },
   {
     key: 3,
-    value: 3,
+    value: 'Narandža',
     menuItemLabel: 'Narandža',
   },
   {
     key: 4,
-    value: 4,
+    value: 'Jagoda',
     menuItemLabel: 'Jagoda',
   },
   {
     key: 5,
-    value: 5,
+    value: 'Kupina',
     menuItemLabel: 'Kupina',
   },
   {
     key: 6,
-    value: 6,
+    value: 'Malina',
     menuItemLabel: 'Malina',
   },
 ];

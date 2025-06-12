@@ -1,6 +1,7 @@
-import { Divider, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import emailjs from 'emailjs-com';
 
 import FormattedPrice from '../utils/FormattedPrice';
 import FormProvider from './FormProvider';
@@ -106,7 +107,59 @@ export default function Form() {
     totalProfit,
   } = watch();
 
-  const formSubmit = async (data: FormData) => {};
+  const formSubmit = async (data: FormData) => {
+    console.log(data);
+
+    const date = new Date();
+    const formattedDateTime =
+      date.toLocaleDateString('sr-RS') +
+      ' ' +
+      date.toLocaleTimeString('sr-RS', { hour: '2-digit', minute: '2-digit' });
+    emailjs
+      .send(
+        'service_prb7u5o', // from EmailJS dashboard
+        'template_opdxwmi',
+        {
+          email: 'lakobrija93@gmail.com',
+          date: formattedDateTime,
+          expences_cups: 110,
+          expences_fruits:
+            Number(data.fruits1Total) +
+            Number(data.fruits2Total) +
+            Number(data.fruits3Total),
+          expences_total: Number(data.totalExpences),
+          income_total: Number(data.totalIncome),
+          income_profit: Number(data.totalProfit),
+          fruit_1_name: data.fruits1,
+          fruit_1_g: data.fruitsG1,
+          fruit_1_price: data.fruitsPrice1,
+          fruit_1_total: data.fruits1Total,
+          fruit_2_name: data.fruits2,
+          fruit_2_g: data.fruitsG2,
+          fruit_2_price: data.fruitsPrice2,
+          fruit_2_total: data.fruits2Total,
+          fruit_3_name: data.fruits3,
+          fruit_3_g: data.fruitsG3,
+          fruit_3_price: data.fruitsPrice3,
+          fruit_3_total: data.fruits3Total,
+          smallCups: data.orderNumberOfCups1,
+          smallCups_total: data.orderTotal1,
+          largeCups: data.orderNumberOfCups2,
+          largeCups_total: data.orderTotal2,
+        },
+        'HknMoAEDVlbk1FCHp' // EmailJS user ID (public key)
+      )
+      .then(
+        (result) => {
+          console.log('Email sent:', result.text);
+          alert('Email je uspešno poslat!');
+        },
+        (error) => {
+          console.error('Email send error:', error.text);
+          alert('Nešto ne radi - cimaj Nikolu.');
+        }
+      );
+  };
 
   useEffect(() => {
     setValue(
@@ -484,6 +537,9 @@ export default function Form() {
           </Stack>
         </Stack>
         <Divider />
+        <Button type='submit' variant='contained' sx={{ fontWeight: 'bold' }}>
+          Pošalji mi na mejl
+        </Button>
       </Stack>
     </FormProvider>
   );
