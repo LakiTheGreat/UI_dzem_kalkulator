@@ -284,7 +284,7 @@ export default function Form() {
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Troškovi teglica
+            Troškovi - teglice
           </Typography>
           <Stack gap={1} direction={'row'}>
             <Stack sx={{ width: '35%' }}>
@@ -338,7 +338,7 @@ export default function Form() {
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Troškovi voća
+            Troškovi - voće
           </Typography>
           {/* PRVA */}
           <Stack gap={2}>
