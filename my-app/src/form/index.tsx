@@ -537,7 +537,11 @@ export default function Form() {
           </Stack>
         </Stack>
         <Divider />
-        <Button type='submit' variant='contained' sx={{ fontWeight: 'bold' }}>
+        <Button
+          type='submit'
+          variant='contained'
+          sx={{ fontWeight: 'bold', bgcolor: '#DF3A15' }}
+        >
           Pošalji mi na mejl
         </Button>
       </Stack>
