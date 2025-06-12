@@ -481,7 +481,7 @@ export default function Form() {
 
           <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
             <Typography variant='body1' sx={{ width: 200 }}>
-              Ostali troškovi:
+              Ostali troškovi (15%):
             </Typography>
             <Typography>{`${additionalExpences} din`}</Typography>
           </Stack>
