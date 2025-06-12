@@ -120,7 +120,7 @@ export default function Form() {
         'service_prb7u5o', // from EmailJS dashboard
         'template_opdxwmi',
         {
-          email: 'lakobrija93@gmail.com',
+          email: 'dusan.pantelic7@gmail.com',
           date: formattedDateTime,
           expences_cups: 110,
           expences_fruits:
