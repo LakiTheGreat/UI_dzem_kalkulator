@@ -494,27 +494,36 @@ export default function Form() {
           Presek
         </Typography>
         <Stack gap={3}>
-          <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
-            <Typography variant='body1' sx={{ width: 200 }}>
-              Fiksni troškovi:
-            </Typography>
+          <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='space-between'
+            gap={3}
+            sx={{ px: 1 }}
+          >
+            <Typography variant='body1'>Fiksni troškovi:</Typography>
             <FormattedPrice price={fixedExpences} />
           </Stack>
 
-          <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
-            <Typography variant='body1' sx={{ width: 200 }}>
-              Ostali troškovi (20%):
-            </Typography>
+          <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='space-between'
+            gap={3}
+            sx={{ px: 1 }}
+          >
+            <Typography variant='body1'>Ostali troškovi (20%):</Typography>
             <FormattedPrice price={additionalExpences} />
           </Stack>
 
           <Stack
             direction='row'
             alignItems='center'
+            justifyContent='space-between'
             gap={3}
             sx={{ border: '2px solid lightblue', p: 1, borderRadius: 1 }}
           >
-            <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
               UKUPNI TROŠKOVI:
             </Typography>
             <FormattedPrice price={totalExpences} />
@@ -524,20 +533,25 @@ export default function Form() {
         <Divider variant='middle' />
 
         <Stack gap={3}>
-          <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
-            <Typography variant='body1' sx={{ width: 200 }}>
-              Ukupni prihod:
-            </Typography>
+          <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='space-between'
+            gap={3}
+            sx={{ px: 1 }}
+          >
+            <Typography variant='body1'>Ukupni prihod:</Typography>
             <FormattedPrice price={totalIncome} />
           </Stack>
 
           <Stack
             direction='row'
             alignItems='center'
+            justifyContent='space-between'
             gap={3}
             sx={{ p: 1, border: '2px solid lightGreen', borderRadius: 1 }}
           >
-            <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
               UKUPAN PROFIT:
             </Typography>
             <FormattedPrice price={totalProfit} />
