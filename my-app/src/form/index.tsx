@@ -493,7 +493,7 @@ export default function Form() {
         <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
           Presek
         </Typography>
-        <Stack gap={3}>
+        <Stack gap={1}>
           <Stack
             direction='row'
             alignItems='center'
@@ -532,7 +532,7 @@ export default function Form() {
 
         <Divider variant='middle' />
 
-        <Stack gap={3}>
+        <Stack gap={1}>
           <Stack
             direction='row'
             alignItems='center'
