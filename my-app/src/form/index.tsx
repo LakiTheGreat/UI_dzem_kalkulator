@@ -40,12 +40,12 @@ type FormData = {
 const cupTypes: MenuItemType[] = [
   {
     key: 1,
-    value: 24,
+    value: 35,
     menuItemLabel: '212ml',
   },
   {
     key: 2,
-    value: 27,
+    value: 46,
     menuItemLabel: '370ml',
   },
 ];
@@ -407,7 +407,11 @@ export default function Form() {
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
               <Stack sx={{ width: '28%' }}>
-                <RHFTextInput name='orderNumberOfCups1' label='Broj teglica' />
+                <RHFTextInput
+                  name='orderNumberOfCups1'
+                  label='Broj teglica'
+                  type='number'
+                />
               </Stack>
               <Stack sx={{ width: '45%' }}>
                 <RHFAutoComplete
