@@ -41,7 +41,7 @@ function App() {
           textAlign='center'
           sx={{ fontWeight: 'bold', fontStyle: 'italic' }}
         >
-          - Džemarijum - Sva prava Dule zadržo © 2025 -
+          - Džemulator - Sva prava Dule zadržo © 2025 -
         </Typography>
       </Stack>
     </>
