@@ -67,6 +67,7 @@ const RHFAutoComplete = forwardRef<HTMLInputElement, RHFAutoCompleteProps>(
                   return (
                     <TextField
                       {...params}
+                      sx={{ width: '100%' }}
                       label={
                         <span
                           dangerouslySetInnerHTML={{

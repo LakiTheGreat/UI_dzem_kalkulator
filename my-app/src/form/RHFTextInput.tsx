@@ -58,7 +58,7 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
         render={({ field, fieldState: { error } }) => {
           const displayedValue =
             showCurrency && typeof field.value === 'number'
-              ? `${field.value} DIN`
+              ? `${field.value} din`
               : field.value;
 
           const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

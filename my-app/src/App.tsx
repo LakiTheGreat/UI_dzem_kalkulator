@@ -3,7 +3,7 @@ import Form from './form';
 
 function App() {
   return (
-    <Container sx={{ py: 5 }}>
+    <Container sx={{ my: 5 }}>
       <Form />
     </Container>
   );
