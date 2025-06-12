@@ -4,6 +4,7 @@ import { Divider, Stack, Typography } from '@mui/material';
 import RHFTextInput from './RHFTextInput';
 import RHFAutoComplete, { MenuItemType } from './RHFAutoComplete';
 import { useEffect } from 'react';
+import FormattedPrice from '../utils/FormattedPrice';
 
 type FormData = {
   numOfCups: number | string;
@@ -149,6 +150,7 @@ export default function Form() {
     orderTotal1,
     orderTotal2,
     totalIncome,
+    totalProfit,
   } = watch();
 
   const formSubmit = async (data: FormData) => {};
@@ -197,6 +199,8 @@ export default function Form() {
   useEffect(() => {
     if (numOfCups && typeOfCups) {
       setValue('priceOfCups', Number(numOfCups) * Number(typeOfCups));
+    } else {
+      setValue('priceOfCups', '');
     }
   }, [numOfCups, typeOfCups, setValue]);
 
@@ -212,22 +216,30 @@ export default function Form() {
         'fruits1Total',
         (Number(fruitsPrice1) / 1000) * Number(fruitsG1)
       );
+    } else {
+      setValue('fruits1Total', '');
     }
   }, [fruitsG1, fruitsPrice1, setValue]);
+
   useEffect(() => {
     if (fruitsG2 && fruitsPrice2) {
       setValue(
         'fruits2Total',
         (Number(fruitsPrice2) / 1000) * Number(fruitsG2)
       );
+    } else {
+      setValue('fruits2Total', '');
     }
   }, [fruitsG2, fruitsPrice2, setValue]);
+
   useEffect(() => {
     if (fruitsG3 && fruitsPrice3) {
       setValue(
         'fruits3Total',
         (Number(fruitsPrice3) / 1000) * Number(fruitsG3)
       );
+    } else {
+      setValue('fruits3Total', '');
     }
   }, [fruitsG3, fruitsPrice3, setValue]);
 
@@ -253,54 +265,52 @@ export default function Form() {
     <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
       <Stack gap={3}>
         <Stack gap={3}>
-          <Typography variant='h5'>Troškovi teglica </Typography>
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Troškovi teglica
+          </Typography>
           <Stack gap={1} direction={'row'}>
             <Stack sx={{ width: '35%' }}>
-              <RHFTextInput name='numOfCups' label='Broj tegli' type='number' />
+              <RHFTextInput name='numOfCups' label='Broj' type='number' />
             </Stack>
 
             <Stack sx={{ width: '35%' }}>
               <RHFAutoComplete
                 name='typeOfCups'
-                label='Velicina tegle'
+                label='Veličina'
                 menuItems={cupTypes}
               />
             </Stack>
 
-            <Stack sx={{ width: '30%' }}>
-              <RHFTextInput
-                name='priceOfCups'
-                label='Ukupno'
-                disabled={true}
-                showCurrency={true}
-              />
+            <Stack
+              sx={{ width: '30%' }}
+              alignItems='center'
+              justifyContent='center'
+            >
+              <Typography>{`Ukupno:`}</Typography>
+              <FormattedPrice price={priceOfCups} />
             </Stack>
           </Stack>
           <Divider />
           <Stack gap={1} direction={'row'}>
             <Stack sx={{ width: '35%' }}>
-              <RHFTextInput
-                name='numOfCups1'
-                label='Broj tegli'
-                type='number'
-              />
+              <RHFTextInput name='numOfCups1' label='Broj' type='number' />
             </Stack>
 
             <Stack sx={{ width: '35%' }}>
               <RHFAutoComplete
                 name='typeOfCups1'
-                label='Velicina tegle'
+                label='Veličina'
                 menuItems={cupTypes}
               />
             </Stack>
 
-            <Stack sx={{ width: '30%' }}>
-              <RHFTextInput
-                name='priceOfCups1'
-                label='Ukupno'
-                disabled={true}
-                showCurrency={true}
-              />
+            <Stack
+              sx={{ width: '30%' }}
+              alignItems='center'
+              justifyContent='center'
+            >
+              <Typography>{`Ukupno:`}</Typography>
+              <FormattedPrice price={priceOfCups1} />
             </Stack>
           </Stack>
         </Stack>
@@ -308,8 +318,9 @@ export default function Form() {
         <Divider />
 
         <Stack gap={3}>
-          <Typography variant='h5'>Troškovi voća</Typography>
-
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Troškovi voća
+          </Typography>
           {/* PRVA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
@@ -331,15 +342,13 @@ export default function Form() {
                 />
               </Stack>
             </Stack>
-            <RHFTextInput
-              name='fruits1Total'
-              label='Ukupno'
-              disabled={true}
-              showCurrency={true}
-            />
+
+            <Stack direction='row' gap={1}>
+              <Typography>{`Ukupno:`}</Typography>
+              <FormattedPrice price={fruits1Total} />
+            </Stack>
           </Stack>
           <Divider />
-
           {/* DRUGA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
@@ -361,15 +370,12 @@ export default function Form() {
                 />
               </Stack>
             </Stack>
-            <RHFTextInput
-              name='fruits2Total'
-              label='Ukupno'
-              disabled={true}
-              showCurrency={true}
-            />
+          </Stack>
+          <Stack direction='row' gap={1}>
+            <Typography>{`Ukupno:`}</Typography>
+            <FormattedPrice price={fruits2Total} />
           </Stack>
           <Divider />
-
           {/* TRECA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
@@ -391,42 +397,42 @@ export default function Form() {
                 />
               </Stack>
             </Stack>
-            <RHFTextInput
-              name='fruits3Total'
-              label='Ukupno'
-              disabled={true}
-              showCurrency={true}
-            />
+          </Stack>{' '}
+          <Stack direction='row' gap={1}>
+            <Typography>{`Ukupno:`}</Typography>
+            <FormattedPrice price={fruits3Total} />
           </Stack>
         </Stack>
 
         <Divider />
         <Stack gap={3}>
-          <Typography variant='h5'>Vrednost porudžbine</Typography>
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Vrednost porudžbine
+          </Typography>
           {/* PRVA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
               <Stack sx={{ width: '28%' }}>
                 <RHFTextInput
                   name='orderNumberOfCups1'
-                  label='Broj teglica'
+                  label='Broj'
                   type='number'
                 />
               </Stack>
               <Stack sx={{ width: '45%' }}>
                 <RHFAutoComplete
                   name='orderCupType1'
-                  label='Velicina teglice'
+                  label='Veličina'
                   menuItems={cupPrice}
                 />
               </Stack>
-              <Stack sx={{ width: '33%' }}>
-                <RHFTextInput
-                  name='orderTotal1'
-                  label='Ukupno'
-                  showCurrency={true}
-                  disabled={true}
-                />
+              <Stack
+                sx={{ width: '33%' }}
+                alignItems='center'
+                justifyContent='center'
+              >
+                <Typography>{`Ukupno:`}</Typography>
+                <FormattedPrice price={orderTotal1} />
               </Stack>
             </Stack>
           </Stack>
@@ -437,24 +443,24 @@ export default function Form() {
               <Stack sx={{ width: '28%' }}>
                 <RHFTextInput
                   name='orderNumberOfCups2'
-                  label='Broj teglica'
+                  label='Broj'
                   type='number'
                 />
               </Stack>
               <Stack sx={{ width: '45%' }}>
                 <RHFAutoComplete
                   name='orderCupType2'
-                  label='Velicina teglice'
+                  label='Veličina'
                   menuItems={cupPrice}
                 />
               </Stack>
-              <Stack sx={{ width: '33%' }}>
-                <RHFTextInput
-                  name='orderTotal2'
-                  label='Ukupno'
-                  showCurrency={true}
-                  disabled={true}
-                />
+              <Stack
+                sx={{ width: '33%' }}
+                alignItems='center'
+                justifyContent='center'
+              >
+                <Typography>{`Ukupno:`}</Typography>
+                <FormattedPrice price={orderTotal2} />
               </Stack>
             </Stack>
           </Stack>
@@ -462,71 +468,64 @@ export default function Form() {
 
         <Divider />
 
-        <Typography variant='h5'>Troškovi</Typography>
+        <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+          Presek
+        </Typography>
         <Stack gap={3}>
-          <Stack direction='row' alignItems='center' gap={3}>
-            <Typography variant='body1' sx={{ width: 150 }}>
+          <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
+            <Typography variant='body1' sx={{ width: 200 }}>
               Fiksni troškovi:
             </Typography>
-            <RHFTextInput
-              name='fixedExpences'
-              label='Fiksni troskovi'
-              showCurrency={true}
-              disabled={true}
-            />
+            <Typography>{`${fixedExpences} din`}</Typography>
           </Stack>
 
-          <Stack direction='row' alignItems='center' gap={3}>
-            <Typography variant='body1' sx={{ width: 150 }}>
+          <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
+            <Typography variant='body1' sx={{ width: 200 }}>
               Ostali troškovi:
             </Typography>
-            <RHFTextInput
-              name='additionalExpences'
-              label='Ostali troskovi'
-              showCurrency={true}
-              disabled={true}
-            />
+            <Typography>{`${additionalExpences} din`}</Typography>
           </Stack>
 
-          <Stack direction='row' alignItems='center' gap={3}>
-            <Typography variant='body1' sx={{ width: 150, fontWeight: 'bold' }}>
-              UKUPNO:
+          <Stack
+            direction='row'
+            alignItems='center'
+            gap={3}
+            sx={{ bgcolor: 'lightblue', p: 1, borderRadius: 1 }}
+          >
+            <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
+              UKUPNI TROŠKOVI:
             </Typography>
-            <RHFTextInput
-              name='totalExpences'
-              label='UKUPNO'
-              showCurrency={true}
-              disabled={true}
-            />
+            <Typography
+              sx={{ fontWeight: 'bold' }}
+            >{`${totalExpences} din`}</Typography>
           </Stack>
         </Stack>
 
-        <Typography variant='h5'>Prihod</Typography>
+        <Divider variant='middle' />
+
         <Stack gap={3}>
-          <Stack direction='row' alignItems='center' gap={3}>
-            <Typography variant='body1' sx={{ width: 150 }}>
+          <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
+            <Typography variant='body1' sx={{ width: 200 }}>
               Ukupni prihodi:
             </Typography>
-            <RHFTextInput
-              name='totalIncome'
-              label='Ukupni prihod'
-              showCurrency={true}
-              disabled={true}
-            />
+            <Typography>{`${totalIncome} din`}</Typography>
           </Stack>
 
-          <Stack direction='row' alignItems='center' gap={3}>
-            <Typography variant='body1' sx={{ width: 150, fontWeight: 'bold' }}>
+          <Stack
+            direction='row'
+            alignItems='center'
+            gap={3}
+            sx={{ p: 1, bgcolor: 'lightGreen', borderRadius: 1 }}
+          >
+            <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
               UKUPNA ZARADA:
             </Typography>
-            <RHFTextInput
-              name='totalProfit'
-              label='UKUPNA ZARADA'
-              showCurrency={true}
-              disabled={true}
-            />
+            <Typography
+              sx={{ fontWeight: 'bold' }}
+            >{`${totalProfit} din`}</Typography>
           </Stack>
         </Stack>
+        <Divider />
       </Stack>
     </FormProvider>
   );
