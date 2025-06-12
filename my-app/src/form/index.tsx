@@ -1,10 +1,11 @@
-import { useForm } from 'react-hook-form';
-import FormProvider from './FormProvider';
 import { Divider, Stack, Typography } from '@mui/material';
-import RHFTextInput from './RHFTextInput';
-import RHFAutoComplete, { MenuItemType } from './RHFAutoComplete';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+
 import FormattedPrice from '../utils/FormattedPrice';
+import FormProvider from './FormProvider';
+import RHFAutoComplete, { MenuItemType } from './RHFAutoComplete';
+import RHFTextInput from './RHFTextInput';
 
 type FormData = {
   numOfCups: number | string;
@@ -264,6 +265,7 @@ export default function Form() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
       <Stack gap={3}>
+        {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
             Troškovi teglica
@@ -317,6 +319,7 @@ export default function Form() {
 
         <Divider />
 
+        {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
             Troškovi voća
@@ -397,7 +400,7 @@ export default function Form() {
                 />
               </Stack>
             </Stack>
-          </Stack>{' '}
+          </Stack>
           <Stack direction='row' gap={1}>
             <Typography>{`Ukupno:`}</Typography>
             <FormattedPrice price={fruits3Total} />
@@ -405,6 +408,8 @@ export default function Form() {
         </Stack>
 
         <Divider />
+
+        {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
             Vrednost porudžbine
@@ -468,6 +473,7 @@ export default function Form() {
 
         <Divider />
 
+        {/* ----------------------------------------------------------------------- */}
         <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
           Presek
         </Typography>
