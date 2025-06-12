@@ -198,7 +198,7 @@ export default function Form() {
 
   useEffect(() => {
     if (fixedExpences) {
-      setValue('additionalExpences', Number(fixedExpences) * 0.15);
+      setValue('additionalExpences', Number(fixedExpences) * 0.2);
     }
   }, [fixedExpences, setValue]);
 
@@ -492,7 +492,7 @@ export default function Form() {
 
           <Stack direction='row' alignItems='center' gap={3} sx={{ px: 1 }}>
             <Typography variant='body1' sx={{ width: 200 }}>
-              Ostali troškovi (15%):
+              Ostali troškovi (20%):
             </Typography>
             <Typography>{`${additionalExpences} din`}</Typography>
           </Stack>
