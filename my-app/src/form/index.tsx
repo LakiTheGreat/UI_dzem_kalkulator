@@ -321,10 +321,14 @@ export default function Form() {
                 />
               </Stack>
               <Stack sx={{ width: '30%' }}>
-                <RHFTextInput name='fruitsG1' label='Gramaža             ' />
+                <RHFTextInput name='fruitsG1' label='Gramaža' type='number' />
               </Stack>
               <Stack sx={{ width: '30%' }}>
-                <RHFTextInput name='fruitsPrice1' label='Cena (KG)' />
+                <RHFTextInput
+                  name='fruitsPrice1'
+                  label='Cena (KG)'
+                  type='number'
+                />
               </Stack>
             </Stack>
             <RHFTextInput
@@ -347,10 +351,14 @@ export default function Form() {
                 />
               </Stack>
               <Stack sx={{ width: '30%' }}>
-                <RHFTextInput name='fruitsG2' label='Gramaža             ' />
+                <RHFTextInput name='fruitsG2' label='Gramaža' type='number' />
               </Stack>
               <Stack sx={{ width: '30%' }}>
-                <RHFTextInput name='fruitsPrice2' label='Cena (KG)' />
+                <RHFTextInput
+                  name='fruitsPrice2'
+                  label='Cena (KG)'
+                  type='number'
+                />
               </Stack>
             </Stack>
             <RHFTextInput
@@ -373,10 +381,14 @@ export default function Form() {
                 />
               </Stack>
               <Stack sx={{ width: '30%' }}>
-                <RHFTextInput name='fruitsG3' label='Gramaža             ' />
+                <RHFTextInput name='fruitsG3' label='Gramaža' type='number' />
               </Stack>
               <Stack sx={{ width: '30%' }}>
-                <RHFTextInput name='fruitsPrice3' label='Cena (KG)' />
+                <RHFTextInput
+                  name='fruitsPrice3'
+                  label='Cena (KG)'
+                  type='number'
+                />
               </Stack>
             </Stack>
             <RHFTextInput
@@ -419,7 +431,11 @@ export default function Form() {
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
               <Stack sx={{ width: '28%' }}>
-                <RHFTextInput name='orderNumberOfCups2' label='Broj teglica' />
+                <RHFTextInput
+                  name='orderNumberOfCups2'
+                  label='Broj teglica'
+                  type='number'
+                />
               </Stack>
               <Stack sx={{ width: '45%' }}>
                 <RHFAutoComplete
