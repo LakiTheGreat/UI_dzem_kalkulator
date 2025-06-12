@@ -53,7 +53,7 @@ const cupTypes: MenuItemType[] = [
 const cupPrice: MenuItemType[] = [
   {
     key: 1,
-    value: 370,
+    value: 350,
     menuItemLabel: '212ml',
   },
   {
