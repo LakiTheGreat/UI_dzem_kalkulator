@@ -405,10 +405,10 @@ export default function Form() {
                   menuItems={fruits}
                 />
               </Stack>
-              <Stack sx={{ width: '30%' }}>
+              <Stack sx={{ width: '32%' }}>
                 <RHFTextInput name='fruitsG3' label='Gramaža' type='number' />
               </Stack>
-              <Stack sx={{ width: '30%' }}>
+              <Stack sx={{ width: '28%' }}>
                 <RHFTextInput
                   name='fruitsPrice3'
                   label='Cena (KG)'
