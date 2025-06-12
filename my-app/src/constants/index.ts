@@ -58,3 +58,8 @@ export const fruits: MenuItemType[] = [
     menuItemLabel: 'Malina',
   },
 ];
+
+export const colors = {
+  main: '#DF3A15',
+  secondary: '#FBEFC3',
+};

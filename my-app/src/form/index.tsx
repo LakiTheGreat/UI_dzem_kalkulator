@@ -7,7 +7,7 @@ import FormattedPrice from '../utils/FormattedPrice';
 import FormProvider from './FormProvider';
 import RHFSelectInput from './RHFSelectInput';
 import RHFTextInput from './RHFTextInput';
-import { cupPrice, cupTypes, fruits } from '../constants';
+import { colors, cupPrice, cupTypes, fruits } from '../constants';
 
 type FormData = {
   numOfCups: number | string;
@@ -39,6 +39,7 @@ type FormData = {
   totalExpences: number | string;
   totalIncome: number | string;
   totalProfit: number | string;
+  buyer: string;
 };
 
 export default function Form() {
@@ -73,6 +74,7 @@ export default function Form() {
       totalExpences: '',
       totalIncome: '',
       totalProfit: '',
+      buyer: '',
     },
   });
 
@@ -108,8 +110,6 @@ export default function Form() {
   } = watch();
 
   const formSubmit = async (data: FormData) => {
-    console.log(data);
-
     const date = new Date();
     const formattedDateTime =
       date.toLocaleDateString('sr-RS') +
@@ -120,7 +120,8 @@ export default function Form() {
         'service_prb7u5o', // from EmailJS dashboard
         'template_opdxwmi',
         {
-          email: 'dusan.pantelic7@gmail.com',
+          email: 'lakobrija93@gmail.com',
+          // email: 'dusan.pantelic7@gmail.com',
           date: formattedDateTime,
           expences_cups: 110,
           expences_fruits:
@@ -146,6 +147,7 @@ export default function Form() {
           smallCups_total: data.orderTotal1,
           largeCups: data.orderNumberOfCups2,
           largeCups_total: data.orderTotal2,
+          buyer: data.buyer,
         },
         'HknMoAEDVlbk1FCHp' // EmailJS user ID (public key)
       )
@@ -270,6 +272,14 @@ export default function Form() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
       <Stack gap={3}>
+        {/* ----------------------------------------------------------------------- */}
+        <Stack gap={3}>
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Kupac
+          </Typography>
+          <RHFTextInput name='buyer' label='Kupac' />
+        </Stack>
+
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
@@ -501,7 +511,7 @@ export default function Form() {
             direction='row'
             alignItems='center'
             gap={3}
-            sx={{ bgcolor: 'lightblue', p: 1, borderRadius: 1 }}
+            sx={{ border: '2px solid lightblue', p: 1, borderRadius: 1 }}
           >
             <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
               UKUPNI TROŠKOVI:
@@ -526,7 +536,7 @@ export default function Form() {
             direction='row'
             alignItems='center'
             gap={3}
-            sx={{ p: 1, bgcolor: 'lightGreen', borderRadius: 1 }}
+            sx={{ p: 1, border: '2px solid lightGreen', borderRadius: 1 }}
           >
             <Typography variant='body1' sx={{ width: 200, fontWeight: 'bold' }}>
               UKUPNA ZARADA:
@@ -536,11 +546,19 @@ export default function Form() {
             >{`${totalProfit} din`}</Typography>
           </Stack>
         </Stack>
-        <Divider />
+
+        <Divider
+          sx={{
+            color: colors.secondary,
+            bgcolor: colors.secondary,
+            height: 2,
+          }}
+        />
+
         <Button
           type='submit'
           variant='contained'
-          sx={{ fontWeight: 'bold', bgcolor: '#DF3A15' }}
+          sx={{ fontWeight: 'bold', bgcolor: colors.main }}
         >
           Pošalji mi na mejl
         </Button>
