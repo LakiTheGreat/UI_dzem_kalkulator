@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import FormattedPrice from '../utils/FormattedPrice';
 import FormProvider from './FormProvider';
-import RHFAutoComplete, { MenuItemType } from './RHFAutoComplete';
+import RHFSelectInput, { MenuItemType } from './RHFSelectInput';
 import RHFTextInput from './RHFTextInput';
 
 type FormData = {
@@ -276,7 +276,7 @@ export default function Form() {
             </Stack>
 
             <Stack sx={{ width: '35%' }}>
-              <RHFAutoComplete
+              <RHFSelectInput
                 name='typeOfCups'
                 label='Veličina'
                 menuItems={cupTypes}
@@ -299,7 +299,7 @@ export default function Form() {
             </Stack>
 
             <Stack sx={{ width: '35%' }}>
-              <RHFAutoComplete
+              <RHFSelectInput
                 name='typeOfCups1'
                 label='Veličina'
                 menuItems={cupTypes}
@@ -328,7 +328,7 @@ export default function Form() {
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
               <Stack sx={{ width: '40%' }}>
-                <RHFAutoComplete
+                <RHFSelectInput
                   name='fruits1'
                   label='Vrsta voća'
                   menuItems={fruits}
@@ -356,7 +356,7 @@ export default function Form() {
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
               <Stack sx={{ width: '40%' }}>
-                <RHFAutoComplete
+                <RHFSelectInput
                   name='fruits2'
                   label='Vrsta voća'
                   menuItems={fruits}
@@ -383,7 +383,7 @@ export default function Form() {
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
               <Stack sx={{ width: '40%' }}>
-                <RHFAutoComplete
+                <RHFSelectInput
                   name='fruits3'
                   label='Vrsta voća'
                   menuItems={fruits}
@@ -425,7 +425,7 @@ export default function Form() {
                 />
               </Stack>
               <Stack sx={{ width: '45%' }}>
-                <RHFAutoComplete
+                <RHFSelectInput
                   name='orderCupType1'
                   label='Veličina'
                   menuItems={cupPrice}
@@ -453,7 +453,7 @@ export default function Form() {
                 />
               </Stack>
               <Stack sx={{ width: '45%' }}>
-                <RHFAutoComplete
+                <RHFSelectInput
                   name='orderCupType2'
                   label='Veličina'
                   menuItems={cupPrice}
