@@ -258,6 +258,8 @@ export default function Form() {
         'orderTotal1',
         Number(orderNumberOfCups1) * Number(orderCupType1)
       );
+    } else {
+      setValue('orderTotal1', '');
     }
   }, [orderNumberOfCups1, orderCupType1, setValue]);
 
@@ -267,6 +269,8 @@ export default function Form() {
         'orderTotal2',
         Number(orderNumberOfCups2) * Number(orderCupType2)
       );
+    } else {
+      setValue('orderTotal2', '');
     }
   }, [orderNumberOfCups2, orderCupType2, setValue]);
 
@@ -574,6 +578,7 @@ export default function Form() {
             type='submit'
             variant='contained'
             sx={{ fontWeight: 'bold', bgcolor: colors.main }}
+            disabled={!totalIncome}
           >
             Pošalji mi na mejl
           </Button>
