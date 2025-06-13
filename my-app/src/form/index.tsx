@@ -582,7 +582,7 @@ export default function Form() {
             <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
               UKUPNI TROŠKOVI:
             </Typography>
-            <FormattedPrice price={totalExpences} />
+            <FormattedPrice price={totalExpences} isBold={true} />
           </Stack>
         </Stack>
 
@@ -608,7 +608,7 @@ export default function Form() {
             <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
               UKUPAN PROFIT:
             </Typography>
-            <FormattedPrice price={totalProfit} />
+            <FormattedPrice price={totalProfit} isBold={true} />
           </Stack>
         </Stack>
 

@@ -3,7 +3,7 @@ import Typography, { type TypographyProps } from '@mui/material/Typography';
 interface FormattedPriceProps {
   price: number | string;
   locales?: string;
-
+  isBold?: boolean;
   minimumFractionDigits?: number;
   maximumFractionDigits?: number;
   variant?: TypographyProps['variant'];
@@ -13,7 +13,7 @@ export default function FormattedPrice({
   price,
   variant = 'body1',
   locales = 'sr-RS',
-
+  isBold = false,
   minimumFractionDigits = 0,
   maximumFractionDigits = 0,
 }: FormattedPriceProps) {
@@ -26,5 +26,12 @@ export default function FormattedPrice({
     maximumFractionDigits,
   }).format(numericPrice);
 
-  return <Typography variant={variant}>{formatted}</Typography>;
+  return (
+    <Typography
+      variant={variant}
+      sx={{ fontWeight: isBold ? 'bold' : 'normal' }}
+    >
+      {formatted}
+    </Typography>
+  );
 }
