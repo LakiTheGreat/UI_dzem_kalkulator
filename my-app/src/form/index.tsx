@@ -368,17 +368,17 @@ export default function Form() {
           {/* PRVA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
-              <Stack sx={{ width: '40%' }}>
+              <Stack sx={{ width: '33%' }}>
                 <RHFSelectInput
                   name='fruits1'
                   label='Vrsta voća'
                   menuItems={fruits}
                 />
               </Stack>
-              <Stack sx={{ width: '32%' }}>
+              <Stack sx={{ width: '33%' }}>
                 <RHFTextInput name='fruitsG1' label='Gramaža' type='number' />
               </Stack>
-              <Stack sx={{ width: '28%' }}>
+              <Stack sx={{ width: '33%' }}>
                 <RHFTextInput
                   name='fruitsPrice1'
                   label='Cena (KG)'
@@ -399,21 +399,21 @@ export default function Form() {
               <Divider variant='middle' />
               <Stack gap={2}>
                 <Stack direction='row' gap={1}>
-                  <Stack sx={{ width: '40%' }}>
+                  <Stack sx={{ width: '33%' }}>
                     <RHFSelectInput
                       name='fruits2'
                       label='Vrsta voća'
                       menuItems={fruits}
                     />
                   </Stack>
-                  <Stack sx={{ width: '32%' }}>
+                  <Stack sx={{ width: '33%' }}>
                     <RHFTextInput
                       name='fruitsG2'
                       label='Gramaža'
                       type='number'
                     />
                   </Stack>
-                  <Stack sx={{ width: '28%' }}>
+                  <Stack sx={{ width: '33%' }}>
                     <RHFTextInput
                       name='fruitsPrice2'
                       label='Cena (KG)'
@@ -434,21 +434,21 @@ export default function Form() {
               <Divider variant='middle' />
               <Stack gap={2}>
                 <Stack direction='row' gap={1}>
-                  <Stack sx={{ width: '40%' }}>
+                  <Stack sx={{ width: '33%' }}>
                     <RHFSelectInput
                       name='fruits3'
                       label='Vrsta voća'
                       menuItems={fruits}
                     />
                   </Stack>
-                  <Stack sx={{ width: '32%' }}>
+                  <Stack sx={{ width: '33%' }}>
                     <RHFTextInput
                       name='fruitsG3'
                       label='Gramaža'
                       type='number'
                     />
                   </Stack>
-                  <Stack sx={{ width: '28%' }}>
+                  <Stack sx={{ width: '33%' }}>
                     <RHFTextInput
                       name='fruitsPrice3'
                       label='Cena (KG)'
@@ -548,9 +548,7 @@ export default function Form() {
         <Divider sx={{ bgcolor: colors.secondary }} />
 
         {/* ----------------------------------------------------------------------- */}
-        <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-          Presek
-        </Typography>
+
         <Stack gap={1}>
           <Stack
             direction='row'
@@ -587,8 +585,6 @@ export default function Form() {
             <FormattedPrice price={totalExpences} />
           </Stack>
         </Stack>
-
-        <Divider variant='middle' />
 
         <Stack gap={1}>
           <Stack
