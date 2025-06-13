@@ -1,5 +1,5 @@
 import { Button, Divider, Stack, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import emailjs from 'emailjs-com';
 
@@ -7,7 +7,7 @@ import FormattedPrice from '../utils/FormattedPrice';
 import FormProvider from './FormProvider';
 import RHFSelectInput from './RHFSelectInput';
 import RHFTextInput from './RHFTextInput';
-import { colors, cupPrice, cupTypes, fruits } from '../constants';
+import { colors, cupTypes, fruits } from '../constants';
 
 type FormData = {
   numOfCups: number | string;
@@ -47,7 +47,7 @@ export default function Form() {
   const methods = useForm<FormData>({
     defaultValues: {
       numOfCups: '',
-      typeOfCups: '',
+      typeOfCups: '35',
       priceOfCups: '',
       fruits1: '',
       fruits2: '',
@@ -65,11 +65,11 @@ export default function Form() {
       orderNumberOfCups2: '',
       orderTotal1: '',
       orderTotal2: '',
-      orderCupType1: '',
-      orderCupType2: '',
+      orderCupType1: '350',
+      orderCupType2: '550',
       fixedExpences: '',
       numOfCups1: '',
-      typeOfCups1: '',
+      typeOfCups1: '46',
       priceOfCups1: '',
       additionalExpences: '',
       totalExpences: '',
@@ -81,6 +81,7 @@ export default function Form() {
   });
 
   const { handleSubmit, watch, setValue } = methods;
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     numOfCups,
@@ -112,6 +113,7 @@ export default function Form() {
   } = watch();
 
   const formSubmit = async (data: FormData) => {
+    setIsLoading(true);
     const date = new Date();
     const formattedDateTime =
       date.toLocaleDateString('sr-RS') +
@@ -156,10 +158,12 @@ export default function Form() {
         (result) => {
           console.log('Email sent:', result.text);
           alert('Email je uspešno poslat!');
+          setIsLoading(false);
         },
         (error) => {
           console.error('Email send error:', error.text);
           alert('Nešto ne radi - cimaj Nikolu.');
+          setIsLoading(false);
         }
       );
   };
@@ -297,12 +301,20 @@ export default function Form() {
               <RHFTextInput name='numOfCups' label='Broj' type='number' />
             </Stack>
 
-            <Stack sx={{ width: '35%' }}>
-              <RHFSelectInput
+            <Stack
+              sx={{ width: '35%' }}
+              alignItems='center'
+              justifyContent='center'
+            >
+              {/* <RHFSelectInput
                 name='typeOfCups'
                 label='Veličina'
                 menuItems={cupTypes}
-              />
+              /> */}
+              <Stack alignItems='center'>
+                <Typography>{`Veličina:`}</Typography>
+                <Typography>{`${cupTypes[0].menuItemLabel}`}</Typography>
+              </Stack>
             </Stack>
 
             <Stack
@@ -320,12 +332,20 @@ export default function Form() {
               <RHFTextInput name='numOfCups1' label='Broj' type='number' />
             </Stack>
 
-            <Stack sx={{ width: '35%' }}>
-              <RHFSelectInput
+            <Stack
+              sx={{ width: '35%' }}
+              alignItems='center'
+              justifyContent='center'
+            >
+              {/* <RHFSelectInput
                 name='typeOfCups1'
                 label='Veličina'
                 menuItems={cupTypes}
-              />
+              /> */}
+              <Stack alignItems='center'>
+                <Typography>{`Veličina:`}</Typography>
+                <Typography>{`${cupTypes[1].menuItemLabel}`}</Typography>
+              </Stack>
             </Stack>
 
             <Stack
@@ -463,12 +483,20 @@ export default function Form() {
                   type='number'
                 />
               </Stack>
-              <Stack sx={{ width: '45%' }}>
-                <RHFSelectInput
+              <Stack
+                sx={{ width: '45%' }}
+                alignItems='center'
+                justifyContent='center'
+              >
+                {/* <RHFSelectInput
                   name='orderCupType1'
                   label='Veličina'
                   menuItems={cupPrice}
-                />
+                /> */}
+                <Stack alignItems='center'>
+                  <Typography>{`Veličina:`}</Typography>
+                  <Typography>{`${cupTypes[0].menuItemLabel}`}</Typography>
+                </Stack>
               </Stack>
               <Stack
                 sx={{ width: '33%' }}
@@ -491,12 +519,20 @@ export default function Form() {
                   type='number'
                 />
               </Stack>
-              <Stack sx={{ width: '45%' }}>
-                <RHFSelectInput
+              <Stack
+                sx={{ width: '45%' }}
+                alignItems='center'
+                justifyContent='center'
+              >
+                {/* <RHFSelectInput
                   name='orderCupType2'
                   label='Veličina'
                   menuItems={cupPrice}
-                />
+                /> */}
+                <Stack alignItems='center'>
+                  <Typography>{`Veličina:`}</Typography>
+                  <Typography>{`${cupTypes[1].menuItemLabel}`}</Typography>
+                </Stack>
               </Stack>
               <Stack
                 sx={{ width: '33%' }}
@@ -592,6 +628,7 @@ export default function Form() {
         <Stack gap={3} sx={{ mt: 2 }}>
           <RHFTextInput name='email' label='Email' />
           <Button
+            loading={isLoading}
             type='submit'
             variant='contained'
             sx={{ fontWeight: 'bold', bgcolor: colors.main }}
