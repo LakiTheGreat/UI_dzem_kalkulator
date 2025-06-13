@@ -46,7 +46,7 @@ type FormData = {
 export default function Form() {
   const methods = useForm<FormData>({
     defaultValues: {
-      numOfCups: ' ',
+      numOfCups: '',
       typeOfCups: '',
       priceOfCups: '',
       fruits1: '',
@@ -375,58 +375,74 @@ export default function Form() {
           </Stack>
           <Divider variant='middle' />
           {/* DRUGA */}
-          <Stack gap={2}>
-            <Stack direction='row' gap={1}>
-              <Stack sx={{ width: '40%' }}>
-                <RHFSelectInput
-                  name='fruits2'
-                  label='Vrsta voća'
-                  menuItems={fruits}
-                />
+          {fruitsG1 && fruits1Total && (
+            <>
+              <Stack gap={2}>
+                <Stack direction='row' gap={1}>
+                  <Stack sx={{ width: '40%' }}>
+                    <RHFSelectInput
+                      name='fruits2'
+                      label='Vrsta voća'
+                      menuItems={fruits}
+                    />
+                  </Stack>
+                  <Stack sx={{ width: '32%' }}>
+                    <RHFTextInput
+                      name='fruitsG2'
+                      label='Gramaža'
+                      type='number'
+                    />
+                  </Stack>
+                  <Stack sx={{ width: '28%' }}>
+                    <RHFTextInput
+                      name='fruitsPrice2'
+                      label='Cena (KG)'
+                      type='number'
+                    />
+                  </Stack>
+                </Stack>
               </Stack>
-              <Stack sx={{ width: '32%' }}>
-                <RHFTextInput name='fruitsG2' label='Gramaža' type='number' />
+              <Stack direction='row' gap={1}>
+                <Typography>{`Ukupno:`}</Typography>
+                <FormattedPrice price={fruits2Total} />
               </Stack>
-              <Stack sx={{ width: '28%' }}>
-                <RHFTextInput
-                  name='fruitsPrice2'
-                  label='Cena (KG)'
-                  type='number'
-                />
-              </Stack>
-            </Stack>
-          </Stack>
-          <Stack direction='row' gap={1}>
-            <Typography>{`Ukupno:`}</Typography>
-            <FormattedPrice price={fruits2Total} />
-          </Stack>
-          <Divider variant='middle' />
+              <Divider variant='middle' />
+            </>
+          )}
           {/* TRECA */}
-          <Stack gap={2}>
-            <Stack direction='row' gap={1}>
-              <Stack sx={{ width: '40%' }}>
-                <RHFSelectInput
-                  name='fruits3'
-                  label='Vrsta voća'
-                  menuItems={fruits}
-                />
+          {fruitsG2 && fruits2Total && (
+            <>
+              <Stack gap={2}>
+                <Stack direction='row' gap={1}>
+                  <Stack sx={{ width: '40%' }}>
+                    <RHFSelectInput
+                      name='fruits3'
+                      label='Vrsta voća'
+                      menuItems={fruits}
+                    />
+                  </Stack>
+                  <Stack sx={{ width: '32%' }}>
+                    <RHFTextInput
+                      name='fruitsG3'
+                      label='Gramaža'
+                      type='number'
+                    />
+                  </Stack>
+                  <Stack sx={{ width: '28%' }}>
+                    <RHFTextInput
+                      name='fruitsPrice3'
+                      label='Cena (KG)'
+                      type='number'
+                    />
+                  </Stack>
+                </Stack>
               </Stack>
-              <Stack sx={{ width: '32%' }}>
-                <RHFTextInput name='fruitsG3' label='Gramaža' type='number' />
+              <Stack direction='row' gap={1}>
+                <Typography>{`Ukupno:`}</Typography>
+                <FormattedPrice price={fruits3Total} />
               </Stack>
-              <Stack sx={{ width: '28%' }}>
-                <RHFTextInput
-                  name='fruitsPrice3'
-                  label='Cena (KG)'
-                  type='number'
-                />
-              </Stack>
-            </Stack>
-          </Stack>
-          <Stack direction='row' gap={1}>
-            <Typography>{`Ukupno:`}</Typography>
-            <FormattedPrice price={fruits3Total} />
-          </Stack>
+            </>
+          )}
         </Stack>
 
         <Divider sx={{ bgcolor: colors.secondary }} />
