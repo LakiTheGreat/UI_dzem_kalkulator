@@ -1,13 +1,13 @@
 import { Button, Divider, Stack, Typography } from '@mui/material';
+import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import emailjs from 'emailjs-com';
 
+import { colors, cupTypes, fruits } from '../constants';
 import FormattedPrice from '../utils/FormattedPrice';
 import FormProvider from './FormProvider';
 import RHFSelectInput from './RHFSelectInput';
 import RHFTextInput from './RHFTextInput';
-import { colors, cupTypes, fruits } from '../constants';
 
 type FormData = {
   numOfCups: number | string;
@@ -297,12 +297,12 @@ export default function Form() {
             Troškovi - teglice
           </Typography>
           <Stack gap={1} direction={'row'}>
-            <Stack sx={{ width: '35%' }}>
+            <Stack sx={{ width: '33%' }}>
               <RHFTextInput name='numOfCups' label='Broj' type='number' />
             </Stack>
 
             <Stack
-              sx={{ width: '35%' }}
+              sx={{ width: '33%' }}
               alignItems='center'
               justifyContent='center'
             >
@@ -318,7 +318,7 @@ export default function Form() {
             </Stack>
 
             <Stack
-              sx={{ width: '30%' }}
+              sx={{ width: '33%' }}
               alignItems='center'
               justifyContent='center'
             >
@@ -326,14 +326,13 @@ export default function Form() {
               <FormattedPrice price={priceOfCups} />
             </Stack>
           </Stack>
-          <Divider variant='middle' />
           <Stack gap={1} direction={'row'}>
-            <Stack sx={{ width: '35%' }}>
+            <Stack sx={{ width: '33%' }}>
               <RHFTextInput name='numOfCups1' label='Broj' type='number' />
             </Stack>
 
             <Stack
-              sx={{ width: '35%' }}
+              sx={{ width: '33%' }}
               alignItems='center'
               justifyContent='center'
             >
@@ -349,7 +348,7 @@ export default function Form() {
             </Stack>
 
             <Stack
-              sx={{ width: '30%' }}
+              sx={{ width: '33%' }}
               alignItems='center'
               justifyContent='center'
             >
@@ -476,7 +475,7 @@ export default function Form() {
           {/* PRVA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
-              <Stack sx={{ width: '28%' }}>
+              <Stack sx={{ width: '33%' }}>
                 <RHFTextInput
                   name='orderNumberOfCups1'
                   label='Broj'
@@ -484,7 +483,7 @@ export default function Form() {
                 />
               </Stack>
               <Stack
-                sx={{ width: '45%' }}
+                sx={{ width: '33%' }}
                 alignItems='center'
                 justifyContent='center'
               >
@@ -512,7 +511,7 @@ export default function Form() {
           {/* DRUGA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
-              <Stack sx={{ width: '28%' }}>
+              <Stack sx={{ width: '33%' }}>
                 <RHFTextInput
                   name='orderNumberOfCups2'
                   label='Broj'
@@ -520,7 +519,7 @@ export default function Form() {
                 />
               </Stack>
               <Stack
-                sx={{ width: '45%' }}
+                sx={{ width: '33%' }}
                 alignItems='center'
                 justifyContent='center'
               >
