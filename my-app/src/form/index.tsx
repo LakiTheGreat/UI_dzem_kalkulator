@@ -126,7 +126,7 @@ export default function Form() {
         {
           email: data.email,
           date: formattedDateTime,
-          expences_cups: 110,
+          expences_cups: Number(data.priceOfCups) + Number(data.priceOfCups1),
           expences_fruits:
             Number(data.fruits1Total) +
             Number(data.fruits2Total) +
