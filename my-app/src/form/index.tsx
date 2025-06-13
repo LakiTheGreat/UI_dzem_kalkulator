@@ -373,10 +373,11 @@ export default function Form() {
               <FormattedPrice price={fruits1Total} />
             </Stack>
           </Stack>
-          <Divider variant='middle' />
+
           {/* DRUGA */}
           {fruitsG1 && fruits1Total && (
             <>
+              <Divider variant='middle' />
               <Stack gap={2}>
                 <Stack direction='row' gap={1}>
                   <Stack sx={{ width: '40%' }}>
@@ -406,12 +407,12 @@ export default function Form() {
                 <Typography>{`Ukupno:`}</Typography>
                 <FormattedPrice price={fruits2Total} />
               </Stack>
-              <Divider variant='middle' />
             </>
           )}
           {/* TRECA */}
           {fruitsG2 && fruits2Total && (
             <>
+              <Divider variant='middle' />
               <Stack gap={2}>
                 <Stack direction='row' gap={1}>
                   <Stack sx={{ width: '40%' }}>
