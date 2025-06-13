@@ -371,7 +371,7 @@ export default function Form() {
               <Stack sx={{ width: '33%' }}>
                 <RHFSelectInput
                   name='fruits1'
-                  label='Vrsta voća'
+                  label='Voće'
                   menuItems={fruits}
                 />
               </Stack>
