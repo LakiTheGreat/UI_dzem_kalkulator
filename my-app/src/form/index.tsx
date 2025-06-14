@@ -624,7 +624,7 @@ export default function Form() {
         />
 
         <Stack gap={3} sx={{ mt: 2 }}>
-          <RHFTextInput name='email' label='Email' />
+          <RHFTextInput name='email' label='Email' type='email' />
           <Button
             loading={isLoading}
             type='submit'
