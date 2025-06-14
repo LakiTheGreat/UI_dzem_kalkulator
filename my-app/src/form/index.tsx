@@ -282,7 +282,6 @@ export default function Form() {
       setValue('orderTotal2', '');
     }
   }, [orderNumberOfCups2, orderCupType2, setValue]);
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
       <Stack gap={3}>
@@ -396,7 +395,7 @@ export default function Form() {
           </Stack>
 
           {/* DRUGA */}
-          {fruitsG1 && fruits1Total && (
+          {fruitsG1 && typeof fruits1Total === 'number' && (
             <>
               <Divider variant='middle' />
               <Stack gap={2}>
@@ -431,7 +430,7 @@ export default function Form() {
             </>
           )}
           {/* TRECA */}
-          {fruitsG2 && fruits2Total && (
+          {fruitsG2 && typeof fruits2Total === 'number' && (
             <>
               <Divider variant='middle' />
               <Stack gap={2}>
