@@ -291,7 +291,7 @@ export default function Form() {
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
             Kupac
           </Typography>
-          <RHFTextInput name='buyer' label='Kupac' />
+          <RHFTextInput name='buyer' label='Ima kupca / naziv porudžbine' />
         </Stack>
 
         <Divider sx={{ bgcolor: colors.secondary }} />
@@ -299,7 +299,7 @@ export default function Form() {
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
           <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Troškovi - teglice
+            Troškovi
           </Typography>
           <Stack gap={1} direction={'row'}>
             <Stack sx={{ width: '33%' }}>
@@ -367,9 +367,6 @@ export default function Form() {
 
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Troškovi - voće
-          </Typography>
           {/* PRVA */}
           <Stack gap={2}>
             <Stack direction='row' gap={1}>
