@@ -63,3 +63,5 @@ export const colors = {
   main: '#DF3A15',
   secondary: '#FBEFC3',
 };
+
+export const AppName = 'Džemulator';

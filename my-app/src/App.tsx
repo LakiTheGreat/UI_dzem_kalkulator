@@ -2,7 +2,7 @@ import { Box, Container, Divider, Stack, Typography } from '@mui/material';
 
 import logo from './assets/logo.png';
 import Form from './form';
-import { colors } from './constants';
+import { AppName, colors } from './constants';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
               variant='h3'
               sx={{ fontStyle: 'italic', fontWeight: 'bold' }}
             >
-              Džmulator
+              {AppName}
             </Typography>
           </Stack>
 
@@ -41,7 +41,7 @@ function App() {
           textAlign='center'
           sx={{ fontWeight: 'bold', fontStyle: 'italic' }}
         >
-          - Džemulator - Sva prava Dule zadržo © 2025 -
+          {`${AppName} - Sva prava Dule zadržo © ${new Date().getFullYear()}`}
         </Typography>
       </Stack>
     </>
