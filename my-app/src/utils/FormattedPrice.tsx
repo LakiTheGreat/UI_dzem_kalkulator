@@ -4,6 +4,7 @@ interface FormattedPriceProps {
   price: number | string;
   locales?: string;
   isBold?: boolean;
+  isExpense?: boolean;
   minimumFractionDigits?: number;
   maximumFractionDigits?: number;
   variant?: TypographyProps['variant'];
@@ -16,6 +17,7 @@ export default function FormattedPrice({
   isBold = false,
   minimumFractionDigits = 0,
   maximumFractionDigits = 0,
+  isExpense = false,
 }: FormattedPriceProps) {
   const numericPrice = typeof price === 'string' ? Number(price) : price;
 
@@ -31,6 +33,7 @@ export default function FormattedPrice({
       variant={variant}
       sx={{ fontWeight: isBold ? 'bold' : 'normal' }}
     >
+      {isExpense && '-'}
       {formatted}
     </Typography>
   );
