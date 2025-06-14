@@ -1,4 +1,4 @@
-import { Button, Divider, Snackbar, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import FormattedPrice from '../utils/FormattedPrice';
 import FormProvider from './FormProvider';
 import RHFSelectInput from './RHFSelectInput';
 import RHFTextInput from './RHFTextInput';
+import { useSnackbar } from 'notistack';
 
 type FormData = {
   numOfCups: number | string;
@@ -80,10 +81,9 @@ export default function Form() {
     },
   });
 
+  const { enqueueSnackbar } = useSnackbar();
   const { handleSubmit, watch, setValue } = methods;
   const [isLoading, setIsLoading] = useState(false);
-  const [showSnackbar, setShowSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const {
     numOfCups,
@@ -159,14 +159,16 @@ export default function Form() {
       .then(
         (result) => {
           setIsLoading(false);
-          setSnackbarMessage('Email je uspešno poslat');
-          setShowSnackbar(true);
+          enqueueSnackbar('Email je uspešno poslat', {
+            variant: 'success',
+          });
         },
         (error) => {
           console.error('Email send error:', error.text);
           setIsLoading(false);
-          setSnackbarMessage('Nešto ne radi - CIMAJ NIKOLU');
-          setShowSnackbar(true);
+          enqueueSnackbar('Nešto ne radi - CIMAJ NIKOLU', {
+            variant: 'error',
+          });
         }
       );
   };
@@ -636,13 +638,6 @@ export default function Form() {
           </Button>
         </Stack>
       </Stack>
-      <Snackbar
-        open={showSnackbar}
-        autoHideDuration={3000}
-        message={snackbarMessage}
-        onClose={() => setShowSnackbar(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      />
     </FormProvider>
   );
 }
