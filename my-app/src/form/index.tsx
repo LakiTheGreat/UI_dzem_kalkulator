@@ -1,4 +1,4 @@
-import { Button, Divider, Stack, Typography } from '@mui/material';
+import { Button, Divider, Snackbar, Stack, Typography } from '@mui/material';
 import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -82,6 +82,8 @@ export default function Form() {
 
   const { handleSubmit, watch, setValue } = methods;
   const [isLoading, setIsLoading] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const {
     numOfCups,
@@ -156,14 +158,15 @@ export default function Form() {
       )
       .then(
         (result) => {
-          console.log('Email sent:', result.text);
-          alert('Email je uspešno poslat!');
           setIsLoading(false);
+          setSnackbarMessage('Email je uspešno poslat');
+          setShowSnackbar(true);
         },
         (error) => {
           console.error('Email send error:', error.text);
-          alert('Nešto ne radi - cimaj Nikolu.');
           setIsLoading(false);
+          setSnackbarMessage('Nešto ne radi - CIMAJ NIKOLU');
+          setShowSnackbar(true);
         }
       );
   };
@@ -633,6 +636,13 @@ export default function Form() {
           </Button>
         </Stack>
       </Stack>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={3000}
+        message={snackbarMessage}
+        onClose={() => setShowSnackbar(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      />
     </FormProvider>
   );
 }
