@@ -591,15 +591,9 @@ export default function Form() {
             gap={3}
             sx={{ px: 1, borderRadius: 1 }}
           >
-            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-              UKUPNI TROŠKOVI:
-            </Typography>
+            <Typography variant='body1'>Ukupni troškovi:</Typography>
 
-            <FormattedPrice
-              price={totalExpences}
-              isBold={true}
-              isExpense={true}
-            />
+            <FormattedPrice price={totalExpences} isExpense={true} />
           </Stack>
 
           <Divider variant='middle' />
@@ -619,7 +613,7 @@ export default function Form() {
               }}
             >
               <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                UKUPAN PROFIT:
+                {`${Number(totalProfit) > 0 ? 'Profit:' : 'Gubitak:'}`}
               </Typography>
               <FormattedPrice price={totalProfit} isBold={true} />
             </Stack>
