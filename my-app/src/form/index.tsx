@@ -607,13 +607,13 @@ export default function Form() {
               sx={{
                 p: 1,
                 border: `2px solid ${
-                  Number(totalProfit) > 0 ? 'lightGreen' : 'red'
+                  Number(totalProfit) >= 0 ? 'lightGreen' : 'red'
                 }`,
                 borderRadius: 1,
               }}
             >
               <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                {`${Number(totalProfit) > 0 ? 'Profit:' : 'Gubitak:'}`}
+                {`${Number(totalProfit) >= 0 ? 'Profit:' : 'Gubitak:'}`}
               </Typography>
               <FormattedPrice price={totalProfit} isBold={true} />
             </Stack>
