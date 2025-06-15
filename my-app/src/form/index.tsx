@@ -210,7 +210,7 @@ export default function Form() {
 
   useEffect(() => {
     if (fixedExpences) {
-      setValue('additionalExpences', Number(fixedExpences) * 0.2);
+      setValue('additionalExpences', Number(fixedExpences) * 0.25);
     }
   }, [fixedExpences, setValue]);
 
@@ -580,7 +580,7 @@ export default function Form() {
             gap={3}
             sx={{ px: 1 }}
           >
-            <Typography variant='body1'>Ostali troškovi (20%):</Typography>
+            <Typography variant='body1'>Ostali troškovi (25%):</Typography>
             <FormattedPrice price={additionalExpences} isExpense={true} />
           </Stack>
 
