@@ -7,7 +7,7 @@ import { AppName, colors } from './constants';
 function App() {
   return (
     <>
-      <Container sx={{ my: 5 }}>
+      <Container sx={{ my: 5 }} maxWidth='sm'>
         <Stack gap={2}>
           <Stack direction='row' alignItems='center' gap={1}>
             <Box
