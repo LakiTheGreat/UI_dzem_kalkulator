@@ -282,6 +282,18 @@ export default function Form() {
       setValue('orderTotal2', '');
     }
   }, [orderNumberOfCups2, orderCupType2, setValue]);
+
+  const profitMargin =
+    Number(totalProfit) > 0 &&
+    Number(totalExpences) > 0 &&
+    Number(totalProfit) + Number(totalExpences) > 0
+      ? (
+          (Number(totalProfit) /
+            (Number(totalProfit) + Number(totalExpences))) *
+          100
+        ).toFixed(0)
+      : '0.00';
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
       <Stack gap={3}>
@@ -616,6 +628,15 @@ export default function Form() {
                 {`${Number(totalProfit) >= 0 ? 'Profit:' : 'Gubitak:'}`}
               </Typography>
               <FormattedPrice price={totalProfit} isBold={true} />
+            </Stack>
+            <Stack
+              direction='row'
+              alignItems='center'
+              justifyContent='space-between'
+              sx={{ p: 1 }}
+            >
+              <Typography variant='body1'>Profitna marža:</Typography>
+              <Typography variant='body1'>{profitMargin}%</Typography>
             </Stack>
           </Stack>
         </Stack>
