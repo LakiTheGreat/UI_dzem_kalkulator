@@ -57,6 +57,16 @@ export const fruits: MenuItemType[] = [
     value: 'Malina',
     menuItemLabel: 'Malina',
   },
+  {
+    key: 7,
+    value: 'Limun',
+    menuItemLabel: 'Limun',
+  },
+  {
+    key: 8,
+    value: 'Urme',
+    menuItemLabel: 'Urme',
+  },
 ];
 
 export const colors = {

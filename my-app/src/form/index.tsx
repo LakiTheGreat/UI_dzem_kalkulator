@@ -415,7 +415,7 @@ export default function Form() {
                   <Stack sx={{ width: '33%' }}>
                     <RHFSelectInput
                       name='fruits2'
-                      label='Vrsta voća'
+                      label='Voće'
                       menuItems={fruits}
                     />
                   </Stack>
@@ -450,7 +450,7 @@ export default function Form() {
                   <Stack sx={{ width: '33%' }}>
                     <RHFSelectInput
                       name='fruits3'
-                      label='Vrsta voća'
+                      label='Voće'
                       menuItems={fruits}
                     />
                   </Stack>
