@@ -156,7 +156,7 @@ export default function GeneralCalculator() {
             sx={{ p: 1 }}
           >
             <Typography>Fiksni troškovi:</Typography>
-            <FormattedPrice price={fixedExpense} />
+            <FormattedPrice price={fixedExpense} isExpense={true} />
           </Stack>
           <Stack
             gap={1}
@@ -165,7 +165,7 @@ export default function GeneralCalculator() {
             sx={{ p: 1 }}
           >
             <Typography>Ostali troškovi (25%):</Typography>
-            <FormattedPrice price={additionalExpense} />
+            <FormattedPrice price={additionalExpense} isExpense={true} />
           </Stack>
           <Stack
             gap={1}
@@ -180,7 +180,11 @@ export default function GeneralCalculator() {
             <Typography sx={{ fontWeight: 'bold' }}>
               Ukupni troškovi :
             </Typography>
-            <FormattedPrice price={totalExpense} isBold={true} />
+            <FormattedPrice
+              price={totalExpense}
+              isBold={true}
+              isExpense={true}
+            />
           </Stack>
         </Stack>
         <Stack>
