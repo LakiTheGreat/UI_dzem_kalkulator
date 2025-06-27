@@ -1,33 +1,46 @@
 import { useForm } from 'react-hook-form';
-import FormProvider from '../../components/FormProvider';
+import { useEffect } from 'react';
 import { Divider, Stack, Typography } from '@mui/material';
+
+import FormProvider from '../../components/FormProvider';
 import RHFTextInput from '../../components/RHFTextInput';
 import FormattedPrice from '../../utils/FormattedPrice';
-import { useEffect } from 'react';
 
 export default function GeneralCalculator() {
   type FormData = {
+    basePrice: number | string;
+    totalWeight: number | string;
+    packageWeight: number | string;
     fixedExpense: number | string;
     additionalExpense: number | string;
     totalExpense: number | string;
     profitMarginValue: number | string;
     minPrice: number | string;
+    packageDifference: number | string;
   };
 
   const methods = useForm<FormData>({
     defaultValues: {
+      basePrice: '',
+      totalWeight: '',
+      packageWeight: '',
       fixedExpense: '',
       additionalExpense: '',
       totalExpense: '',
       profitMarginValue: '',
       minPrice: '',
+      packageDifference: '',
     },
   });
 
   const { handleSubmit, watch, setValue } = methods;
 
   const {
+    basePrice,
+    totalWeight,
+    packageWeight,
     fixedExpense,
+    packageDifference,
     additionalExpense,
     totalExpense,
     profitMarginValue,
@@ -35,10 +48,30 @@ export default function GeneralCalculator() {
   } = watch();
 
   useEffect(() => {
-    if (fixedExpense) {
-      setValue('additionalExpense', Number(fixedExpense) * 0.25);
+    if (basePrice) {
+      setValue(
+        'fixedExpense',
+        Number(basePrice) * (packageDifference ? Number(packageDifference) : 1)
+      );
+    } else {
+      setValue('fixedExpense', '');
+      setValue('additionalExpense', '');
+      setValue('totalExpense', '');
+      setValue('profitMarginValue', '');
+      setValue('minPrice', '');
     }
-  }, [setValue, fixedExpense]);
+  }, [setValue, basePrice, packageDifference]);
+
+  useEffect(() => {
+    if (basePrice) {
+      setValue(
+        'additionalExpense',
+        Number(basePrice) *
+          0.25 *
+          (packageDifference ? Number(packageDifference) : 1)
+      );
+    }
+  }, [setValue, basePrice, packageDifference]);
 
   useEffect(() => {
     if (fixedExpense && additionalExpense) {
@@ -47,7 +80,7 @@ export default function GeneralCalculator() {
         Number(fixedExpense) + Number(additionalExpense)
       );
     }
-  }, [setValue, fixedExpense, additionalExpense]);
+  }, [setValue, fixedExpense, additionalExpense, packageDifference]);
 
   useEffect(() => {
     if (totalExpense) {
@@ -61,6 +94,24 @@ export default function GeneralCalculator() {
     }
   }, [setValue, totalExpense, profitMarginValue]);
 
+  useEffect(() => {
+    const value = Number(packageWeight) / Number(totalWeight);
+
+    if (value !== Infinity) {
+      setValue(
+        'packageDifference',
+        Number(packageWeight) / Number(totalWeight)
+      );
+    } else {
+      setValue('fixedExpense', '');
+      setValue('additionalExpense', '');
+      setValue('totalExpense', '');
+      setValue('profitMarginValue', '');
+      setValue('minPrice', '');
+      setValue('packageWeight', '');
+    }
+  }, [setValue, packageWeight, totalWeight]);
+
   const formSubmit = (data: FormData) => {
     console.log(data);
   };
@@ -69,9 +120,32 @@ export default function GeneralCalculator() {
     <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
       <Stack gap={4}>
         <Stack gap={2}>
-          <Typography>Ukupna cena sirovina:</Typography>
-          <RHFTextInput name='fixedExpense' label='Ukupna cena' type='number' />
+          <Stack gap={2}>
+            <Typography>Ukupna cena sirovina:</Typography>
+            <RHFTextInput name='basePrice' label='Ukupna cena' type='number' />
+          </Stack>
+          <Stack direction='row' gap={2}>
+            <Stack gap={2} sx={{ flex: 1 }}>
+              <Typography>Ukupna masa (g)</Typography>
+              <RHFTextInput
+                name='totalWeight'
+                label='Ukupna masa (g)'
+                type='number'
+              />
+            </Stack>
+
+            <Stack gap={2} sx={{ flex: 1 }}>
+              <Typography>Masa pakovanja(g)</Typography>
+              <RHFTextInput
+                name='packageWeight'
+                label='Masa pakovanja (g)'
+                type='number'
+                disabled={!totalWeight}
+              />
+            </Stack>
+          </Stack>
         </Stack>
+
         <Divider />
         <Stack>
           <Stack
