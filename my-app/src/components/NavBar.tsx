@@ -26,7 +26,7 @@ export default function NavBar() {
         sx={{ height: 60 }}
         onClick={() => navigate(`/${routes.dzem_calculator}`)}
       >
-        Dzemovi
+        Džem profit kalkulator
       </Button>
       <Button
         variant={
