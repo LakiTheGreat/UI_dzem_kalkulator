@@ -1,9 +1,10 @@
-import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
 import { Divider, Stack, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 import FormProvider from '../../components/FormProvider';
 import RHFTextInput from '../../components/RHFTextInput';
+import { colors } from '../../constants';
 import FormattedPrice from '../../utils/FormattedPrice';
 
 export default function GeneralCalculator() {
@@ -119,7 +120,7 @@ export default function GeneralCalculator() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
       <Stack gap={4}>
-        <Stack gap={2}>
+        <Stack gap={2} sx={{ py: 1 }}>
           <Stack gap={2}>
             <Typography>Ukupna cena sirovina:</Typography>
             <RHFTextInput name='basePrice' label='Ukupna cena' type='number' />
@@ -146,7 +147,7 @@ export default function GeneralCalculator() {
           </Stack>
         </Stack>
 
-        <Divider />
+        <Divider sx={{ bgcolor: colors.secondary }} />
         <Stack>
           <Stack
             gap={1}
