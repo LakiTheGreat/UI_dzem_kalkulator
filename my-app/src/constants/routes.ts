@@ -1,4 +1,4 @@
 export const routes = {
-  dzem_calculator: 'dzem_calculator',
-  general_calculator: 'general_calculator',
+  dzem_calculator: 'dzem-calculator',
+  general_calculator: 'general-calculator',
 };
