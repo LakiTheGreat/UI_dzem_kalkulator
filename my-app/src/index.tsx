@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SnackbarProvider } from 'notistack';
 import { RouterProvider } from 'react-router';
 
+import { register as registerServiceWorker } from './serviceWorkerRegistration';
 import router from './router';
 import AppTheme from './theme/AppTheme';
 
@@ -23,3 +24,5 @@ root.render(
     </AppTheme>
   </React.StrictMode>
 );
+
+registerServiceWorker();
