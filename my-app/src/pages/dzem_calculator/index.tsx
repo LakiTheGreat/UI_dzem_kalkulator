@@ -114,7 +114,7 @@ export default function DzemCalculator() {
     totalProfit,
   } = watch();
 
-  const formSubmit = async (data: FormData) => {
+  const formSubmit = (data: FormData) => {
     setIsLoading(true);
     const date = new Date();
     const formattedDateTime =
