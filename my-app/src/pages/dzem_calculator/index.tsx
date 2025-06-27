@@ -3,12 +3,12 @@ import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { colors, cupTypes, fruits } from '../constants';
-import FormattedPrice from '../utils/FormattedPrice';
-import FormProvider from './FormProvider';
-import RHFSelectInput from './RHFSelectInput';
-import RHFTextInput from './RHFTextInput';
+import FormProvider from '../../components/FormProvider';
+import RHFSelectInput from '../../components/RHFSelectInput';
+import RHFTextInput from '../../components/RHFTextInput';
 import { useSnackbar } from 'notistack';
+import { colors, cupTypes, fruits } from '../../constants';
+import FormattedPrice from '../../utils/FormattedPrice';
 
 type FormData = {
   numOfCups: number | string;
@@ -44,7 +44,7 @@ type FormData = {
   email: string;
 };
 
-export default function Form() {
+export default function DzemCalculator() {
   const methods = useForm<FormData>({
     defaultValues: {
       numOfCups: '',

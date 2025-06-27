@@ -1,4 +1,4 @@
-import { MenuItemType } from '../form/RHFSelectInput';
+import { MenuItemType } from '../components/RHFSelectInput';
 
 export const cupTypes: MenuItemType[] = [
   {
