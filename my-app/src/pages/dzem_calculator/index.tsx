@@ -7,7 +7,7 @@ import FormProvider from '../../components/FormProvider';
 import RHFSelectInput from '../../components/RHFSelectInput';
 import RHFTextInput from '../../components/RHFTextInput';
 import { useSnackbar } from 'notistack';
-import { colors, cupTypes, fruits } from '../../constants';
+import { cupTypes, fruits } from '../../constants';
 import FormattedPrice from '../../utils/FormattedPrice';
 
 type FormData = {
@@ -305,7 +305,7 @@ export default function DzemCalculator() {
           <RHFTextInput name='buyer' label='Ima kupca / naziv porudžbine' />
         </Stack>
 
-        <Divider sx={{ bgcolor: colors.secondary }} />
+        <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
 
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
@@ -374,7 +374,7 @@ export default function DzemCalculator() {
           </Stack>
         </Stack>
 
-        <Divider sx={{ bgcolor: colors.secondary }} />
+        <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
 
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
@@ -478,7 +478,7 @@ export default function DzemCalculator() {
           )}
         </Stack>
 
-        <Divider sx={{ bgcolor: colors.secondary }} />
+        <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
 
         {/* ----------------------------------------------------------------------- */}
         <Stack gap={3}>
@@ -558,7 +558,7 @@ export default function DzemCalculator() {
           </Stack>
         </Stack>
 
-        <Divider sx={{ bgcolor: colors.secondary }} />
+        <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
 
         {/* ----------------------------------------------------------------------- */}
 
@@ -643,8 +643,8 @@ export default function DzemCalculator() {
 
         <Divider
           sx={{
-            color: colors.secondary,
-            bgcolor: colors.secondary,
+            color: ({ palette }) => palette.secondary.main,
+            bgcolor: ({ palette }) => palette.secondary.main,
             height: 2,
           }}
         />
@@ -655,7 +655,10 @@ export default function DzemCalculator() {
             loading={isLoading}
             type='submit'
             variant='contained'
-            sx={{ fontWeight: 'bold', bgcolor: colors.main }}
+            sx={{
+              fontWeight: 'bold',
+              bgcolor: ({ palette }) => palette.primary.main,
+            }}
             disabled={!totalIncome}
           >
             Pošalji mi na mejl

@@ -2,8 +2,9 @@ import { Box, Container, Divider, Stack, Typography } from '@mui/material';
 import { Outlet } from 'react-router';
 
 import logo from './assets/logo.png';
-import { AppName, colors } from './constants';
+import { AppName } from './constants';
 import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -14,7 +15,6 @@ function App() {
         flexDirection: 'column',
       }}
     >
-      {/* Main content */}
       <Container sx={{ mt: 1.5, mb: 5, flexGrow: 1 }} maxWidth='sm'>
         <Stack gap={2}>
           <Stack direction='row' alignItems='center' gap={1}>
@@ -36,8 +36,8 @@ function App() {
 
           <Divider
             sx={{
-              color: colors.secondary,
-              bgcolor: colors.secondary,
+              color: ({ palette }) => palette.secondary.main,
+              bgcolor: ({ palette }) => palette.secondary.main,
               height: 2,
             }}
           />
@@ -46,22 +46,7 @@ function App() {
         </Stack>
       </Container>
 
-      {/* Footer */}
-      <Stack
-        sx={{
-          bgcolor: colors.secondary,
-          py: 1,
-          mt: 'auto', // Push footer to bottom
-        }}
-      >
-        <Typography
-          variant='caption'
-          textAlign='center'
-          sx={{ fontWeight: 'bold', fontStyle: 'italic' }}
-        >
-          {`${AppName} - Sva prava Dule zadržo © ${new Date().getFullYear()}`}
-        </Typography>
-      </Stack>
+      <Footer />
     </Box>
   );
 }

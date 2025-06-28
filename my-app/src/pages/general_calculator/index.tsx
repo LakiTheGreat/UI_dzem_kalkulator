@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 
 import FormProvider from '../../components/FormProvider';
 import RHFTextInput from '../../components/RHFTextInput';
-import { colors } from '../../constants';
 import FormattedPrice from '../../utils/FormattedPrice';
 
 export default function GeneralCalculator() {
@@ -147,7 +146,7 @@ export default function GeneralCalculator() {
           </Stack>
         </Stack>
 
-        <Divider sx={{ bgcolor: colors.secondary }} />
+        <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
         <Stack>
           <Stack
             gap={1}
