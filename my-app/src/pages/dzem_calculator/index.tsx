@@ -1,12 +1,12 @@
 import { Button, Divider, Stack, Typography } from '@mui/material';
 import emailjs from 'emailjs-com';
+import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import FormProvider from '../../components/FormProvider';
 import RHFSelectInput from '../../components/RHFSelectInput';
 import RHFTextInput from '../../components/RHFTextInput';
-import { useSnackbar } from 'notistack';
 import { cupTypes, fruits } from '../../constants';
 import FormattedPrice from '../../utils/FormattedPrice';
 
