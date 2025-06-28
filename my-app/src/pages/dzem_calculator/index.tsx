@@ -657,7 +657,6 @@ export default function DzemCalculator() {
             variant='contained'
             sx={{
               fontWeight: 'bold',
-              bgcolor: ({ palette }) => palette.primary.main,
             }}
             disabled={!totalIncome}
           >
