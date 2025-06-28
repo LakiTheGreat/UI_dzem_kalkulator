@@ -15,7 +15,7 @@ function App() {
       }}
     >
       {/* Main content */}
-      <Container sx={{ my: 5, flexGrow: 1 }} maxWidth='sm'>
+      <Container sx={{ mt: 1.5, mb: 5, flexGrow: 1 }} maxWidth='sm'>
         <Stack gap={2}>
           <Stack direction='row' alignItems='center' gap={1}>
             <Box
