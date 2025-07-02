@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography } from '@mui/material';
+import { Container, Divider, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -119,7 +119,7 @@ export default function GeneralCalculator() {
   };
 
   return (
-    <Stack>
+    <Container maxWidth='md'>
       <HeaderBreadcrumbs
         heading={'Kalkulator cene'}
         links={[
@@ -230,6 +230,6 @@ export default function GeneralCalculator() {
           </Stack>
         </Stack>
       </FormProvider>
-    </Stack>
+    </Container>
   );
 }

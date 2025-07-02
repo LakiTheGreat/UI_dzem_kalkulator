@@ -1,4 +1,4 @@
-import { Button, Divider, Stack, Typography } from '@mui/material';
+import { Button, Container, Divider, Stack, Typography } from '@mui/material';
 import emailjs from 'emailjs-com';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
@@ -297,7 +297,7 @@ export default function DzemCalculator() {
       : '0.00';
 
   return (
-    <Stack>
+    <Container maxWidth='md'>
       <HeaderBreadcrumbs
         heading={'Nova porudžbina'}
         links={[
@@ -678,6 +678,6 @@ export default function DzemCalculator() {
           </Stack>
         </Stack>
       </FormProvider>
-    </Stack>
+    </Container>
   );
 }
