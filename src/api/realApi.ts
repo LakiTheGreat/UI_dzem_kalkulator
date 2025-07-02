@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
+import { MenuItemType } from '../components/RHFSelectInput';
+
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://be-dzem-kalkulator.onrender.com/api',
 });
@@ -11,7 +13,7 @@ export const realApi = createApi({
   baseQuery: baseQueryWithRetry,
   tagTypes: ['Test'],
   endpoints: (build) => ({
-    getTest: build.query<any, void>({
+    getTest: build.query<MenuItemType[], void>({
       query: () => ({
         url: `/order-types`,
       }),
