@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import FormProvider from '../../components/FormProvider';
+import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import RHFTextInput from '../../components/RHFTextInput';
+import { routes } from '../../constants/routes';
 import FormattedPrice from '../../utils/FormattedPrice';
 
 export default function GeneralCalculator() {
@@ -117,102 +119,117 @@ export default function GeneralCalculator() {
   };
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
-      <Stack gap={4}>
-        <Stack gap={2} sx={{ py: 1 }}>
-          <Stack gap={2}>
-            <Typography>Ukupna cena sirovina:</Typography>
-            <RHFTextInput name='basePrice' label='Ukupna cena' type='number' />
-          </Stack>
-          <Stack direction='row' gap={2}>
-            <Stack gap={2} sx={{ flex: 1 }}>
-              <Typography>Ukupna masa (g)</Typography>
+    <Stack>
+      <HeaderBreadcrumbs
+        heading={'Kalkulator cene'}
+        links={[
+          {
+            name: 'Izračunaj minimalnu prodajnu cenu',
+            href: routes.general_calculator,
+          },
+        ]}
+      />
+      <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
+        <Stack gap={4}>
+          <Stack gap={2} sx={{ py: 1 }}>
+            <Stack gap={2}>
+              <Typography>Ukupna cena sirovina:</Typography>
               <RHFTextInput
-                name='totalWeight'
-                label='Ukupna masa (g)'
+                name='basePrice'
+                label='Ukupna cena'
                 type='number'
               />
             </Stack>
+            <Stack direction='row' gap={2}>
+              <Stack gap={2} sx={{ flex: 1 }}>
+                <Typography>Ukupna masa (g)</Typography>
+                <RHFTextInput
+                  name='totalWeight'
+                  label='Ukupna masa (g)'
+                  type='number'
+                />
+              </Stack>
 
-            <Stack gap={2} sx={{ flex: 1 }}>
-              <Typography>Masa pakovanja(g)</Typography>
-              <RHFTextInput
-                name='packageWeight'
-                label='Masa pakovanja (g)'
-                type='number'
-                disabled={!totalWeight}
+              <Stack gap={2} sx={{ flex: 1 }}>
+                <Typography>Masa pakovanja(g)</Typography>
+                <RHFTextInput
+                  name='packageWeight'
+                  label='Masa pakovanja (g)'
+                  type='number'
+                  disabled={!totalWeight}
+                />
+              </Stack>
+            </Stack>
+          </Stack>
+
+          <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
+          <Stack>
+            <Stack
+              gap={1}
+              direction='row'
+              justifyContent='space-between'
+              sx={{ p: 1 }}
+            >
+              <Typography>Fiksni troškovi:</Typography>
+              <FormattedPrice price={fixedExpense} isExpense={true} />
+            </Stack>
+            <Stack
+              gap={1}
+              direction='row'
+              justifyContent='space-between'
+              sx={{ p: 1 }}
+            >
+              <Typography>Ostali troškovi (25%):</Typography>
+              <FormattedPrice price={additionalExpense} isExpense={true} />
+            </Stack>
+            <Stack
+              gap={1}
+              direction='row'
+              justifyContent='space-between'
+              sx={{
+                border: `2px solid ${'red'}`,
+                borderRadius: 1,
+                p: 1,
+              }}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Ukupni troškovi :
+              </Typography>
+              <FormattedPrice
+                price={totalExpense}
+                isBold={true}
+                isExpense={true}
               />
             </Stack>
           </Stack>
-        </Stack>
-
-        <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
-        <Stack>
-          <Stack
-            gap={1}
-            direction='row'
-            justifyContent='space-between'
-            sx={{ p: 1 }}
-          >
-            <Typography>Fiksni troškovi:</Typography>
-            <FormattedPrice price={fixedExpense} isExpense={true} />
-          </Stack>
-          <Stack
-            gap={1}
-            direction='row'
-            justifyContent='space-between'
-            sx={{ p: 1 }}
-          >
-            <Typography>Ostali troškovi (25%):</Typography>
-            <FormattedPrice price={additionalExpense} isExpense={true} />
-          </Stack>
-          <Stack
-            gap={1}
-            direction='row'
-            justifyContent='space-between'
-            sx={{
-              border: `2px solid ${'red'}`,
-              borderRadius: 1,
-              p: 1,
-            }}
-          >
-            <Typography sx={{ fontWeight: 'bold' }}>
-              Ukupni troškovi :
-            </Typography>
-            <FormattedPrice
-              price={totalExpense}
-              isBold={true}
-              isExpense={true}
-            />
+          <Stack>
+            <Stack
+              gap={1}
+              direction='row'
+              justifyContent='space-between'
+              sx={{ p: 1 }}
+            >
+              <Typography>Profitna marža (50%):</Typography>
+              <FormattedPrice price={profitMarginValue} />
+            </Stack>
+            <Stack
+              gap={1}
+              direction='row'
+              justifyContent='space-between'
+              sx={{
+                border: `2px solid ${'lightgreen'}`,
+                borderRadius: 1,
+                p: 1,
+              }}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Minimalna cena koštanja:
+              </Typography>
+              <FormattedPrice price={minPrice} isBold={true} />
+            </Stack>
           </Stack>
         </Stack>
-        <Stack>
-          <Stack
-            gap={1}
-            direction='row'
-            justifyContent='space-between'
-            sx={{ p: 1 }}
-          >
-            <Typography>Profitna marža (50%):</Typography>
-            <FormattedPrice price={profitMarginValue} />
-          </Stack>
-          <Stack
-            gap={1}
-            direction='row'
-            justifyContent='space-between'
-            sx={{
-              border: `2px solid ${'lightgreen'}`,
-              borderRadius: 1,
-              p: 1,
-            }}
-          >
-            <Typography sx={{ fontWeight: 'bold' }}>
-              Minimalna cena koštanja:
-            </Typography>
-            <FormattedPrice price={minPrice} isBold={true} />
-          </Stack>
-        </Stack>
-      </Stack>
-    </FormProvider>
+      </FormProvider>
+    </Stack>
   );
 }
