@@ -29,28 +29,28 @@ export const cupPrice: MenuItemType[] = [
 export const fruits: MenuItemType[] = [
   {
     key: 1,
-    value: 'Šljiva',
-    menuItemLabel: 'Šljiva',
-  },
-  {
-    key: 2,
-    value: 'Kruška',
-    menuItemLabel: 'Kruška',
-  },
-  {
-    key: 3,
-    value: 'Narandža',
-    menuItemLabel: 'Narandža',
-  },
-  {
-    key: 4,
     value: 'Jagoda',
     menuItemLabel: 'Jagoda',
   },
   {
-    key: 5,
+    key: 2,
+    value: 'Kajsija',
+    menuItemLabel: 'Kajsija',
+  },
+  {
+    key: 3,
+    value: 'Kruška',
+    menuItemLabel: 'Kruška',
+  },
+  {
+    key: 4,
     value: 'Kupina',
     menuItemLabel: 'Kupina',
+  },
+  {
+    key: 5,
+    value: 'Limun',
+    menuItemLabel: 'Limun',
   },
   {
     key: 6,
@@ -59,11 +59,16 @@ export const fruits: MenuItemType[] = [
   },
   {
     key: 7,
-    value: 'Limun',
-    menuItemLabel: 'Limun',
+    value: 'Narandža',
+    menuItemLabel: 'Narandža',
   },
   {
     key: 8,
+    value: 'Šljiva',
+    menuItemLabel: 'Šljiva',
+  },
+  {
+    key: 9,
     value: 'Urme',
     menuItemLabel: 'Urme',
   },
