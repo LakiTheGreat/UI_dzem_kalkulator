@@ -12,10 +12,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={`${routes.dzem_calculator}`} replace />,
+        element: <Navigate to={`${routes.new_order}`} replace />,
       },
       {
-        path: `${routes.dzem_calculator}`,
+        path: `${routes.new_order}`,
         element: <DzemCalculator />,
       },
       {

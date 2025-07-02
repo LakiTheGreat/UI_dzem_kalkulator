@@ -9,6 +9,11 @@ export default function Footer() {
         bgcolor: ({ palette }) => palette.secondary.main,
         py: 1,
         mt: 'auto',
+        zIndex: 1300,
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
       }}
     >
       <Typography
