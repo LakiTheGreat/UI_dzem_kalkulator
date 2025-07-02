@@ -1,7 +1,6 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
-  Container,
   Divider,
   IconButton,
   Stack,
@@ -89,9 +88,7 @@ export default function MobileNav() {
         data-testid='MobileNav'
         sx={{ overflow: 'auto', pb: isTablet ? 8 : 4, mt: 3 }}
       >
-        <Container>
-          <Outlet />
-        </Container>
+        <Outlet />
       </Box>
     </Box>
   );
