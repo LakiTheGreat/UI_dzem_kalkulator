@@ -6,18 +6,9 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithRetry = retry(baseQuery, { maxRetries: 0 });
 
-export const realApi = createApi({
+export const api = createApi({
   reducerPath: 'realApi',
   baseQuery: baseQueryWithRetry,
   tagTypes: ['Test'],
-  endpoints: (build) => ({
-    getTest: build.query<any, void>({
-      query: () => ({
-        url: `/order-types`,
-      }),
-      providesTags: ['Test'],
-    }),
-  }),
+  endpoints: (build) => ({}),
 });
-
-export const { useGetTestQuery } = realApi;

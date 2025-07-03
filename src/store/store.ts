@@ -5,7 +5,7 @@ import {
   type Reducer,
 } from '@reduxjs/toolkit';
 
-import { realApi } from '../api/realApi';
+import { api } from '../api';
 
 const createNoopStorage = () => ({
   getItem(_key: string) {
@@ -22,7 +22,7 @@ const createNoopStorage = () => ({
 // const storage = typeof window !== 'undefined' ? createWebStorage('local') : createNoopStorage();
 
 const rootReducer = combineReducers({
-  [realApi.reducerPath]: realApi.reducer,
+  [api.reducerPath]: api.reducer,
 });
 
 const persistConfig = {
@@ -45,7 +45,7 @@ export const store = configureStore({
     //       }
     //     : false,
     // })
-    getDefaultMiddleware().concat(realApi.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 });
 
 // export const persistor = shouldPersist ? persistStore(store) : null;
