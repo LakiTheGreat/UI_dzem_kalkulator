@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useGetTestQuery } from '../../api/realApi';
+import { useGetFruitsQuery } from '../../api/lookupsSlice';
 import FormProvider from '../../components/FormProvider';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import RHFSelectInput from '../../components/RHFSelectInput';
@@ -48,7 +48,7 @@ type FormData = {
 };
 
 export default function DzemCalculator() {
-  const { data } = useGetTestQuery();
+  const { data } = useGetFruitsQuery();
 
   console.log(data);
 
