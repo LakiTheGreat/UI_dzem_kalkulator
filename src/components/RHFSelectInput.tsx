@@ -10,7 +10,7 @@ import { forwardRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export type MenuItemType = {
-  key: string | number;
+  id: string | number;
   value: any;
   menuItemLabel: string | number;
   iso2?: string;
@@ -46,7 +46,7 @@ const RHFSelectInput = forwardRef<HTMLDivElement, RHFSelectInputProps>(
               sx={{ fontSize: isBigInput ? 20 : 'auto' }}
             >
               {menuItems.map((item) => (
-                <MenuItem key={item.key} value={item.value}>
+                <MenuItem key={item.id} value={item.value}>
                   <Typography sx={{ fontSize: isBigInput ? 20 : 'inherit' }}>
                     {item.menuItemLabel}
                   </Typography>
