@@ -50,8 +50,6 @@ type FormData = {
 export default function DzemCalculator() {
   const { data } = useGetFruitsQuery();
 
-  console.log(data);
-
   const methods = useForm<FormData>({
     defaultValues: {
       numOfCups: '',
@@ -403,7 +401,7 @@ export default function DzemCalculator() {
                   <RHFSelectInput
                     name='fruits1'
                     label='Voće'
-                    menuItems={fruits}
+                    menuItems={data || fruits}
                   />
                 </Stack>
                 <Stack sx={{ width: '33%' }}>
@@ -434,7 +432,7 @@ export default function DzemCalculator() {
                       <RHFSelectInput
                         name='fruits2'
                         label='Voće'
-                        menuItems={fruits}
+                        menuItems={data || fruits}
                       />
                     </Stack>
                     <Stack sx={{ width: '33%' }}>
@@ -469,7 +467,7 @@ export default function DzemCalculator() {
                       <RHFSelectInput
                         name='fruits3'
                         label='Voće'
-                        menuItems={fruits}
+                        menuItems={data || fruits}
                       />
                     </Stack>
                     <Stack sx={{ width: '33%' }}>
