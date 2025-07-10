@@ -152,9 +152,9 @@ export default function DesktopNav() {
               </Typography>
             </Stack>
 
-            <Stack direction='row' gap={1} alignItems='center'>
+            {/* <Stack direction='row' gap={1} alignItems='center'>
               Account popover
-            </Stack>
+            </Stack> */}
           </Stack>
         </Toolbar>
       </AppBar>
