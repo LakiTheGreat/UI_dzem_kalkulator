@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <Stack
       sx={{
-        bgcolor: ({ palette }) => palette.secondary.main,
+        bgcolor: ({ palette }) => palette.secondary.light,
         py: 1,
         mt: 'auto',
         zIndex: 1300,
