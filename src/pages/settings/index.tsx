@@ -16,6 +16,8 @@ import {
 import { useEffect, useState } from 'react';
 import { Id } from 'react-toastify';
 
+import { useGetAllCupCostsQuery } from '../../api/cupCosts';
+import { useGetAllCupValuesQuery } from '../../api/cupValues';
 import {
   useDeleteFruitMutation,
   useGetFruitsQuery,
@@ -24,20 +26,36 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
-import { mapFruitToMenuItems } from '../../utils/mapToMenuItems';
+import FormattedPrice from '../../utils/FormattedPrice';
+import {
+  mapCupsToMenuItems,
+  mapFruitToMenuItems,
+} from '../../utils/mapToMenuItems';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import CreateFruit from './fruits/CreateFruit';
 import EditFruit from './fruits/EditFruit';
 
 export default function Settings() {
+  const [getConfirmation, Confirmation] = useConfirmDialog();
   const [toastId, setToastId] = useState<Id>('');
+
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
-  const [getConfirmation, Confirmation] = useConfirmDialog();
+
   const [selectedFruitId, setSelectedFruitId] = useState<string>('');
+  const [selectedCupCostId, setSelectedCupCostId] = useState<string>('');
+  const [selectedCupValueId, setSelectedCupValueId] = useState<string>('');
 
   const { data: fruits, isLoading: fruitsIsLoading } = useGetFruitsQuery();
-  const mappedData = mapFruitToMenuItems(fruits);
+  const mappedFruits = mapFruitToMenuItems(fruits);
+
+  const { data: cupCosts, isLoading: cupCostsIsLoading } =
+    useGetAllCupCostsQuery();
+  const mappedCupCosts = mapCupsToMenuItems(cupCosts);
+
+  const { data: cupValues, isLoading: cupValuesIsLoading } =
+    useGetAllCupValuesQuery();
+  const mappedCupValues = mapCupsToMenuItems(cupValues);
 
   const [deleteFruit, { data: deleteFruitData }] = useDeleteFruitMutation();
 
@@ -65,6 +83,18 @@ export default function Settings() {
       setSelectedFruitId(fruits[0].id.toString());
     }
   }, [fruits]);
+
+  useEffect(() => {
+    if (cupCosts && cupCosts.length > 0) {
+      setSelectedCupCostId(cupCosts[0].id.toString());
+    }
+  }, [cupCosts]);
+
+  useEffect(() => {
+    if (cupValues && cupValues.length > 0) {
+      setSelectedCupValueId(cupValues[0].id.toString());
+    }
+  }, [cupValues]);
 
   return (
     <Container maxWidth='sm'>
@@ -97,7 +127,7 @@ export default function Settings() {
                   label='Izaberi voće'
                   onChange={(e) => setSelectedFruitId(e.target.value)}
                 >
-                  {mappedData.map((item) => (
+                  {mappedFruits.map((item) => (
                     <MenuItem key={item.id} value={item.id}>
                       {item.menuItemLabel}
                     </MenuItem>
@@ -140,30 +170,126 @@ export default function Settings() {
         <Divider />
 
         {/* -------------------------------------------------- CUP COSTS  ------------------------------------------------ */}
-        <Stack gap={3}>
-          <Stack direction='row' justifyContent='space-between'>
-            <Typography variant='h5'>
-              Nabavna cena i veličina teglica
-            </Typography>
-            {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
+        {cupCostsIsLoading && <Skeleton variant='rounded' height={112} />}
+        {!cupCostsIsLoading && cupCosts && (
+          <Stack gap={3}>
+            <Stack direction='row' justifyContent='space-between'>
+              <Typography variant='h5'>Nabavna cena teglica</Typography>
+              {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
               <AddCircleOutlineIcon fontSize='large' />
             </IconButton> */}
+            </Stack>
+            <Stack gap={4} direction='row'>
+              <FormControl fullWidth>
+                <InputLabel>Izaberi teglicu</InputLabel>
+                <Select
+                  value={selectedCupCostId}
+                  label='Izaberi teglicu'
+                  onChange={(e) => setSelectedCupCostId(e.target.value)}
+                >
+                  {mappedCupCosts.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.menuItemLabel}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Stack
+                direction='row'
+                gap={2}
+                alignItems='center'
+                justifyContent='space-between'
+              >
+                <Stack direction='row' gap={1}>
+                  <Typography
+                    sx={{
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    Nabavna cena teglice:
+                  </Typography>
+                  <FormattedPrice
+                    price={
+                      cupCosts.find((c) => c.id === Number(selectedCupCostId))
+                        ?.value || 0
+                    }
+                    isBold
+                  />
+                </Stack>
+                <IconButton
+                  sx={{ color: 'secondary.dark' }}
+                  disabled={!selectedFruitId}
+                  onClick={() => setOpenEdit(true)}
+                >
+                  <EditIcon fontSize='large' />
+                </IconButton>
+              </Stack>
+            </Stack>
           </Stack>
-        </Stack>
+        )}
 
         <Divider />
 
         {/* -------------------------------------------------- CUP VALUE  ------------------------------------------------- */}
-        <Stack gap={3}>
-          <Stack direction='row' justifyContent='space-between'>
-            <Typography variant='h5'>
-              Prodajna cena teglica po veličini
-            </Typography>
-            {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
+        {cupValuesIsLoading && <Skeleton variant='rounded' height={112} />}
+        {!cupValuesIsLoading && cupValues && (
+          <Stack gap={3}>
+            <Stack direction='row' justifyContent='space-between'>
+              <Typography variant='h5'>
+                Prodajna cena džema po teglici
+              </Typography>
+              {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
               <AddCircleOutlineIcon fontSize='large' />
             </IconButton> */}
+            </Stack>
+            <Stack gap={4} direction='row'>
+              <FormControl fullWidth>
+                <InputLabel>Izaberi teglicu</InputLabel>
+                <Select
+                  value={selectedCupValueId}
+                  label='Izaberi teglicu'
+                  onChange={(e) => setSelectedCupValueId(e.target.value)}
+                >
+                  {mappedCupValues.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.menuItemLabel}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Stack
+                direction='row'
+                gap={2}
+                alignItems='center'
+                justifyContent='space-between'
+              >
+                <Stack direction='row' gap={1}>
+                  <Typography
+                    sx={{
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    Prodajna cena teglice:
+                  </Typography>
+                  <FormattedPrice
+                    price={
+                      cupValues.find((c) => c.id === Number(selectedCupValueId))
+                        ?.value || 0
+                    }
+                    isBold
+                  />
+                </Stack>
+                <IconButton
+                  sx={{ color: 'secondary.dark' }}
+                  disabled={!selectedFruitId}
+                  onClick={() => setOpenEdit(true)}
+                >
+                  <EditIcon fontSize='large' />
+                </IconButton>
+              </Stack>
+            </Stack>
           </Stack>
-        </Stack>
+        )}
       </Stack>
 
       <Confirmation />
