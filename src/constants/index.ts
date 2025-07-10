@@ -27,3 +27,5 @@ export const cupPrice: MenuItemType[] = [
 ];
 
 export const AppName = 'Džemulator';
+
+export const TOASTIFY_AUTO_CLOSE_TIME = 3000;
