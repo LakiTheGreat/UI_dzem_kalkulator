@@ -195,7 +195,7 @@ export default function DesktopNav() {
         data-testid='DesktopNav'
         sx={{
           mt: 16,
-          mb: 8,
+          mb: 10,
           width: '100%',
           overflow: 'auto',
         }}
