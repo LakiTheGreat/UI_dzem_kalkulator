@@ -162,7 +162,7 @@ export default function GeneralCalculator() {
             </Stack>
           </Stack>
 
-          <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
+          <Divider />
           <Stack>
             <Stack
               gap={1}

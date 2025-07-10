@@ -334,9 +334,7 @@ export default function DzemCalculator() {
               <RHFTextInput name='buyer' label='Ima kupca / naziv porudžbine' />
             </Stack>
 
-            <Divider
-              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
-            />
+            <Divider />
 
             {/* ----------------------------------------------------------------------- */}
             <Stack gap={3}>
@@ -405,9 +403,7 @@ export default function DzemCalculator() {
               </Stack>
             </Stack>
 
-            <Divider
-              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
-            />
+            <Divider />
 
             {/* ----------------------------------------------------------------------- */}
             <Stack gap={3}>
@@ -515,9 +511,7 @@ export default function DzemCalculator() {
               )}
             </Stack>
 
-            <Divider
-              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
-            />
+            <Divider />
 
             {/* ----------------------------------------------------------------------- */}
             <Stack gap={3}>
@@ -597,9 +591,7 @@ export default function DzemCalculator() {
               </Stack>
             </Stack>
 
-            <Divider
-              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
-            />
+            <Divider />
 
             {/* ----------------------------------------------------------------------- */}
 
@@ -682,13 +674,7 @@ export default function DzemCalculator() {
               </Stack>
             </Stack>
 
-            <Divider
-              sx={{
-                color: ({ palette }) => palette.secondary.main,
-                bgcolor: ({ palette }) => palette.secondary.main,
-                height: 2,
-              }}
-            />
+            <Divider />
 
             <Stack gap={3} sx={{ mt: 2 }}>
               <RHFTextInput name='email' label='Email' type='email' />

@@ -1,6 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
 import {
-  Button,
   Container,
   Divider,
   FormControl,
@@ -71,14 +72,14 @@ export default function Settings() {
         heading={'Podešavanja'}
         links={[
           {
-            name: 'Podešavanja',
+            name: 'Osnovne postavke',
             href: routes.settings,
           },
         ]}
       />
       <Stack gap={3}>
         <Divider />
-
+        {/* -------------------------------------------------- FRUITS  -------------------------------------------------- */}
         {fruitsIsLoading && <Skeleton variant='rounded' height={131} />}
         {!fruitsIsLoading && fruits && (
           <Stack gap={3}>
@@ -92,8 +93,6 @@ export default function Settings() {
               <FormControl fullWidth>
                 <InputLabel>Izaberi voće</InputLabel>
                 <Select
-                  labelId='demo-simple-select-label'
-                  id='demo-simple-select'
                   value={selectedFruitId}
                   label='Izaberi voće'
                   onChange={(e) => setSelectedFruitId(e.target.value)}
@@ -106,20 +105,20 @@ export default function Settings() {
                 </Select>
               </FormControl>
               <Stack direction='row' gap={2}>
-                <Button
-                  variant='contained'
+                <IconButton
+                  sx={{ color: 'secondary.dark' }}
                   disabled={!selectedFruitId}
                   onClick={() => setOpenEdit(true)}
                 >
-                  Izmeni
-                </Button>
-                <Button
-                  variant='outlined'
+                  <EditIcon fontSize='large' />
+                </IconButton>
+                <IconButton
+                  sx={{ color: 'secondary.dark' }}
                   disabled={!selectedFruitId}
                   onClick={() => handleDelete(selectedFruitId)}
                 >
-                  Obriši
-                </Button>
+                  <DeleteOutlineIcon fontSize='large' />
+                </IconButton>
               </Stack>
             </Stack>
             {openCreate && (
@@ -139,6 +138,32 @@ export default function Settings() {
         )}
 
         <Divider />
+
+        {/* -------------------------------------------------- CUP COSTS  ------------------------------------------------ */}
+        <Stack gap={3}>
+          <Stack direction='row' justifyContent='space-between'>
+            <Typography variant='h5'>
+              Nabavna cena i veličina teglica
+            </Typography>
+            {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
+              <AddCircleOutlineIcon fontSize='large' />
+            </IconButton> */}
+          </Stack>
+        </Stack>
+
+        <Divider />
+
+        {/* -------------------------------------------------- CUP VALUE  ------------------------------------------------- */}
+        <Stack gap={3}>
+          <Stack direction='row' justifyContent='space-between'>
+            <Typography variant='h5'>
+              Prodajna cena teglica po veličini
+            </Typography>
+            {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
+              <AddCircleOutlineIcon fontSize='large' />
+            </IconButton> */}
+          </Stack>
+        </Stack>
       </Stack>
 
       <Confirmation />
