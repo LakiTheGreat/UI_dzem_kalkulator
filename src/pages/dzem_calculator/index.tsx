@@ -1,17 +1,25 @@
-import { Button, Container, Divider, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Container,
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import emailjs from 'emailjs-com';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useGetFruitsQuery } from '../../api/lookupsSlice';
+import { useGetFruitsQuery } from '../../api/fruitsSlice';
 import FormProvider from '../../components/FormProvider';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import RHFSelectInput from '../../components/RHFSelectInput';
 import RHFTextInput from '../../components/RHFTextInput';
-import { cupTypes, fruits } from '../../constants';
+import { cupTypes } from '../../constants';
 import { routes } from '../../constants/routes';
 import FormattedPrice from '../../utils/FormattedPrice';
+import { mapFruitToMenuItems } from '../../utils/mapToMenuItems';
 
 type FormData = {
   numOfCups: number | string;
@@ -48,7 +56,9 @@ type FormData = {
 };
 
 export default function DzemCalculator() {
-  const { data } = useGetFruitsQuery();
+  const { data, isLoading: fruitsIsLoading } = useGetFruitsQuery();
+
+  const mappedData = mapFruitToMenuItems(data);
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -299,6 +309,8 @@ export default function DzemCalculator() {
         ).toFixed(0)
       : '0.00';
 
+  const somethingIsLoading = fruitsIsLoading;
+
   return (
     <Container maxWidth='md'>
       <HeaderBreadcrumbs
@@ -310,377 +322,391 @@ export default function DzemCalculator() {
           },
         ]}
       />
-
-      <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
-        <Stack gap={3}>
-          {/* ----------------------------------------------------------------------- */}
+      {somethingIsLoading && <Skeleton variant='rounded' height='70vh' />}
+      {!somethingIsLoading && (
+        <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
           <Stack gap={3}>
-            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Kupac
-            </Typography>
-            <RHFTextInput name='buyer' label='Ima kupca / naziv porudžbine' />
-          </Stack>
-
-          <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
-
-          {/* ----------------------------------------------------------------------- */}
-          <Stack gap={3}>
-            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Troškovi
-            </Typography>
-            <Stack gap={1} direction={'row'}>
-              <Stack sx={{ width: '33%' }}>
-                <RHFTextInput name='numOfCups' label='Broj' type='number' />
-              </Stack>
-
-              <Stack
-                sx={{ width: '33%' }}
-                alignItems='center'
-                justifyContent='center'
-              >
-                {/* <RHFSelectInput
-                name='typeOfCups'
-                label='Veličina'
-                menuItems={cupTypes}
-              /> */}
-                <Stack alignItems='center'>
-                  <Typography>{`Veličina:`}</Typography>
-                  <Typography>{`${cupTypes[0].menuItemLabel}`}</Typography>
-                </Stack>
-              </Stack>
-
-              <Stack
-                sx={{ width: '33%' }}
-                alignItems='center'
-                justifyContent='center'
-              >
-                <Typography>{`Ukupno:`}</Typography>
-                <FormattedPrice price={priceOfCups} />
-              </Stack>
-            </Stack>
-            <Stack gap={1} direction={'row'}>
-              <Stack sx={{ width: '33%' }}>
-                <RHFTextInput name='numOfCups1' label='Broj' type='number' />
-              </Stack>
-
-              <Stack
-                sx={{ width: '33%' }}
-                alignItems='center'
-                justifyContent='center'
-              >
-                {/* <RHFSelectInput
-                name='typeOfCups1'
-                label='Veličina'
-                menuItems={cupTypes}
-              /> */}
-                <Stack alignItems='center'>
-                  <Typography>{`Veličina:`}</Typography>
-                  <Typography>{`${cupTypes[1].menuItemLabel}`}</Typography>
-                </Stack>
-              </Stack>
-
-              <Stack
-                sx={{ width: '33%' }}
-                alignItems='center'
-                justifyContent='center'
-              >
-                <Typography>{`Ukupno:`}</Typography>
-                <FormattedPrice price={priceOfCups1} />
-              </Stack>
-            </Stack>
-          </Stack>
-
-          <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
-
-          {/* ----------------------------------------------------------------------- */}
-          <Stack gap={3}>
-            {/* PRVA */}
-            <Stack gap={2}>
-              <Stack direction='row' gap={1}>
-                <Stack sx={{ width: '33%' }}>
-                  <RHFSelectInput
-                    name='fruits1'
-                    label='Voće'
-                    menuItems={data || fruits}
-                  />
-                </Stack>
-                <Stack sx={{ width: '33%' }}>
-                  <RHFTextInput name='fruitsG1' label='Gramaža' type='number' />
-                </Stack>
-                <Stack sx={{ width: '33%' }}>
-                  <RHFTextInput
-                    name='fruitsPrice1'
-                    label='Cena (KG)'
-                    type='number'
-                  />
-                </Stack>
-              </Stack>
-
-              <Stack direction='row' gap={1}>
-                <Typography>{`Ukupno:`}</Typography>
-                <FormattedPrice price={fruits1Total} />
-              </Stack>
+            {/* ----------------------------------------------------------------------- */}
+            <Stack gap={3}>
+              <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+                Kupac
+              </Typography>
+              <RHFTextInput name='buyer' label='Ima kupca / naziv porudžbine' />
             </Stack>
 
-            {/* DRUGA */}
-            {fruitsG1 && typeof fruits1Total === 'number' && (
-              <>
-                <Divider variant='middle' />
-                <Stack gap={2}>
-                  <Stack direction='row' gap={1}>
-                    <Stack sx={{ width: '33%' }}>
-                      <RHFSelectInput
-                        name='fruits2'
-                        label='Voće'
-                        menuItems={data || fruits}
-                      />
-                    </Stack>
-                    <Stack sx={{ width: '33%' }}>
-                      <RHFTextInput
-                        name='fruitsG2'
-                        label='Gramaža'
-                        type='number'
-                      />
-                    </Stack>
-                    <Stack sx={{ width: '33%' }}>
-                      <RHFTextInput
-                        name='fruitsPrice2'
-                        label='Cena (KG)'
-                        type='number'
-                      />
-                    </Stack>
-                  </Stack>
-                </Stack>
-                <Stack direction='row' gap={1}>
-                  <Typography>{`Ukupno:`}</Typography>
-                  <FormattedPrice price={fruits2Total} />
-                </Stack>
-              </>
-            )}
-            {/* TRECA */}
-            {fruitsG2 && typeof fruits2Total === 'number' && (
-              <>
-                <Divider variant='middle' />
-                <Stack gap={2}>
-                  <Stack direction='row' gap={1}>
-                    <Stack sx={{ width: '33%' }}>
-                      <RHFSelectInput
-                        name='fruits3'
-                        label='Voće'
-                        menuItems={data || fruits}
-                      />
-                    </Stack>
-                    <Stack sx={{ width: '33%' }}>
-                      <RHFTextInput
-                        name='fruitsG3'
-                        label='Gramaža'
-                        type='number'
-                      />
-                    </Stack>
-                    <Stack sx={{ width: '33%' }}>
-                      <RHFTextInput
-                        name='fruitsPrice3'
-                        label='Cena (KG)'
-                        type='number'
-                      />
-                    </Stack>
-                  </Stack>
-                </Stack>
-                <Stack direction='row' gap={1}>
-                  <Typography>{`Ukupno:`}</Typography>
-                  <FormattedPrice price={fruits3Total} />
-                </Stack>
-              </>
-            )}
-          </Stack>
+            <Divider
+              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
+            />
 
-          <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
-
-          {/* ----------------------------------------------------------------------- */}
-          <Stack gap={3}>
-            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Vrednost porudžbine
-            </Typography>
-            {/* PRVA */}
-            <Stack gap={2}>
-              <Stack direction='row' gap={1}>
+            {/* ----------------------------------------------------------------------- */}
+            <Stack gap={3}>
+              <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+                Troškovi
+              </Typography>
+              <Stack gap={1} direction={'row'}>
                 <Stack sx={{ width: '33%' }}>
-                  <RHFTextInput
-                    name='orderNumberOfCups1'
-                    label='Broj'
-                    type='number'
-                  />
+                  <RHFTextInput name='numOfCups' label='Broj' type='number' />
                 </Stack>
+
                 <Stack
                   sx={{ width: '33%' }}
                   alignItems='center'
                   justifyContent='center'
                 >
                   {/* <RHFSelectInput
-                  name='orderCupType1'
-                  label='Veličina'
-                  menuItems={cupPrice}
-                /> */}
+                name='typeOfCups'
+                label='Veličina'
+                menuItems={cupTypes}
+              /> */}
                   <Stack alignItems='center'>
                     <Typography>{`Veličina:`}</Typography>
                     <Typography>{`${cupTypes[0].menuItemLabel}`}</Typography>
                   </Stack>
                 </Stack>
+
                 <Stack
                   sx={{ width: '33%' }}
                   alignItems='center'
                   justifyContent='center'
                 >
                   <Typography>{`Ukupno:`}</Typography>
-                  <FormattedPrice price={orderTotal1} />
+                  <FormattedPrice price={priceOfCups} />
                 </Stack>
               </Stack>
-            </Stack>
-
-            {/* DRUGA */}
-            <Stack gap={2}>
-              <Stack direction='row' gap={1}>
+              <Stack gap={1} direction={'row'}>
                 <Stack sx={{ width: '33%' }}>
-                  <RHFTextInput
-                    name='orderNumberOfCups2'
-                    label='Broj'
-                    type='number'
-                  />
+                  <RHFTextInput name='numOfCups1' label='Broj' type='number' />
                 </Stack>
+
                 <Stack
                   sx={{ width: '33%' }}
                   alignItems='center'
                   justifyContent='center'
                 >
                   {/* <RHFSelectInput
-                  name='orderCupType2'
-                  label='Veličina'
-                  menuItems={cupPrice}
-                /> */}
+                name='typeOfCups1'
+                label='Veličina'
+                menuItems={cupTypes}
+              /> */}
                   <Stack alignItems='center'>
                     <Typography>{`Veličina:`}</Typography>
                     <Typography>{`${cupTypes[1].menuItemLabel}`}</Typography>
                   </Stack>
                 </Stack>
+
                 <Stack
                   sx={{ width: '33%' }}
                   alignItems='center'
                   justifyContent='center'
                 >
                   <Typography>{`Ukupno:`}</Typography>
-                  <FormattedPrice price={orderTotal2} />
+                  <FormattedPrice price={priceOfCups1} />
                 </Stack>
               </Stack>
             </Stack>
-          </Stack>
 
-          <Divider sx={{ bgcolor: ({ palette }) => palette.secondary.main }} />
+            <Divider
+              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
+            />
 
-          {/* ----------------------------------------------------------------------- */}
+            {/* ----------------------------------------------------------------------- */}
+            <Stack gap={3}>
+              {/* PRVA */}
+              <Stack gap={2}>
+                <Stack direction='row' gap={1}>
+                  <Stack sx={{ width: '33%' }}>
+                    <RHFSelectInput
+                      name='fruits1'
+                      label='Voće'
+                      menuItems={mappedData}
+                    />
+                  </Stack>
+                  <Stack sx={{ width: '33%' }}>
+                    <RHFTextInput
+                      name='fruitsG1'
+                      label='Gramaža'
+                      type='number'
+                    />
+                  </Stack>
+                  <Stack sx={{ width: '33%' }}>
+                    <RHFTextInput
+                      name='fruitsPrice1'
+                      label='Cena (KG)'
+                      type='number'
+                    />
+                  </Stack>
+                </Stack>
 
-          <Stack gap={1.5}>
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-between'
-              gap={3}
-              sx={{ px: 1 }}
-            >
-              <Typography variant='body1'>Ukupni prihod:</Typography>
-              <FormattedPrice price={totalIncome} />
+                <Stack direction='row' gap={1}>
+                  <Typography>{`Ukupno:`}</Typography>
+                  <FormattedPrice price={fruits1Total} />
+                </Stack>
+              </Stack>
+
+              {/* DRUGA */}
+              {fruitsG1 && typeof fruits1Total === 'number' && (
+                <>
+                  <Divider variant='middle' />
+                  <Stack gap={2}>
+                    <Stack direction='row' gap={1}>
+                      <Stack sx={{ width: '33%' }}>
+                        <RHFSelectInput
+                          name='fruits2'
+                          label='Voće'
+                          menuItems={mappedData}
+                        />
+                      </Stack>
+                      <Stack sx={{ width: '33%' }}>
+                        <RHFTextInput
+                          name='fruitsG2'
+                          label='Gramaža'
+                          type='number'
+                        />
+                      </Stack>
+                      <Stack sx={{ width: '33%' }}>
+                        <RHFTextInput
+                          name='fruitsPrice2'
+                          label='Cena (KG)'
+                          type='number'
+                        />
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                  <Stack direction='row' gap={1}>
+                    <Typography>{`Ukupno:`}</Typography>
+                    <FormattedPrice price={fruits2Total} />
+                  </Stack>
+                </>
+              )}
+              {/* TRECA */}
+              {fruitsG2 && typeof fruits2Total === 'number' && (
+                <>
+                  <Divider variant='middle' />
+                  <Stack gap={2}>
+                    <Stack direction='row' gap={1}>
+                      <Stack sx={{ width: '33%' }}>
+                        <RHFSelectInput
+                          name='fruits3'
+                          label='Voće'
+                          menuItems={mappedData}
+                        />
+                      </Stack>
+                      <Stack sx={{ width: '33%' }}>
+                        <RHFTextInput
+                          name='fruitsG3'
+                          label='Gramaža'
+                          type='number'
+                        />
+                      </Stack>
+                      <Stack sx={{ width: '33%' }}>
+                        <RHFTextInput
+                          name='fruitsPrice3'
+                          label='Cena (KG)'
+                          type='number'
+                        />
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                  <Stack direction='row' gap={1}>
+                    <Typography>{`Ukupno:`}</Typography>
+                    <FormattedPrice price={fruits3Total} />
+                  </Stack>
+                </>
+              )}
             </Stack>
-            <Divider variant='middle' />
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-between'
-              gap={3}
-              sx={{ px: 1 }}
-            >
-              <Typography variant='body1'>Fiksni troškovi:</Typography>
-              <FormattedPrice price={fixedExpences} isExpense={true} />
+
+            <Divider
+              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
+            />
+
+            {/* ----------------------------------------------------------------------- */}
+            <Stack gap={3}>
+              <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+                Vrednost porudžbine
+              </Typography>
+              {/* PRVA */}
+              <Stack gap={2}>
+                <Stack direction='row' gap={1}>
+                  <Stack sx={{ width: '33%' }}>
+                    <RHFTextInput
+                      name='orderNumberOfCups1'
+                      label='Broj'
+                      type='number'
+                    />
+                  </Stack>
+                  <Stack
+                    sx={{ width: '33%' }}
+                    alignItems='center'
+                    justifyContent='center'
+                  >
+                    {/* <RHFSelectInput
+                  name='orderCupType1'
+                  label='Veličina'
+                  menuItems={cupPrice}
+                /> */}
+                    <Stack alignItems='center'>
+                      <Typography>{`Veličina:`}</Typography>
+                      <Typography>{`${cupTypes[0].menuItemLabel}`}</Typography>
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    sx={{ width: '33%' }}
+                    alignItems='center'
+                    justifyContent='center'
+                  >
+                    <Typography>{`Ukupno:`}</Typography>
+                    <FormattedPrice price={orderTotal1} />
+                  </Stack>
+                </Stack>
+              </Stack>
+
+              {/* DRUGA */}
+              <Stack gap={2}>
+                <Stack direction='row' gap={1}>
+                  <Stack sx={{ width: '33%' }}>
+                    <RHFTextInput
+                      name='orderNumberOfCups2'
+                      label='Broj'
+                      type='number'
+                    />
+                  </Stack>
+                  <Stack
+                    sx={{ width: '33%' }}
+                    alignItems='center'
+                    justifyContent='center'
+                  >
+                    {/* <RHFSelectInput
+                  name='orderCupType2'
+                  label='Veličina'
+                  menuItems={cupPrice}
+                /> */}
+                    <Stack alignItems='center'>
+                      <Typography>{`Veličina:`}</Typography>
+                      <Typography>{`${cupTypes[1].menuItemLabel}`}</Typography>
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    sx={{ width: '33%' }}
+                    alignItems='center'
+                    justifyContent='center'
+                  >
+                    <Typography>{`Ukupno:`}</Typography>
+                    <FormattedPrice price={orderTotal2} />
+                  </Stack>
+                </Stack>
+              </Stack>
             </Stack>
 
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-between'
-              gap={3}
-              sx={{ px: 1 }}
-            >
-              <Typography variant='body1'>Ostali troškovi (25%):</Typography>
-              <FormattedPrice price={additionalExpences} isExpense={true} />
-            </Stack>
+            <Divider
+              sx={{ bgcolor: ({ palette }) => palette.secondary.main }}
+            />
 
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-between'
-              gap={3}
-              sx={{ px: 1, borderRadius: 1 }}
-            >
-              <Typography variant='body1'>Ukupni troškovi:</Typography>
+            {/* ----------------------------------------------------------------------- */}
 
-              <FormattedPrice price={totalExpences} isExpense={true} />
-            </Stack>
-
-            <Divider variant='middle' />
-
-            <Stack gap={1}>
+            <Stack gap={1.5}>
               <Stack
                 direction='row'
                 alignItems='center'
                 justifyContent='space-between'
                 gap={3}
-                sx={{
-                  p: 1,
-                  border: `2px solid ${
-                    Number(totalProfit) >= 0 ? 'lightGreen' : 'red'
-                  }`,
-                  borderRadius: 1,
-                }}
+                sx={{ px: 1 }}
               >
-                <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                  {`${Number(totalProfit) >= 0 ? 'Profit:' : 'Gubitak:'}`}
-                </Typography>
-                <FormattedPrice price={totalProfit} isBold={true} />
+                <Typography variant='body1'>Ukupni prihod:</Typography>
+                <FormattedPrice price={totalIncome} />
               </Stack>
+              <Divider variant='middle' />
               <Stack
                 direction='row'
                 alignItems='center'
                 justifyContent='space-between'
-                sx={{ p: 1 }}
+                gap={3}
+                sx={{ px: 1 }}
               >
-                <Typography variant='body1'>Profitna marža:</Typography>
-                <Typography variant='body1'>{profitMargin}%</Typography>
+                <Typography variant='body1'>Fiksni troškovi:</Typography>
+                <FormattedPrice price={fixedExpences} isExpense={true} />
+              </Stack>
+
+              <Stack
+                direction='row'
+                alignItems='center'
+                justifyContent='space-between'
+                gap={3}
+                sx={{ px: 1 }}
+              >
+                <Typography variant='body1'>Ostali troškovi (25%):</Typography>
+                <FormattedPrice price={additionalExpences} isExpense={true} />
+              </Stack>
+
+              <Stack
+                direction='row'
+                alignItems='center'
+                justifyContent='space-between'
+                gap={3}
+                sx={{ px: 1, borderRadius: 1 }}
+              >
+                <Typography variant='body1'>Ukupni troškovi:</Typography>
+
+                <FormattedPrice price={totalExpences} isExpense={true} />
+              </Stack>
+
+              <Divider variant='middle' />
+
+              <Stack gap={1}>
+                <Stack
+                  direction='row'
+                  alignItems='center'
+                  justifyContent='space-between'
+                  gap={3}
+                  sx={{
+                    p: 1,
+                    border: `2px solid ${
+                      Number(totalProfit) >= 0 ? 'lightGreen' : 'red'
+                    }`,
+                    borderRadius: 1,
+                  }}
+                >
+                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
+                    {`${Number(totalProfit) >= 0 ? 'Profit:' : 'Gubitak:'}`}
+                  </Typography>
+                  <FormattedPrice price={totalProfit} isBold={true} />
+                </Stack>
+                <Stack
+                  direction='row'
+                  alignItems='center'
+                  justifyContent='space-between'
+                  sx={{ p: 1 }}
+                >
+                  <Typography variant='body1'>Profitna marža:</Typography>
+                  <Typography variant='body1'>{profitMargin}%</Typography>
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
 
-          <Divider
-            sx={{
-              color: ({ palette }) => palette.secondary.main,
-              bgcolor: ({ palette }) => palette.secondary.main,
-              height: 2,
-            }}
-          />
-
-          <Stack gap={3} sx={{ mt: 2 }}>
-            <RHFTextInput name='email' label='Email' type='email' />
-            <Button
-              loading={isLoading}
-              type='submit'
-              variant='contained'
+            <Divider
               sx={{
-                fontWeight: 'bold',
+                color: ({ palette }) => palette.secondary.main,
+                bgcolor: ({ palette }) => palette.secondary.main,
+                height: 2,
               }}
-              disabled={!totalIncome}
-            >
-              Pošalji mi na mejl
-            </Button>
+            />
+
+            <Stack gap={3} sx={{ mt: 2 }}>
+              <RHFTextInput name='email' label='Email' type='email' />
+              <Button
+                loading={isLoading}
+                type='submit'
+                variant='contained'
+                sx={{
+                  fontWeight: 'bold',
+                }}
+                disabled={!totalIncome}
+              >
+                Pošalji mi na mejl
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
-      </FormProvider>
+        </FormProvider>
+      )}
     </Container>
   );
 }

@@ -1,11 +1,12 @@
 import { api } from '.';
-import { MenuItemType } from '../components/RHFSelectInput';
+
+import { Fruit } from '../types/fruits';
 
 const fruitsUrl = '/fruits';
 
-const lookupsApiEndpoints = api.injectEndpoints({
+const fruitsApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    getFruits: build.query<MenuItemType[], void>({
+    getFruits: build.query<Fruit[], void>({
       query: () => ({
         url: `${fruitsUrl}`,
       }),
@@ -16,4 +17,4 @@ const lookupsApiEndpoints = api.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetFruitsQuery } = lookupsApiEndpoints;
+export const { useGetFruitsQuery } = fruitsApiEndpoints;
