@@ -14,6 +14,7 @@ export type MenuItemType = {
   value: any;
   menuItemLabel: string | number;
   iso2?: string;
+  isDeleted?: boolean;
 };
 
 type RHFSelectInputProps = {
