@@ -86,7 +86,7 @@ export default function MobileNav() {
       <Box
         component='main'
         data-testid='MobileNav'
-        sx={{ overflow: 'auto', pb: isTablet ? 8 : 4, mt: 3 }}
+        sx={{ overflow: 'auto', pb: isTablet ? 10 : 4, mt: 3 }}
       >
         <Outlet />
       </Box>

@@ -173,7 +173,9 @@ export default function Settings() {
         <Divider />
 
         {/* -------------------------------------------------- CUP COSTS  ------------------------------------------------ */}
-        {cupCostsIsLoading && <Skeleton variant='rounded' height={112} />}
+        {cupCostsIsLoading && (
+          <Skeleton variant='rounded' height={isMdDown ? 128 : 112} />
+        )}
         {!cupCostsIsLoading && cupCosts && (
           <Stack gap={3}>
             <Stack direction='row' justifyContent='space-between'>
@@ -234,7 +236,9 @@ export default function Settings() {
         <Divider />
 
         {/* -------------------------------------------------- CUP VALUE  ------------------------------------------------- */}
-        {cupValuesIsLoading && <Skeleton variant='rounded' height={112} />}
+        {cupValuesIsLoading && (
+          <Skeleton variant='rounded' height={isMdDown ? 128 : 112} />
+        )}
         {!cupValuesIsLoading && cupValues && (
           <Stack gap={3}>
             <Stack direction='row' justifyContent='space-between'>
