@@ -13,7 +13,6 @@ export type MenuItemType = {
   id: string | number;
   value: any;
   menuItemLabel: string | number;
-  iso2?: string;
   isDeleted?: boolean;
 };
 

@@ -49,7 +49,7 @@ export default function NavItemButton({
         onClick={handleClick}
         sx={{
           height: 32,
-          px: 2.5,
+          p: 2.5,
           justifyContent: open ? 'initial' : 'center',
           borderRadius: 1,
         }}

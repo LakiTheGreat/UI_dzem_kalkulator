@@ -1,14 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Analytics } from '@vercel/analytics/react';
-import { SnackbarProvider } from 'notistack';
-import { RouterProvider } from 'react-router';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router';
+import { Bounce, ToastContainer } from 'react-toastify';
 
+import { TOASTIFY_AUTO_CLOSE_TIME } from './constants';
 import router from './router';
-import AppTheme from './theme/AppTheme';
 import { store } from './store/store';
+import AppTheme from './theme/AppTheme';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,11 +20,23 @@ root.render(
     <AppTheme>
       <CssBaseline />
       <Provider store={store}>
-        <SnackbarProvider
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-          <RouterProvider router={router} />
-        </SnackbarProvider>
+        <ToastContainer
+          position='bottom-left'
+          autoClose={TOASTIFY_AUTO_CLOSE_TIME}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          draggable
+          pauseOnHover
+          theme='light'
+          style={{
+            width: 'fit-content',
+            marginBottom: 20,
+          }}
+          transition={Bounce}
+        />
+        <RouterProvider router={router} />
       </Provider>
       <Analytics />
     </AppTheme>
