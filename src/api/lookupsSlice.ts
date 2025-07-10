@@ -1,15 +1,15 @@
 import { api } from '.';
 import { MenuItemType } from '../components/RHFSelectInput';
 
-const lookupsUrl = '/lookup';
+const fruitsUrl = '/fruits';
 
 const lookupsApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
     getFruits: build.query<MenuItemType[], void>({
       query: () => ({
-        url: `${lookupsUrl}/fruits`,
+        url: `${fruitsUrl}`,
       }),
-      providesTags: ['Test'],
+      providesTags: ['Fruit'],
     }),
   }),
 
