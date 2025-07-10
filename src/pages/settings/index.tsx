@@ -34,8 +34,11 @@ import {
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import CreateFruit from './fruits/CreateFruit';
 import EditFruit from './fruits/EditFruit';
+import useResponsive from '../../hooks/useResponsive';
 
 export default function Settings() {
+  const isMdDown = useResponsive('down', 'md');
+
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [toastId, setToastId] = useState<Id>('');
 
@@ -180,7 +183,7 @@ export default function Settings() {
             </IconButton> */}
             </Stack>
             <Stack gap={4} direction='row'>
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ minWidth: 120 }}>
                 <InputLabel>Izaberi teglicu</InputLabel>
                 <Select
                   value={selectedCupCostId}
@@ -200,10 +203,10 @@ export default function Settings() {
                 alignItems='center'
                 justifyContent='space-between'
               >
-                <Stack direction='row' gap={1}>
+                <Stack direction='row' gap={1} alignItems='center'>
                   <Typography
                     sx={{
-                      whiteSpace: 'nowrap',
+                      whiteSpace: isMdDown ? 'normal' : 'nowrap',
                     }}
                   >
                     Nabavna cena teglice:
@@ -243,7 +246,7 @@ export default function Settings() {
             </IconButton> */}
             </Stack>
             <Stack gap={4} direction='row'>
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ minWidth: 120 }}>
                 <InputLabel>Izaberi teglicu</InputLabel>
                 <Select
                   value={selectedCupValueId}
@@ -263,10 +266,10 @@ export default function Settings() {
                 alignItems='center'
                 justifyContent='space-between'
               >
-                <Stack direction='row' gap={1}>
+                <Stack direction='row' gap={1} alignItems='center'>
                   <Typography
                     sx={{
-                      whiteSpace: 'nowrap',
+                      whiteSpace: isMdDown ? 'normal' : 'nowrap',
                     }}
                   >
                     Prodajna cena teglice:
