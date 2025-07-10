@@ -205,10 +205,14 @@ export default function Settings() {
                 alignItems='center'
                 justifyContent='space-between'
               >
-                <Stack direction='row' gap={1} alignItems='center'>
+                <Stack
+                  direction={isMdDown ? 'column' : 'row'}
+                  gap={1}
+                  alignItems='center'
+                >
                   <Typography
                     sx={{
-                      whiteSpace: isMdDown ? 'normal' : 'nowrap',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     Nabavna cena teglice:
@@ -270,10 +274,14 @@ export default function Settings() {
                 alignItems='center'
                 justifyContent='space-between'
               >
-                <Stack direction='row' gap={1} alignItems='center'>
+                <Stack
+                  direction={isMdDown ? 'column' : 'row'}
+                  gap={1}
+                  alignItems='center'
+                >
                   <Typography
                     sx={{
-                      whiteSpace: isMdDown ? 'normal' : 'nowrap',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     Prodajna cena teglice:
