@@ -2,10 +2,11 @@ import { createBrowserRouter, Navigate } from 'react-router';
 
 import App from './App';
 import { routes } from './constants/routes';
-import NewOrderPage from './pages/NewOrderPage';
+
 import CalculatorPage from './pages/CalculatorPage';
 import SettingsPage from './pages/SettingsPage';
-import NewForm from './pages/NewOrderPage/newForm';
+import OrdersPage from './pages/OrdersPage';
+import OrderForm from './pages/OrdersPage/form';
 
 const router = createBrowserRouter([
   {
@@ -14,11 +15,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={`${routes.new_order}`} replace />,
+        element: <Navigate to={`${routes.orders}`} replace />,
       },
       {
-        path: `${routes.new_order}`,
-        element: <NewForm />,
+        path: `${routes.orders}`,
+        element: <OrdersPage />,
+      },
+      {
+        path: `${routes.orders}/${routes.new}`,
+        element: <OrderForm />,
       },
       {
         path: `${routes.general_calculator}`,

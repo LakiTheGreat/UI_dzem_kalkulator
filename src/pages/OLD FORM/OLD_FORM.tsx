@@ -318,7 +318,7 @@ export default function NewOrder() {
         links={[
           {
             name: 'Kreiraj novu porudžbinu',
-            href: routes.new_order,
+            href: routes.new,
           },
         ]}
       />

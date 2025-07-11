@@ -1,11 +1,12 @@
 import { Button, Container, Divider, Stack } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-
-import { useGetAllCupCostsQuery } from '../../api/cupCosts';
-import FormProvider from '../../components/FormProvider';
-import CupsForm from './from/CupsForm';
-import FruitsForm from './from/FruitsForm';
+import { useGetAllCupCostsQuery } from '../../../api/cupCosts';
+import FormProvider from '../../../components/FormProvider';
+import FruitsForm from './FruitsForm';
+import CupsForm from './CupsForm';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import { routes } from '../../../constants/routes';
 
 export type FruitItem = {
   fruitName: string;
@@ -26,7 +27,7 @@ export type FormData = {
   cups: CupItem[];
 };
 
-export default function NewForm() {
+export default function OrderForm() {
   const { data: cupCosts = [] } = useGetAllCupCostsQuery();
 
   const methods = useForm<FormData>({
@@ -60,6 +61,19 @@ export default function NewForm() {
 
   return (
     <Container maxWidth='sm'>
+      <HeaderBreadcrumbs
+        heading={'Porudžbine'}
+        links={[
+          {
+            name: 'Pregled',
+            href: `/${routes.orders}`,
+          },
+          {
+            name: 'Nova porudžbina',
+            href: `${routes.orders}/${routes.new}`,
+          },
+        ]}
+      />
       <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
         <Stack gap={4}>
           <FruitsForm />
