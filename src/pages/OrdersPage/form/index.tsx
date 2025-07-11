@@ -1,4 +1,4 @@
-import { Button, Container, Divider, Stack } from '@mui/material';
+import { Button, Container, Divider, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGetAllCupCostsQuery } from '../../../api/cupCosts';
@@ -7,6 +7,7 @@ import FruitsForm from './FruitsForm';
 import CupsForm from './CupsForm';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routes } from '../../../constants/routes';
+import RHFTextInput from '../../../components/RHFTextInput';
 
 export type FruitItem = {
   fruitName: string;
@@ -23,6 +24,7 @@ export type CupItem = {
 };
 
 export type FormData = {
+  orderName: string;
   fruits: FruitItem[];
   cups: CupItem[];
 };
@@ -32,6 +34,7 @@ export default function OrderForm() {
 
   const methods = useForm<FormData>({
     defaultValues: {
+      orderName: '',
       fruits: [{ grams: '', price: '', total: '' }],
       cups: [],
     },
@@ -76,15 +79,42 @@ export default function OrderForm() {
       />
       <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
         <Stack gap={4}>
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Naziv porudžbine
+          </Typography>
+
+          <RHFTextInput name='orderName' label='Naziv porudžbine' />
+
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Troškovi
+          </Typography>
           <FruitsForm />
 
           <Divider />
 
           <CupsForm cupCosts={cupCosts} />
 
-          <Divider />
+          <Divider
+            sx={{
+              borderColor: 'secondary.main',
+              bgcolor: 'secondary.main',
+              height: 3,
+            }}
+          />
 
-          <Button variant='contained' type='submit'>
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Vrednost porudžbine
+          </Typography>
+
+          <Divider
+            sx={{
+              borderColor: 'secondary.main',
+              bgcolor: 'secondary.main',
+              height: 3,
+            }}
+          />
+
+          <Button variant='contained' type='submit' size='large'>
             Sačuvaj
           </Button>
         </Stack>

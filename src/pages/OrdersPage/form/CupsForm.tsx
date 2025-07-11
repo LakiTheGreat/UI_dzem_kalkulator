@@ -41,10 +41,6 @@ export default function CupsForm({ cupCosts }: Props) {
 
   return (
     <Stack spacing={2}>
-      <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-        Teglice
-      </Typography>
-
       {cupCosts.map((cup, index) => (
         <Stack direction='row' spacing={2} alignItems='center' key={cup.id}>
           <Stack sx={{ flex: 1 }}>

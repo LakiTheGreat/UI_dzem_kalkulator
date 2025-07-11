@@ -48,21 +48,17 @@ export default function FruitsForm() {
 
   return (
     <Stack spacing={2}>
-      <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-        Voće
-      </Typography>
-
       {fields.map((field, index) => (
         <Stack key={field.id} gap={2}>
           <Stack direction='column' alignItems='center' gap={2}>
             <Stack sx={{ width: '100%' }}>
               <RHFSelectInput
                 menuItems={mappedData}
-                label='Ime voća'
+                label='Naziv voća'
                 name={`fruits.${index}.fruitName`}
               />
             </Stack>
-            <Stack direction='row' gap={1}>
+            <Stack direction='row' gap={1} sx={{ width: '100%' }}>
               <Stack sx={{ flex: 1 }}>
                 <RHFTextInput
                   type='number'
