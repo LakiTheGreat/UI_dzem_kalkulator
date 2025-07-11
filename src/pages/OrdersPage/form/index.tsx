@@ -6,16 +6,25 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import { Id } from 'react-toastify';
 
 import { useGetOtherExpansesMarginQuery } from '../../../api/constantApi';
 import { useGetAllCupCostsQuery } from '../../../api/cupCosts';
 import { useGetAllCupValuesQuery } from '../../../api/cupValues';
+import { useGetFruitsQuery } from '../../../api/fruitsSlice';
+import { useCreateNewOrderMutation } from '../../../api/ordersApi';
 import FormProvider from '../../../components/FormProvider';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import RHFSelectInput from '../../../components/RHFSelectInput';
 import RHFTextInput from '../../../components/RHFTextInput';
 import { routes } from '../../../constants/routes';
+import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
+import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
+import { NewOrder } from '../../../types/orders';
+import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
+import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import CupsForm from './CupsForm';
 import FruitsForm from './FruitsForm';
 import OrderSummary from './OrderSummary';
@@ -38,9 +47,13 @@ export type FormData = {
   orderName: string;
   fruits: FruitItem[];
   cups: CupItem[];
+  orderTypeId: string;
 };
 
 export default function OrderForm() {
+  const [toastId, setToastId] = useState<Id>('');
+
+  const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
   const { data: cupCosts = [], isLoading: cupCostsLoading } =
     useGetAllCupCostsQuery();
   const { data: cupValues = [], isLoading: cupValuesLoading } =
@@ -48,21 +61,30 @@ export default function OrderForm() {
   const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
     useGetOtherExpansesMarginQuery();
 
+  const mappedFruits = mapFruitToMenuItems(fruitData);
+
   const isLoading =
-    cupCostsLoading || cupValuesLoading || otherExpansesMarginLoading;
+    cupCostsLoading ||
+    cupValuesLoading ||
+    otherExpansesMarginLoading ||
+    fruitLoading;
+
+  const [createNewOrder, { data, error }] = useCreateNewOrderMutation();
 
   const methods = useForm<FormData>({
     defaultValues: {
       orderName: '',
       fruits: [{ grams: '', price: '', total: '' }],
       cups: [],
+      orderTypeId: '',
     },
   });
 
-  const { handleSubmit, reset, control } = methods;
+  const { handleSubmit, reset, control, watch } = methods;
 
   const cups = useWatch({ control, name: 'cups' });
   const fruits = useWatch({ control, name: 'fruits' });
+  const { orderTypeId } = watch();
 
   const totalCupPrice = cupCosts.reduce((acc, cost, index) => {
     const numberOf = Number(cups[index]?.numberOf ?? 0);
@@ -113,8 +135,39 @@ export default function OrderForm() {
   }, [cupCosts, reset]);
 
   const formSubmit = (data: FormData) => {
-    console.log('Submitted:', data);
+    const numberOfSmallCups = data.cups[0]?.numberOf || 0;
+    const numberOFLargeCups = data.cups[1]?.numberOf || 0;
+
+    const req: NewOrder = {
+      orderTypeId: Number(data.orderTypeId),
+      orderName: data.orderName,
+      numberOfSmallCups: Number(numberOfSmallCups),
+      numberOfLargeCups: Number(numberOFLargeCups),
+      totalExpense: totalExpenses,
+      totalValue: Number(totalOrderPrice),
+      profit: profit,
+      profitMargin: Number(profitMargin),
+    };
+    createNewOrder(req);
+    setToastId(setToastIsLoading(`Sačekaj....`));
   };
+
+  useEffect(() => {
+    if (data) {
+      reset();
+    }
+  }, [data, reset]);
+
+  useApiSuccessNotification({
+    data,
+    message: 'Narudžbina uspešno kreirana',
+    toastId,
+  });
+
+  useApiErrorNotification({
+    error,
+    toastId,
+  });
 
   return (
     <Container maxWidth='sm'>
@@ -136,15 +189,23 @@ export default function OrderForm() {
         {!isLoading && (
           <Stack gap={4}>
             <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Naziv porudžbine
+              Porudžbina
             </Typography>
 
-            <RHFTextInput name='orderName' label='Naziv porudžbine' />
+            <Stack gap={2}>
+              <RHFTextInput name='orderName' label='Naziv porudžbine' />
+
+              <RHFSelectInput
+                name='orderTypeId'
+                label='Vrsta džema'
+                menuItems={mappedFruits}
+              />
+            </Stack>
 
             <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
               Troškovi
             </Typography>
-            <FruitsForm />
+            <FruitsForm mappedData={mappedFruits} />
 
             <Divider />
 
@@ -184,7 +245,17 @@ export default function OrderForm() {
               }}
             />
 
-            <Button variant='contained' type='submit' size='large'>
+            <Button
+              variant='contained'
+              type='submit'
+              size='large'
+              disabled={
+                !orderTypeId ||
+                (!cups[0]?.numberOf && !cups[0]?.numberOf) ||
+                fruits[0]?.total === '' ||
+                fruits.length === 0
+              }
+            >
               Sačuvaj
             </Button>
           </Stack>

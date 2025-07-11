@@ -90,7 +90,10 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
                   onBlur={onBlur}
                   onWheel={(e) => (e.target as HTMLElement).blur()}
                   onKeyDown={(e) => {
-                    if (['e', 'E', '+', '-'].includes(e.key)) {
+                    if (
+                      type === 'number' &&
+                      ['e', 'E', '+', '-'].includes(e.key)
+                    ) {
                       e.preventDefault();
                     }
                   }}

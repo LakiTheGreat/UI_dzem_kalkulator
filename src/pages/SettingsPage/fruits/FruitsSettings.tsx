@@ -24,6 +24,7 @@ import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import CreateFruit from './form/CreateFruit';
 import EditFruit from './form/EditFruit';
+import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
 
 export default function FruitsSettings() {
   const [getConfirmation, Confirmation] = useConfirmDialog();
@@ -37,7 +38,8 @@ export default function FruitsSettings() {
   const { data, isLoading } = useGetFruitsQuery();
   const mappedData = mapFruitToMenuItems(data);
 
-  const [deleteFruit, { data: deleteFruitData }] = useDeleteFruitMutation();
+  const [deleteFruit, { data: deleteFruitData, error }] =
+    useDeleteFruitMutation();
 
   const handleDelete = async (id: string) => {
     const isConfirmed = await getConfirmation({
@@ -61,6 +63,11 @@ export default function FruitsSettings() {
   useApiSuccessNotification({
     data: deleteFruitData,
     message: 'Voćka uspešno obrisana',
+    toastId,
+  });
+
+  useApiErrorNotification({
+    error,
     toastId,
   });
 

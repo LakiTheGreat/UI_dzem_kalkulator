@@ -1,6 +1,6 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Container, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
@@ -27,7 +27,6 @@ export default function OrdersPage() {
           </IconButton>
         }
       />
-      {/* <NewOrder /> */}
     </Container>
   );
 }
