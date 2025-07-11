@@ -39,7 +39,7 @@ export default function EditCupCosts({ open, cup, handleClose }: Props) {
 
   return (
     <CupCostForm
-      values={{ value: cup?.value || '' }}
+      values={{ value: cup?.value || 0 }}
       open={open}
       isLoading={isLoading}
       data={data}

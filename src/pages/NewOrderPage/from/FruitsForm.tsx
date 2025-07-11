@@ -9,13 +9,7 @@ import RHFSelectInput from '../../../components/RHFSelectInput';
 import RHFTextInput from '../../../components/RHFTextInput';
 import FormattedPrice from '../../../utils/FormattedPrice';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
-
-type FruitItem = {
-  fruitName: string;
-  grams: string | number;
-  price: string | number;
-  total: string | number;
-};
+import { FruitItem } from '../newForm';
 
 export default function FruitsForm() {
   const { data } = useGetFruitsQuery();
@@ -34,7 +28,7 @@ export default function FruitsForm() {
   const fruits = useWatch({
     control,
     name: 'fruits',
-    defaultValue: [{ fruitName: '', grams: '', price: '', total: '' }],
+    // defaultValue: [{ fruitName: '', grams: '', price: '', total: '' }],
   });
 
   useEffect(() => {
