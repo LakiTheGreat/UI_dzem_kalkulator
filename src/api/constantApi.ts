@@ -9,18 +9,33 @@ const constantApiEndpoints = api.injectEndpoints({
       query: () => ({
         url: `${constantApiUrl}/1`,
       }),
-      providesTags: ['Cups'],
+      providesTags: ['Constant'],
     }),
     getProfitMargin: build.query<Constant, void>({
       query: () => ({
         url: `${constantApiUrl}/2`,
       }),
-      providesTags: ['Cups'],
+      providesTags: ['Constant'],
+    }),
+
+    patchConstant: build.mutation<
+      Constant,
+      { id: number; value: number; label: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `${constantApiUrl}/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Constant'],
     }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useGetOtherExpansesMarginQuery, useGetProfitMarginQuery } =
-  constantApiEndpoints;
+export const {
+  useGetOtherExpansesMarginQuery,
+  useGetProfitMarginQuery,
+  usePatchConstantMutation,
+} = constantApiEndpoints;

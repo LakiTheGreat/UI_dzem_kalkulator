@@ -1,6 +1,6 @@
 export type Constant = {
   id: number;
-  value: string;
+  value: number;
   label: string;
   description: string;
   isDeleted: boolean;

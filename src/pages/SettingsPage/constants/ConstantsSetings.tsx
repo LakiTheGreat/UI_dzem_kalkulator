@@ -1,13 +1,12 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton, Skeleton, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Id } from 'react-toastify';
 
-import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import {
   useGetOtherExpansesMarginQuery,
   useGetProfitMarginQuery,
 } from '../../../api/constantApi';
+import EditConstant from './form/EditConstant';
 
 export default function ConstantsSettings() {
   const { data: profitMargin, isLoading: profitMarginLoading } =
@@ -15,9 +14,8 @@ export default function ConstantsSettings() {
   const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
     useGetOtherExpansesMarginQuery();
 
-  const [toastId, setToastId] = useState<Id>('');
-  const [openCreate, setOpenCreate] = useState<boolean>(false);
-  const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
 
   const isLoading = profitMarginLoading || otherExpansesMarginLoading;
 
@@ -42,8 +40,10 @@ export default function ConstantsSettings() {
               </Stack>
               <IconButton
                 sx={{ color: 'secondary.dark' }}
-                // disabled={!selectedId}
-                // onClick={() => setOpenEdit(true)}
+                onClick={() => {
+                  setSelectedId(otherExpansesMargin.id.toString());
+                  setOpen(true);
+                }}
               >
                 <EditIcon />
               </IconButton>
@@ -61,20 +61,27 @@ export default function ConstantsSettings() {
               </Stack>
               <IconButton
                 sx={{ color: 'secondary.dark' }}
-                // disabled={!selectedId}
-                // onClick={() => setOpenEdit(true)}
+                onClick={() => {
+                  setSelectedId(profitMargin.id.toString());
+                  setOpen(true);
+                }}
               >
                 <EditIcon />
               </IconButton>
             </Stack>
           </Stack>
 
-          {/* {openCreate && (
-            <CreateFruit
-              handleClose={() => setOpenCreate(false)}
-              open={openCreate}
+          {open && (
+            <EditConstant
+              constant={
+                selectedId === profitMargin.id.toString()
+                  ? profitMargin
+                  : otherExpansesMargin
+              }
+              handleClose={() => setOpen(false)}
+              open={open}
             />
-          )} */}
+          )}
         </Stack>
       )}
     </>
