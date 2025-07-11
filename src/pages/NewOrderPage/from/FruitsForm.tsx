@@ -28,7 +28,6 @@ export default function FruitsForm() {
   const fruits = useWatch({
     control,
     name: 'fruits',
-    // defaultValue: [{ fruitName: '', grams: '', price: '', total: '' }],
   });
 
   useEffect(() => {
