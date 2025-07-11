@@ -8,7 +8,7 @@ import RHFTextInput from '../../../../components/RHFTextInput';
 import { Fruit } from '../../../../types/fruits';
 
 export type CupCostFormData = {
-  value: string;
+  value: number;
 };
 
 type Props = {
@@ -30,7 +30,7 @@ export function CupValueForm({
 }: Props) {
   const methods = useForm<CupCostFormData>({
     defaultValues: {
-      value: values?.value || '',
+      value: values?.value || 0,
     },
   });
 

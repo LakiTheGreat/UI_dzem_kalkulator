@@ -39,7 +39,7 @@ export default function EditCupValue({ open, cup, handleClose }: Props) {
 
   return (
     <CupValueForm
-      values={{ value: cup?.value || '' }}
+      values={{ value: cup?.value || 0 }}
       open={open}
       isLoading={isLoading}
       data={data}

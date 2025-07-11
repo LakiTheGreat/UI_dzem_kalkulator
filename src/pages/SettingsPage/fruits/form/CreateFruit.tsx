@@ -18,7 +18,6 @@ export default function CreateFruit({ open, handleClose }: Props) {
     useCreateFruitMutation();
 
   const handleCreate = (values: FruitsFormData) => {
-    console.log(values);
     createFruit({ label: values.label });
 
     setToastId(setToastIsLoading(`Sačekaj...`));

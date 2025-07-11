@@ -1,6 +1,6 @@
 export type Cup = {
   id: number;
-  value: string;
+  value: number;
   label: string;
   isDeleted: boolean;
 };
