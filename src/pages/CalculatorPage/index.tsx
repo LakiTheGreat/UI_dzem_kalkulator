@@ -7,8 +7,15 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import RHFTextInput from '../../components/RHFTextInput';
 import { routes } from '../../constants/routes';
 import FormattedPrice from '../../utils/FormattedPrice';
+import {
+  useGetOtherExpansesMarginQuery,
+  useGetProfitMarginQuery,
+} from '../../api/constantApi';
 
 export default function Calculator() {
+  const { data: otherExpences } = useGetOtherExpansesMarginQuery();
+  const { data: profitMargin } = useGetProfitMarginQuery();
+
   type FormData = {
     basePrice: number | string;
     totalWeight: number | string;
@@ -69,11 +76,11 @@ export default function Calculator() {
       setValue(
         'additionalExpense',
         Number(basePrice) *
-          0.25 *
+          (Number(otherExpences?.value || 1) / 100) *
           (packageDifference ? Number(packageDifference) : 1)
       );
     }
-  }, [setValue, basePrice, packageDifference]);
+  }, [setValue, basePrice, packageDifference, otherExpences?.value]);
 
   useEffect(() => {
     if (fixedExpense && additionalExpense) {
@@ -86,9 +93,12 @@ export default function Calculator() {
 
   useEffect(() => {
     if (totalExpense) {
-      setValue('profitMarginValue', Number(totalExpense) * 0.5);
+      setValue(
+        'profitMarginValue',
+        Number(totalExpense) * ((profitMargin?.value || 1) / 100)
+      );
     }
-  }, [setValue, totalExpense]);
+  }, [profitMargin?.value, setValue, totalExpense]);
 
   useEffect(() => {
     if (totalExpense && profitMarginValue) {
@@ -179,7 +189,7 @@ export default function Calculator() {
               justifyContent='space-between'
               sx={{ p: 1 }}
             >
-              <Typography>Ostali troškovi (25%):</Typography>
+              <Typography>{`Ostali troškovi ${otherExpences?.label} :`}</Typography>
               <FormattedPrice price={additionalExpense} isExpense={true} />
             </Stack>
             <Stack
@@ -209,7 +219,7 @@ export default function Calculator() {
               justifyContent='space-between'
               sx={{ p: 1 }}
             >
-              <Typography>Profitna marža (50%):</Typography>
+              <Typography>{`Profitna marža (${profitMargin?.label}):`}</Typography>
               <FormattedPrice price={profitMarginValue} />
             </Stack>
             <Stack
