@@ -119,7 +119,7 @@ export default function Calculator() {
   };
 
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='sm'>
       <HeaderBreadcrumbs
         heading={'Kalkulator cene'}
         links={[

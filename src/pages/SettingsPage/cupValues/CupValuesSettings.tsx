@@ -90,7 +90,7 @@ export default function CupValuesSettings() {
                 disabled={!selectedId}
                 onClick={() => setOpen(true)}
               >
-                <EditIcon fontSize='large' />
+                <EditIcon />
               </IconButton>
             </Stack>
           </Stack>

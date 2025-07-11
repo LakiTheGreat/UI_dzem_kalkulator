@@ -96,14 +96,14 @@ export default function FruitsSettings() {
                 disabled={!selectedId}
                 onClick={() => setOpenEdit(true)}
               >
-                <EditIcon fontSize='large' />
+                <EditIcon />
               </IconButton>
               <IconButton
                 sx={{ color: 'secondary.dark' }}
                 disabled={!selectedId}
                 onClick={() => handleDelete(selectedId)}
               >
-                <DeleteOutlineIcon fontSize='large' />
+                <DeleteOutlineIcon />
               </IconButton>
             </Stack>
           </Stack>

@@ -312,7 +312,7 @@ export default function NewOrder() {
   const somethingIsLoading = fruitsIsLoading;
 
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='sm'>
       <HeaderBreadcrumbs
         heading={'Nova porudžbina'}
         links={[
