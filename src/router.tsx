@@ -5,6 +5,7 @@ import { routes } from './constants/routes';
 import NewOrderPage from './pages/NewOrderPage';
 import CalculatorPage from './pages/CalculatorPage';
 import SettingsPage from './pages/SettingsPage';
+import NewForm from './pages/NewOrderPage/newForm';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: `${routes.new_order}`,
-        element: <NewOrderPage />,
+        element: <NewForm />,
       },
       {
         path: `${routes.general_calculator}`,
