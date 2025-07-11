@@ -1,4 +1,4 @@
-import { Button, Container, Divider, Stack } from '@mui/material';
+import { Button, Container, Divider, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGetAllCupCostsQuery } from '../../../api/cupCosts';
@@ -76,15 +76,36 @@ export default function OrderForm() {
       />
       <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
         <Stack gap={4}>
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Troškovi
+          </Typography>
           <FruitsForm />
 
           <Divider />
 
           <CupsForm cupCosts={cupCosts} />
 
-          <Divider />
+          <Divider
+            sx={{
+              borderColor: 'secondary.main',
+              bgcolor: 'secondary.main',
+              height: 3,
+            }}
+          />
 
-          <Button variant='contained' type='submit'>
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Vrednost porudžbine
+          </Typography>
+
+          <Divider
+            sx={{
+              borderColor: 'secondary.main',
+              bgcolor: 'secondary.main',
+              height: 3,
+            }}
+          />
+
+          <Button variant='contained' type='submit' size='large'>
             Sačuvaj
           </Button>
         </Stack>
