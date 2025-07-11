@@ -71,6 +71,7 @@ export default function FruitsSettings() {
         <Stack gap={3}>
           <Stack direction='row' justifyContent='space-between'>
             <Typography variant='h5'>Voće</Typography>
+
             <IconButton color='primary' onClick={() => setOpenCreate(true)}>
               <AddCircleOutlineIcon fontSize='large' />
             </IconButton>
@@ -90,7 +91,7 @@ export default function FruitsSettings() {
                 ))}
               </Select>
             </FormControl>
-            <Stack direction='row' gap={2}>
+            <Stack direction='row' gap={2} alignItems='center'>
               <IconButton
                 sx={{ color: 'secondary.dark' }}
                 disabled={!selectedId}

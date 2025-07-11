@@ -35,9 +35,9 @@ export default function ConstantsSettings() {
               justifyContent='space-between'
             >
               <Stack direction='row' gap={1}>
-                <Typography>Profitna marža: </Typography>
+                <Typography>Ostali troškovi: </Typography>
                 <Typography sx={{ fontWeight: 'bold' }}>
-                  {profitMargin?.label}
+                  {otherExpansesMargin?.label}
                 </Typography>
               </Stack>
               <IconButton
@@ -54,9 +54,9 @@ export default function ConstantsSettings() {
               justifyContent='space-between'
             >
               <Stack direction='row' gap={1}>
-                <Typography>Ostali troškovi: </Typography>
+                <Typography>Profitna marža: </Typography>
                 <Typography sx={{ fontWeight: 'bold' }}>
-                  {otherExpansesMargin?.label}
+                  {profitMargin?.label}
                 </Typography>
               </Stack>
               <IconButton
