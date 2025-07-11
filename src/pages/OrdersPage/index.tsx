@@ -4,7 +4,6 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
-import NewOrder from '../OLD FORM/OLD_FORM';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ export default function OrdersPage() {
           </IconButton>
         }
       />
-      <NewOrder />
+      {/* <NewOrder /> */}
     </Container>
   );
 }

@@ -1,13 +1,24 @@
-import { Button, Container, Divider, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Container,
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
+
+import { useGetOtherExpansesMarginQuery } from '../../../api/constantApi';
 import { useGetAllCupCostsQuery } from '../../../api/cupCosts';
+import { useGetAllCupValuesQuery } from '../../../api/cupValues';
 import FormProvider from '../../../components/FormProvider';
-import FruitsForm from './FruitsForm';
-import CupsForm from './CupsForm';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import { routes } from '../../../constants/routes';
 import RHFTextInput from '../../../components/RHFTextInput';
+import { routes } from '../../../constants/routes';
+import CupsForm from './CupsForm';
+import FruitsForm from './FruitsForm';
+import OrderSummary from './OrderSummary';
 
 export type FruitItem = {
   fruitName: string;
@@ -30,7 +41,15 @@ export type FormData = {
 };
 
 export default function OrderForm() {
-  const { data: cupCosts = [] } = useGetAllCupCostsQuery();
+  const { data: cupCosts = [], isLoading: cupCostsLoading } =
+    useGetAllCupCostsQuery();
+  const { data: cupValues = [], isLoading: cupValuesLoading } =
+    useGetAllCupValuesQuery();
+  const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
+    useGetOtherExpansesMarginQuery();
+
+  const isLoading =
+    cupCostsLoading || cupValuesLoading || otherExpansesMarginLoading;
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -40,7 +59,42 @@ export default function OrderForm() {
     },
   });
 
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, control } = methods;
+
+  const cups = useWatch({ control, name: 'cups' });
+  const fruits = useWatch({ control, name: 'fruits' });
+
+  const totalCupPrice = cupCosts.reduce((acc, cost, index) => {
+    const numberOf = Number(cups[index]?.numberOf ?? 0);
+    const cupCost = Number(cost.value ?? 0); // this is the COST
+    return acc + numberOf * cupCost;
+  }, 0);
+
+  const totalFruitPrice = fruits.reduce((acc, fruit) => {
+    const total = Number(fruit.total ?? 0);
+    return acc + total;
+  }, 0);
+
+  const totalOrderPrice = cupCosts
+    .reduce((acc, cost, index) => {
+      const numberOf = Number(cups[index]?.numberOf ?? 0);
+      const cupValue = Number(
+        cupValues.find((val) => val.label === cost.label)?.value ?? 0
+      );
+      return acc + numberOf * cupValue;
+    }, 0)
+    .toFixed(2);
+
+  const otherExpenses =
+    Number(totalFruitPrice + totalCupPrice) *
+    ((otherExpansesMargin?.value || 1) / 100);
+
+  const totalExpenses = totalFruitPrice + totalCupPrice + otherExpenses;
+
+  const profit = Number(totalOrderPrice) - totalExpenses;
+  const profitMargin = (
+    Number(totalOrderPrice) > 0 ? (profit / Number(totalOrderPrice)) * 100 : 0
+  ).toFixed(0);
 
   useEffect(() => {
     if (cupCosts.length > 0) {
@@ -78,46 +132,63 @@ export default function OrderForm() {
         ]}
       />
       <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
-        <Stack gap={4}>
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Naziv porudžbine
-          </Typography>
+        {isLoading && <Skeleton height='70vh' variant='rounded' />}
+        {!isLoading && (
+          <Stack gap={4}>
+            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+              Naziv porudžbine
+            </Typography>
 
-          <RHFTextInput name='orderName' label='Naziv porudžbine' />
+            <RHFTextInput name='orderName' label='Naziv porudžbine' />
 
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Troškovi
-          </Typography>
-          <FruitsForm />
+            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+              Troškovi
+            </Typography>
+            <FruitsForm />
 
-          <Divider />
+            <Divider />
 
-          <CupsForm cupCosts={cupCosts} />
+            <CupsForm cupCosts={cupCosts} />
 
-          <Divider
-            sx={{
-              borderColor: 'secondary.main',
-              bgcolor: 'secondary.main',
-              height: 3,
-            }}
-          />
+            <Divider
+              sx={{
+                borderColor: 'secondary.main',
+                bgcolor: 'secondary.main',
+                height: 3,
+              }}
+            />
 
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Vrednost porudžbine
-          </Typography>
+            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+              Vrednost porudžbine
+            </Typography>
 
-          <Divider
-            sx={{
-              borderColor: 'secondary.main',
-              bgcolor: 'secondary.main',
-              height: 3,
-            }}
-          />
+            <OrderSummary
+              cupCosts={cupCosts}
+              cupValues={cupValues}
+              cups={cups}
+              totalOrderPrice={Number(totalOrderPrice)}
+              totalFruitPrice={totalFruitPrice}
+              totalCupPrice={totalCupPrice}
+              otherExpenses={otherExpenses}
+              totalExpenses={totalExpenses}
+              profit={profit}
+              profitMargin={Number(profitMargin)}
+              otherExpansesMargin={otherExpansesMargin}
+            />
 
-          <Button variant='contained' type='submit' size='large'>
-            Sačuvaj
-          </Button>
-        </Stack>
+            <Divider
+              sx={{
+                borderColor: 'secondary.main',
+                bgcolor: 'secondary.main',
+                height: 3,
+              }}
+            />
+
+            <Button variant='contained' type='submit' size='large'>
+              Sačuvaj
+            </Button>
+          </Stack>
+        )}
       </FormProvider>
     </Container>
   );

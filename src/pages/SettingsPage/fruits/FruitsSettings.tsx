@@ -53,10 +53,10 @@ export default function FruitsSettings() {
   };
 
   useEffect(() => {
-    if (data && data.length > 0 && !selectedId) {
+    if (data && data.length > 0) {
       setSelectedId(data[0].id.toString());
     }
-  }, [data, selectedId]);
+  }, [data]);
 
   useApiSuccessNotification({
     data: deleteFruitData,
