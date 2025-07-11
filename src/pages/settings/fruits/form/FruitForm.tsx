@@ -2,10 +2,10 @@ import { Button, Stack } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import FormProvider from '../../../components/FormProvider';
-import GeneralDialog from '../../../components/GeneralDialog';
-import RHFTextInput from '../../../components/RHFTextInput';
-import { Fruit } from '../../../types/fruits';
+import FormProvider from '../../../../components/FormProvider';
+import GeneralDialog from '../../../../components/GeneralDialog';
+import RHFTextInput from '../../../../components/RHFTextInput';
+import { Fruit } from '../../../../types/fruits';
 
 export type FruitsFormData = {
   label: string;
@@ -65,6 +65,7 @@ export function FruitForm({
             color='primary'
             loading={isLoading}
             fullWidth
+            size='large'
           >
             Sačuvaj
           </Button>
