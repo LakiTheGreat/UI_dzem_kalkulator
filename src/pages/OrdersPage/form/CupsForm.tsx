@@ -56,7 +56,7 @@ export default function CupsForm({ cupCosts }: Props) {
           </Stack>
           <Stack sx={{ flex: 1 }} alignItems='center'>
             <Typography>Ukupno:</Typography>
-            <FormattedPrice price={cups[index]?.total} isBold />
+            <FormattedPrice price={cups[index]?.total} />
           </Stack>
         </Stack>
       ))}
