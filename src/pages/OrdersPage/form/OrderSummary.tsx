@@ -98,7 +98,7 @@ export default function OrderSummary({
         alignItems='center'
         sx={{ color: 'success.dark' }}
       >
-        <Typography fontWeight='bold'>Profit</Typography>
+        <Typography fontWeight='bold'>Profit:</Typography>
         <FormattedPrice price={profit} isBold />
       </Stack>
 
