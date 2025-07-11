@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Id } from 'react-toastify';
 
+import { useCreateFruitMutation } from '../../../../api/fruitsSlice';
+import setToastIsLoading from '../../../../utils/toastify/setToastIsLoading';
+import { useApiSuccessNotification } from '../../../../hooks/useApiSuccessNotification';
 import { FruitForm, FruitsFormData } from './FruitForm';
-import { useCreateFruitMutation } from '../../../api/fruitsSlice';
-import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
-import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
 
 type Props = {
   open: boolean;

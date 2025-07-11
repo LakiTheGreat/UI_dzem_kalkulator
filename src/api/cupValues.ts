@@ -11,9 +11,21 @@ const cupValuesApiEndpoints = api.injectEndpoints({
       }),
       providesTags: ['Cups'],
     }),
+    putCupValue: build.mutation<
+      Cup,
+      { id: number; value: number; label: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `${cupValuesUrl}/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Cups'],
+    }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useGetAllCupValuesQuery } = cupValuesApiEndpoints;
+export const { useGetAllCupValuesQuery, usePutCupValueMutation } =
+  cupValuesApiEndpoints;

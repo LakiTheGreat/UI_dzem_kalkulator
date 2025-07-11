@@ -55,7 +55,7 @@ type FormData = {
   email: string;
 };
 
-export default function DzemCalculator() {
+export default function NewOrder() {
   const { data, isLoading: fruitsIsLoading } = useGetFruitsQuery();
 
   const mappedData = mapFruitToMenuItems(data);

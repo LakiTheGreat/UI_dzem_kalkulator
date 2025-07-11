@@ -31,7 +31,6 @@ export default function GeneralDialog({
           alignItems='center'
           justifyContent='space-between'
           gap={0.5}
-          sx={{ pb: 2 }}
         >
           <Typography variant='h4' sx={{ fontSize: { xs: 20, md: 24 } }}>
             {title}
@@ -41,8 +40,8 @@ export default function GeneralDialog({
             <CloseRoundedIcon />
           </IconButton>
         </Stack>
-        <Divider sx={{ mb: 1 }} />
       </DialogTitle>
+      <Divider sx={{ mb: 1.5 }} />
 
       <DialogContent>{children}</DialogContent>
     </Dialog>

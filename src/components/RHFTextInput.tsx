@@ -73,9 +73,9 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
             <Stack direction='row' gap={2}>
               <Stack sx={{ width: '100%' }}>
                 <TextField
+                  {...rest}
                   disabled={disabled}
                   autoComplete='randomStringToPReventAutoFill'
-                  {...rest}
                   size='medium'
                   inputRef={ref}
                   aria-label={`Input for ${label}`}
@@ -89,6 +89,20 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
                   onFocus={handleFocus}
                   onBlur={onBlur}
                   onWheel={(e) => (e.target as HTMLElement).blur()}
+                  onKeyDown={(e) => {
+                    if (['e', 'E', '+', '-'].includes(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  sx={{
+                    '& input[type=number]': {
+                      '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button':
+                        {
+                          appearance: 'none',
+                          margin: 0,
+                        },
+                    },
+                  }}
                   slotProps={{
                     input: {
                       endAdornment: (

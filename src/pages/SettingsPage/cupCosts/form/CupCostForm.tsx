@@ -2,25 +2,25 @@ import { Button, Stack } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import FormProvider from '../../../components/FormProvider';
-import GeneralDialog from '../../../components/GeneralDialog';
-import RHFTextInput from '../../../components/RHFTextInput';
-import { Fruit } from '../../../types/fruits';
+import FormProvider from '../../../../components/FormProvider';
+import GeneralDialog from '../../../../components/GeneralDialog';
+import RHFTextInput from '../../../../components/RHFTextInput';
+import { Fruit } from '../../../../types/fruits';
 
-export type FruitsFormData = {
-  label: string;
+export type CupCostFormData = {
+  value: string;
 };
 
 type Props = {
   open: boolean;
   isLoading: boolean;
-  values?: FruitsFormData;
+  values?: CupCostFormData;
   data?: Fruit;
   handleClose: () => void;
-  onSubmit: (values: FruitsFormData) => void;
+  onSubmit: (values: CupCostFormData) => void;
 };
 
-export function FruitForm({
+export function CupCostForm({
   open,
   values,
   data,
@@ -28,9 +28,9 @@ export function FruitForm({
   handleClose,
   onSubmit,
 }: Props) {
-  const methods = useForm<FruitsFormData>({
+  const methods = useForm<CupCostFormData>({
     defaultValues: {
-      label: values?.label || '',
+      value: values?.value || '',
     },
   });
 
@@ -54,17 +54,18 @@ export function FruitForm({
       open={open}
       handleClose={closeDialog}
       maxWidth='xs'
-      title={values ? 'Izmeni naziv' : 'Kreiraj novo voće'}
+      title={'Izmeni nabavnu cenu'}
     >
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={3} sx={{ mt: 0.5 }}>
-          <RHFTextInput name='label' label='Naziv' />
+          <RHFTextInput name='value' label='Nabavna cena' type='number' />
           <Button
             type='submit'
             variant='contained'
             color='primary'
             loading={isLoading}
             fullWidth
+            size='large'
           >
             Sačuvaj
           </Button>
