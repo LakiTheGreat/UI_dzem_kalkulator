@@ -1,5 +1,6 @@
 export const routes = {
-  new_order: 'new-order',
+  orders: 'orders',
+  new: 'new',
   general_calculator: 'general-calculator',
   settings: 'settings',
 };

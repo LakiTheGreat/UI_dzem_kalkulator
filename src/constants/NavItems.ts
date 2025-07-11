@@ -1,4 +1,4 @@
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import SettingsIcon from '@mui/icons-material/Settings';
 
@@ -7,9 +7,9 @@ import { routes } from './routes';
 
 export const NavItems: NavItem[] = [
   {
-    label: 'Nova porudžbina',
-    icon: AddBoxIcon,
-    to: routes.new_order,
+    label: 'Porudžbine',
+    icon: FolderCopyIcon,
+    to: routes.orders,
     addDividerAfter: true,
   },
   {

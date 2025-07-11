@@ -5,7 +5,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import RHFTextInput from '../../../components/RHFTextInput';
 import { Cup } from '../../../types/cups';
 import FormattedPrice from '../../../utils/FormattedPrice';
-import { CupItem } from '../newForm';
+import { CupItem } from '.';
 
 type Props = {
   cupCosts: Cup[];

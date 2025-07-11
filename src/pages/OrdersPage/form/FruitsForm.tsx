@@ -9,7 +9,7 @@ import RHFSelectInput from '../../../components/RHFSelectInput';
 import RHFTextInput from '../../../components/RHFTextInput';
 import FormattedPrice from '../../../utils/FormattedPrice';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
-import { FruitItem } from '../newForm';
+import { FruitItem } from './index';
 
 export default function FruitsForm() {
   const { data } = useGetFruitsQuery();
