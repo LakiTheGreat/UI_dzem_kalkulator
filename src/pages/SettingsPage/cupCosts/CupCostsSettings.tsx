@@ -11,25 +11,27 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { useGetAllCupValuesQuery } from '../../../api/cupValues';
+import { useGetAllCupCostsQuery } from '../../../api/cupCosts';
 import useResponsive from '../../../hooks/useResponsive';
 import FormattedPrice from '../../../utils/FormattedPrice';
 import { mapCupsToMenuItems } from '../../../utils/mapToMenuItems';
+import EditCupCosts from './form/EditCupCosts';
 
-export default function CupValuesSettings() {
+export default function CupCostsSettings() {
   const isMdDown = useResponsive('down', 'md');
 
   const [open, setOpen] = useState<boolean>(false);
+
   const [selectedId, setSelectedId] = useState<string>('');
 
-  const { data, isLoading } = useGetAllCupValuesQuery();
+  const { data, isLoading } = useGetAllCupCostsQuery();
   const mappedData = mapCupsToMenuItems(data);
 
   useEffect(() => {
-    if (data && data.length > 0) {
+    if (data && data.length > 0 && !selectedId) {
       setSelectedId(data[0].id.toString());
     }
-  }, [data]);
+  }, [data, selectedId]);
 
   return (
     <>
@@ -39,10 +41,10 @@ export default function CupValuesSettings() {
       {!isLoading && data && (
         <Stack gap={3}>
           <Stack direction='row' justifyContent='space-between'>
-            <Typography variant='h5'>Prodajna cena džema po teglici</Typography>
+            <Typography variant='h5'>Nabavna cena teglica</Typography>
             {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
-              <AddCircleOutlineIcon fontSize='large' />
-            </IconButton> */}
+                <AddCircleOutlineIcon fontSize='large' />
+              </IconButton> */}
           </Stack>
           <Stack gap={4} direction='row'>
             <FormControl fullWidth sx={{ minWidth: 120 }}>
@@ -75,7 +77,7 @@ export default function CupValuesSettings() {
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  Prodajna cena teglice:
+                  Nabavna cena teglice:
                 </Typography>
                 <FormattedPrice
                   price={
@@ -94,6 +96,13 @@ export default function CupValuesSettings() {
             </Stack>
           </Stack>
         </Stack>
+      )}
+      {open && (
+        <EditCupCosts
+          open={open}
+          cup={data?.find((c) => c.id === Number(selectedId))}
+          handleClose={() => setOpen(false)}
+        />
       )}
     </>
   );

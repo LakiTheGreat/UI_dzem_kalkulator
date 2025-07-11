@@ -8,7 +8,7 @@ import RHFTextInput from '../../components/RHFTextInput';
 import { routes } from '../../constants/routes';
 import FormattedPrice from '../../utils/FormattedPrice';
 
-export default function GeneralCalculator() {
+export default function Calculator() {
   type FormData = {
     basePrice: number | string;
     totalWeight: number | string;

@@ -4,7 +4,7 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
 import CupCostsSettings from './cupCosts/CupCostsSettings';
 import FruitsSettings from './fruits/FruitsSettings';
-import CupValuesSettings from './cupValues';
+import CupValuesSettings from './cupValues/CupValuesSettings';
 
 export default function Settings() {
   return (

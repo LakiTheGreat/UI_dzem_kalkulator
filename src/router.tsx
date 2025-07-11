@@ -2,9 +2,9 @@ import { createBrowserRouter, Navigate } from 'react-router';
 
 import App from './App';
 import { routes } from './constants/routes';
-import DzemCalculator from './pages/dzem_calculator';
-import GeneralCalculator from './pages/general_calculator';
-import Settings from './pages/settings';
+import NewOrderPage from './pages/NewOrderPage';
+import CalculatorPage from './pages/CalculatorPage';
+import SettingsPage from './pages/SettingsPage';
 
 const router = createBrowserRouter([
   {
@@ -17,15 +17,15 @@ const router = createBrowserRouter([
       },
       {
         path: `${routes.new_order}`,
-        element: <DzemCalculator />,
+        element: <NewOrderPage />,
       },
       {
         path: `${routes.general_calculator}`,
-        element: <GeneralCalculator />,
+        element: <CalculatorPage />,
       },
       {
         path: `${routes.settings}`,
-        element: <Settings />,
+        element: <SettingsPage />,
       },
     ],
   },
