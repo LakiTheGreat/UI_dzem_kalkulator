@@ -9,7 +9,7 @@ export const mapFruitToMenuItems = (
   return fruits.map(
     (fruit: Fruit): MenuItemType => ({
       id: fruit.id,
-      value: fruit.label,
+      value: fruit.id,
       menuItemLabel: fruit.label,
       isDeleted: fruit.isDeleted,
     })
