@@ -22,7 +22,7 @@ export default function EditFruit({ open, fruit, handleClose }: Props) {
     { data: patchFruitData, error: patchFruitError, isLoading },
   ] = usePatchFruitMutation();
 
-  const handleCreate = (values: FruitsFormData) => {
+  const handleEdit = (values: FruitsFormData) => {
     console.log(values);
     patchFruit({ id: fruit?.id || -1, label: values.label });
 
@@ -44,7 +44,7 @@ export default function EditFruit({ open, fruit, handleClose }: Props) {
       isLoading={isLoading}
       data={patchFruitData}
       handleClose={handleClose}
-      onSubmit={handleCreate}
+      onSubmit={handleEdit}
     />
   );
 }
