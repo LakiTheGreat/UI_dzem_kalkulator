@@ -8,7 +8,7 @@ import CupCostsSettings from './cupCosts/CupCostsSettings';
 import CupValuesSettings from './cupValues/CupValuesSettings';
 import FruitsSettings from './fruits/FruitsSettings';
 
-const SECTION_DELAY_MS = 300;
+const SECTION_DELAY_MS = 500;
 
 export default function Settings() {
   const [step, setStep] = useState(0);
