@@ -6,12 +6,12 @@ const ordersApiUrl = '/orders';
 
 const orderApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    // getProfitMargin: build.query<Constant, void>({
-    //   query: () => ({
-    //     url: `${constantApiUrl}/2`,
-    //   }),
-    //   providesTags: ['Constant'],
-    // }),
+    getAllOrders: build.query<Order[], void>({
+      query: () => ({
+        url: `${ordersApiUrl}/`,
+      }),
+      providesTags: ['Order'],
+    }),
 
     createNewOrder: build.mutation<Order, NewOrder>({
       query: (body) => ({
@@ -19,11 +19,12 @@ const orderApiEndpoints = api.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Constant'],
+      invalidatesTags: ['Order'],
     }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useCreateNewOrderMutation } = orderApiEndpoints;
+export const { useCreateNewOrderMutation, useGetAllOrdersQuery } =
+  orderApiEndpoints;
