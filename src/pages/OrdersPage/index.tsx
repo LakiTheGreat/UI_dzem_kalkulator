@@ -8,6 +8,7 @@ import {
   Select,
   Skeleton,
   Stack,
+  Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -85,6 +86,11 @@ export default function OrdersPage() {
 
           {!isFetching &&
             data?.map((order) => <OrderCard key={order.id} order={order} />)}
+          {data?.length === 0 && (
+            <Typography textAlign='center' sx={{ mt: 3 }}>
+              Još nema porudžbina za ovu voćku.
+            </Typography>
+          )}
         </Stack>
       </Stack>
     </Container>
