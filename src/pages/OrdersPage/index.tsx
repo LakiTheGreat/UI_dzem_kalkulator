@@ -17,10 +17,11 @@ import { useNavigate } from 'react-router';
 import { useGetFruitsQuery } from '../../api/fruitsSlice';
 import { useGetAllOrdersQuery } from '../../api/ordersApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+import { ORDER_WIDTH } from '../../constants';
 import { routes } from '../../constants/routes';
 import { OrderParams } from '../../types/orders';
-import OrderCard from './OrderCard';
 import FormattedPrice from '../../utils/FormattedPrice';
+import OrderCard from './OrderCard';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
@@ -78,11 +79,13 @@ export default function OrdersPage() {
         {!isFetching && (
           <Stack>
             <Stack direction='row' gap={1}>
-              <Typography>Ukupni prihod:</Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                Ukupni prihod:
+              </Typography>
               <FormattedPrice price={data?.totalValue ?? 0} />
             </Stack>
             <Stack direction='row' color='primary.main' gap={1}>
-              <Typography sx={{ fontWeight: 'bold' }}>
+              <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
                 Ukupni rashod:
               </Typography>
               <FormattedPrice
@@ -92,7 +95,7 @@ export default function OrdersPage() {
               />
             </Stack>
             <Stack direction='row' color='success.dark' gap={1}>
-              <Typography sx={{ fontWeight: 'bold' }}>
+              <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
                 Ukupni profit:
               </Typography>
               <FormattedPrice price={data?.totalProfit ?? 0} isBold />
