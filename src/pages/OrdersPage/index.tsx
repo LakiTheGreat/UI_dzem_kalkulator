@@ -15,16 +15,29 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useGetFruitsQuery } from '../../api/fruitsSlice';
-import { useGetAllOrdersQuery } from '../../api/ordersApi';
+import {
+  useDeleteOrderMutation,
+  useGetAllOrdersQuery,
+} from '../../api/ordersApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { ORDER_WIDTH } from '../../constants';
 import { routes } from '../../constants/routes';
 import { OrderParams } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
 import OrderCard from './OrderCard';
+import OrderDetailsDialog from './OrderDetailsDialog';
+import useConfirmDialog from '../../hooks/useConfirmDialog';
+import { Id } from 'react-toastify';
+import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
+import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
+import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
+
+  const [toastId, setToastId] = useState<Id>('');
+  const [getConfirmation, Confirmation] = useConfirmDialog();
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const param = {
     orderTypeId: 0,
@@ -34,6 +47,33 @@ export default function OrdersPage() {
 
   const { data, isFetching } = useGetAllOrdersQuery(params);
   const { data: fruits, isLoading: isLoadingFruits } = useGetFruitsQuery();
+
+  const [deleteOrder, { data: deletedOrderData, error }] =
+    useDeleteOrderMutation();
+
+  const handleDelete = async (id: number) => {
+    const isConfirmed = await getConfirmation({
+      title: 'Jesi li siguran da želiš da obrišeš ovu porudžbinu?',
+      contentSubtitle: 'Posle nema nazad (ima)!',
+      confirmLabel: 'Da',
+    });
+
+    if (isConfirmed) {
+      deleteOrder(id);
+      setToastId(setToastIsLoading(`Sačekaj....`));
+    }
+  };
+
+  useApiSuccessNotification({
+    data: deletedOrderData,
+    message: 'Porudžbina uspešno obrisana',
+    toastId,
+  });
+
+  useApiErrorNotification({
+    error,
+    toastId,
+  });
 
   return (
     <Container maxWidth='sm'>
@@ -103,18 +143,27 @@ export default function OrdersPage() {
           </Stack>
         )}
         <Divider />
+
         <Stack gap={3}>
           {isFetching && (
             <Stack gap={3}>
+              <Skeleton variant='rounded' height={24} width={145} />
               <Skeleton variant='rounded' height={280} />
               <Skeleton variant='rounded' height={280} />
               <Skeleton variant='rounded' height={280} />
             </Stack>
           )}
-
+          {!isFetching && (
+            <Typography>Broj porudžbina: {data?.orders?.length}</Typography>
+          )}
           {!isFetching &&
             data?.orders?.map((order) => (
-              <OrderCard key={order.id} order={order} />
+              <OrderCard
+                key={order.id}
+                order={order}
+                setSelectedId={setSelectedId}
+                handleDelete={handleDelete}
+              />
             ))}
           {data?.orders?.length === 0 && (
             <Typography textAlign='center' sx={{ mt: 3 }}>
@@ -123,6 +172,14 @@ export default function OrdersPage() {
           )}
         </Stack>
       </Stack>
+      {selectedId && (
+        <OrderDetailsDialog
+          selectedId={selectedId}
+          open={!!selectedId}
+          handleClose={() => setSelectedId(null)}
+        />
+      )}
+      <Confirmation />
     </Container>
   );
 }
