@@ -1,12 +1,12 @@
 import { api } from '.';
 
-import { NewOrder, Order, OrderParams } from '../types/orders';
+import { NewOrder, Order, OrderParams, OrderResponse } from '../types/orders';
 
 const ordersApiUrl = '/orders';
 
 const orderApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    getAllOrders: build.query<Order[], OrderParams>({
+    getAllOrders: build.query<OrderResponse, OrderParams>({
       query: ({ orderTypeId }) => {
         const params = new URLSearchParams();
         if (orderTypeId && orderTypeId > 0) {
