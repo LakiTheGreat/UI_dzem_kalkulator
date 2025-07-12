@@ -78,16 +78,18 @@ export default function OrdersPage() {
         {!isFetching && (
           <Stack>
             <Stack direction='row' gap={1}>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Ukupni prihod:
-              </Typography>
-              <FormattedPrice price={data?.totalValue ?? 0} isBold />
+              <Typography>Ukupni prihod:</Typography>
+              <FormattedPrice price={data?.totalValue ?? 0} />
             </Stack>
             <Stack direction='row' color='primary.main' gap={1}>
               <Typography sx={{ fontWeight: 'bold' }}>
                 Ukupni rashod:
               </Typography>
-              <FormattedPrice price={data?.totalExpense ?? 0} isBold />
+              <FormattedPrice
+                price={data?.totalExpense ?? 0}
+                isBold
+                isExpense
+              />
             </Stack>
             <Stack direction='row' color='success.dark' gap={1}>
               <Typography sx={{ fontWeight: 'bold' }}>

@@ -33,7 +33,7 @@ export default function FormattedPrice({
       variant={variant}
       sx={{ fontWeight: isBold ? 'bold' : 'normal' }}
     >
-      {isExpense && '-'}
+      {isExpense && '- '}
       {formatted}
     </Typography>
   );
