@@ -60,13 +60,13 @@ export default function OrderCard({ order }: Props) {
           <Divider sx={{ my: 1.5 }} />
 
           <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>Prihodi:</Typography>
+            <Typography sx={{ width: ORDER_WIDTH }}>Prihod:</Typography>
             <FormattedPrice price={order.totalValue} />
           </Stack>
 
           <Stack direction='row' color='primary.main'>
             <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-              Rashodi:
+              Rashod:
             </Typography>
             <FormattedPrice price={order.totalExpense} isExpense isBold />
           </Stack>

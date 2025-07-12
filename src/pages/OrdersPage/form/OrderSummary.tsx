@@ -61,7 +61,7 @@ export default function OrderSummary({
       <Divider />
 
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
-        <Typography fontWeight='bold'>Prihodi:</Typography>
+        <Typography fontWeight='bold'>Prihod:</Typography>
         <FormattedPrice price={totalOrderPrice} isBold />
       </Stack>
 
@@ -86,7 +86,7 @@ export default function OrderSummary({
         alignItems='center'
         sx={{ color: 'error.main' }}
       >
-        <Typography fontWeight='bold'>Rashodi:</Typography>
+        <Typography fontWeight='bold'>Rashod:</Typography>
         <FormattedPrice price={totalExpenses} isExpense isBold />
       </Stack>
 
