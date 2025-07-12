@@ -15,3 +15,7 @@ export type NewOrder = { orderTypeId: number } & Omit<
   Order,
   'id' | 'createdAt' | 'orderTypeName'
 >;
+
+export type OrderParams = {
+  orderTypeId: number;
+};

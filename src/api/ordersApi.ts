@@ -1,15 +1,21 @@
 import { api } from '.';
 
-import { NewOrder, Order } from '../types/orders';
+import { NewOrder, Order, OrderParams } from '../types/orders';
 
 const ordersApiUrl = '/orders';
 
 const orderApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    getAllOrders: build.query<Order[], void>({
-      query: () => ({
-        url: `${ordersApiUrl}/`,
-      }),
+    getAllOrders: build.query<Order[], OrderParams>({
+      query: ({ orderTypeId }) => {
+        const params = new URLSearchParams();
+        if (orderTypeId && orderTypeId > 0) {
+          params.set('orderTypeId', String(orderTypeId));
+        }
+        return {
+          url: `${ordersApiUrl}?${params.toString()}`,
+        };
+      },
       providesTags: ['Order'],
     }),
 
