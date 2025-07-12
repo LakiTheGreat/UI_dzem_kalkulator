@@ -19,6 +19,14 @@ const orderApiEndpoints = api.injectEndpoints({
       providesTags: ['Order'],
     }),
 
+    getOrderById: build.query<Order, number>({
+      query: (id) => ({
+        url: `${ordersApiUrl}/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Order'],
+    }),
+
     createNewOrder: build.mutation<Order, NewOrder>({
       query: (body) => ({
         url: `${ordersApiUrl}`,
@@ -27,10 +35,22 @@ const orderApiEndpoints = api.injectEndpoints({
       }),
       invalidatesTags: ['Order'],
     }),
+
+    deleteOrder: build.mutation<Order, number>({
+      query: (id) => ({
+        url: `${ordersApiUrl}/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Order'],
+    }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useCreateNewOrderMutation, useGetAllOrdersQuery } =
-  orderApiEndpoints;
+export const {
+  useCreateNewOrderMutation,
+  useGetAllOrdersQuery,
+  useGetOrderByIdQuery,
+  useDeleteOrderMutation,
+} = orderApiEndpoints;

@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+// import EditIcon from '@mui/icons-material/Edit';
+// import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {
   Card,
   CardActions,
@@ -15,12 +15,19 @@ import { ORDER_WIDTH } from '../../constants';
 import { Order } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   order: Order;
+  setSelectedId: Dispatch<SetStateAction<number | null>>;
+  handleDelete: (id: number) => void;
 };
 
-export default function OrderCard({ order }: Props) {
+export default function OrderCard({
+  order,
+  setSelectedId,
+  handleDelete,
+}: Props) {
   return (
     <Card
       key={order.id}
@@ -92,13 +99,19 @@ export default function OrderCard({ order }: Props) {
           sx={{ width: '100%' }}
           gap={3}
         >
-          <IconButton>
+          {/* <IconButton
+            onClick={() => {
+              setSelectedId(order.id);
+            }}
+          >
             <RemoveRedEyeIcon />
-          </IconButton>
-          <IconButton>
+          </IconButton> */}
+
+          {/* <IconButton>
             <EditIcon />
-          </IconButton>
-          <IconButton>
+          </IconButton> */}
+
+          <IconButton onClick={() => handleDelete(order.id)}>
             <DeleteIcon />
           </IconButton>
         </Stack>
