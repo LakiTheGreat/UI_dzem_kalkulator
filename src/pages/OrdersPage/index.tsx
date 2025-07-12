@@ -1,6 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
   Container,
+  Divider,
   FormControl,
   IconButton,
   InputLabel,
@@ -19,6 +20,7 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
 import { OrderParams } from '../../types/orders';
 import OrderCard from './OrderCard';
+import FormattedPrice from '../../utils/FormattedPrice';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
@@ -31,8 +33,6 @@ export default function OrdersPage() {
 
   const { data, isFetching } = useGetAllOrdersQuery(params);
   const { data: fruits, isLoading: isLoadingFruits } = useGetFruitsQuery();
-
-  console.log(data);
 
   return (
     <Container maxWidth='sm'>
@@ -74,7 +74,30 @@ export default function OrdersPage() {
             </Select>
           </FormControl>
         )}
-
+        {isFetching && <Skeleton variant='rounded' height={72} />}
+        {!isFetching && (
+          <Stack>
+            <Stack direction='row' gap={1}>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Ukupni prihod:
+              </Typography>
+              <FormattedPrice price={data?.totalValue ?? 0} isBold />
+            </Stack>
+            <Stack direction='row' color='primary.main' gap={1}>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Ukupni rashod:
+              </Typography>
+              <FormattedPrice price={data?.totalExpense ?? 0} isBold />
+            </Stack>
+            <Stack direction='row' color='success.dark' gap={1}>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Ukupni profit:
+              </Typography>
+              <FormattedPrice price={data?.totalProfit ?? 0} isBold />
+            </Stack>
+          </Stack>
+        )}
+        <Divider />
         <Stack gap={3}>
           {isFetching && (
             <Stack gap={3}>
@@ -85,8 +108,10 @@ export default function OrdersPage() {
           )}
 
           {!isFetching &&
-            data?.map((order) => <OrderCard key={order.id} order={order} />)}
-          {data?.length === 0 && (
+            data?.orders?.map((order) => (
+              <OrderCard key={order.id} order={order} />
+            ))}
+          {data?.orders?.length === 0 && (
             <Typography textAlign='center' sx={{ mt: 3 }}>
               Još nema porudžbina za ovu voćku.
             </Typography>

@@ -19,3 +19,10 @@ export type NewOrder = { orderTypeId: number } & Omit<
 export type OrderParams = {
   orderTypeId: number;
 };
+
+export type OrderResponse = {
+  orders: Order[];
+  totalValue: number;
+  totalExpense: number;
+  totalProfit: number;
+};
