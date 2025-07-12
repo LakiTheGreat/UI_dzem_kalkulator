@@ -172,14 +172,14 @@ export default function OrderForm() {
   return (
     <Container maxWidth='sm'>
       <HeaderBreadcrumbs
-        heading={'Porudžbine'}
+        heading={'Proizvodne serije'}
         links={[
           {
             name: 'Pregled',
             href: `/${routes.orders}`,
           },
           {
-            name: 'Nova porudžbina',
+            name: 'Nova serija',
             href: `${routes.orders}/${routes.new}`,
           },
         ]}
@@ -188,12 +188,8 @@ export default function OrderForm() {
         {isLoading && <Skeleton height='70vh' variant='rounded' />}
         {!isLoading && (
           <Stack gap={4}>
-            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Porudžbina
-            </Typography>
-
             <Stack gap={2}>
-              <RHFTextInput name='orderName' label='Naziv porudžbine' />
+              <RHFTextInput name='orderName' label='Naziv serije' />
 
               <RHFSelectInput
                 name='orderTypeId'
@@ -220,7 +216,7 @@ export default function OrderForm() {
             />
 
             <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Vrednost porudžbine
+              Vrednost serije
             </Typography>
 
             <OrderSummary

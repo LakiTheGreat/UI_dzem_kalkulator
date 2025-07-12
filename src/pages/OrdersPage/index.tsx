@@ -53,7 +53,7 @@ export default function OrdersPage() {
 
   const handleDelete = async (id: number) => {
     const isConfirmed = await getConfirmation({
-      title: 'Jesi li siguran da želiš da obrišeš ovu porudžbinu?',
+      title: 'Jesi li siguran da želiš da obrišeš ovu seriju?',
       contentSubtitle: 'Posle nema nazad (ima)!',
       confirmLabel: 'Da',
     });
@@ -78,7 +78,7 @@ export default function OrdersPage() {
   return (
     <Container maxWidth='sm'>
       <HeaderBreadcrumbs
-        heading={'Porudžbine'}
+        heading={'Proizvodne serije'}
         links={[
           {
             name: 'Pregled',
@@ -98,10 +98,10 @@ export default function OrdersPage() {
         {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
         {!isLoadingFruits && (
           <FormControl fullWidth>
-            <InputLabel>Vrsta porudžbine</InputLabel>
+            <InputLabel>Vrsta proizvodne serije</InputLabel>
             <Select
               value={params.orderTypeId}
-              label='Vrsta porudžbine'
+              label='Vrsta proizvodne serije'
               onChange={(e) =>
                 setParams({ ...params, orderTypeId: Number(e.target.value) })
               }

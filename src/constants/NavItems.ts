@@ -7,7 +7,7 @@ import { routes } from './routes';
 
 export const NavItems: NavItem[] = [
   {
-    label: 'Porudžbine',
+    label: 'Proizvodne serije',
     icon: FolderCopyIcon,
     to: routes.orders,
     addDividerAfter: true,
