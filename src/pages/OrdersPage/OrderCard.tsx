@@ -62,16 +62,15 @@ export default function OrderCard({
           </Stack>
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>
+              Besplatna osnova:
+            </Typography>
+            <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
+          </Stack>
+          <Stack direction='row'>
+            <Typography sx={{ width: ORDER_WIDTH }}>
               Broj malih teglica:
             </Typography>
             <Typography> {order.numberOfSmallCups}</Typography>
-          </Stack>
-
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>
-              Osnova je besplatna:
-            </Typography>
-            <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
           </Stack>
 
           <Stack direction='row'>
