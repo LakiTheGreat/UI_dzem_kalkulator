@@ -97,8 +97,9 @@ export default function OrdersPage() {
       />
       <Stack gap={3}>
         {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
-        <Stack direction='row' gap={2}>
-          {!isLoadingFruits && (
+
+        {!isLoadingFruits && (
+          <Stack direction='row' gap={2}>
             <FormControl fullWidth>
               <InputLabel>Vrsta džema</InputLabel>
               <Select
@@ -116,24 +117,27 @@ export default function OrdersPage() {
                 ))}
               </Select>
             </FormControl>
-          )}
-          <FormControl fullWidth>
-            <InputLabel>Besplatna osnova</InputLabel>
-            <Select
-              value={params.priceStatus}
-              label='Besplatna osnova'
-              onChange={(e) =>
-                setParams({ ...params, priceStatus: Number(e.target.value) })
-              }
-            >
-              <MenuItem value={PRICE_STATUS.ALL}>Prikaži sve</MenuItem>
-              <MenuItem value={PRICE_STATUS.ONLY_FREE}>
-                Besplatna osnova
-              </MenuItem>
-              <MenuItem value={PRICE_STATUS.ONLY_PAID}>Plaćena osnova</MenuItem>
-            </Select>
-          </FormControl>
-        </Stack>
+            <FormControl fullWidth>
+              <InputLabel>Besplatna osnova</InputLabel>
+              <Select
+                value={params.priceStatus}
+                label='Besplatna osnova'
+                onChange={(e) =>
+                  setParams({ ...params, priceStatus: Number(e.target.value) })
+                }
+              >
+                <MenuItem value={PRICE_STATUS.ALL}>Prikaži sve</MenuItem>
+                <MenuItem value={PRICE_STATUS.ONLY_FREE}>
+                  Besplatna osnova
+                </MenuItem>
+                <MenuItem value={PRICE_STATUS.ONLY_PAID}>
+                  Plaćena osnova
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
+        )}
+
         {isFetching && <Skeleton variant='rounded' height={72} />}
         {!isFetching && (
           <Stack>
