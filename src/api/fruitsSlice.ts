@@ -26,14 +26,14 @@ const fruitsApiEndpoints = api.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Fruit'],
+      invalidatesTags: ['Fruit', 'Order'],
     }),
     deleteFruit: build.mutation<Fruit, { id: string }>({
       query: ({ id }) => ({
         url: `${fruitsUrl}/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Fruit'],
+      invalidatesTags: ['Fruit', 'Order'],
     }),
   }),
 
