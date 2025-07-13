@@ -143,16 +143,14 @@ export default function Calculator() {
         <Stack gap={4}>
           <Stack gap={2} sx={{ py: 1 }}>
             <Stack gap={2}>
-              <Typography>Ukupna cena sirovina:</Typography>
               <RHFTextInput
                 name='basePrice'
-                label='Ukupna cena'
+                label='Ukuni fiksni troškovi'
                 type='number'
               />
             </Stack>
             <Stack direction='row' gap={2}>
               <Stack gap={2} sx={{ flex: 1 }}>
-                <Typography>Ukupna masa (g)</Typography>
                 <RHFTextInput
                   name='totalWeight'
                   label='Ukupna masa (g)'
@@ -161,7 +159,6 @@ export default function Calculator() {
               </Stack>
 
               <Stack gap={2} sx={{ flex: 1 }}>
-                <Typography>Masa pakovanja(g)</Typography>
                 <RHFTextInput
                   name='packageWeight'
                   label='Masa pakovanja (g)'
@@ -171,7 +168,10 @@ export default function Calculator() {
               </Stack>
             </Stack>
           </Stack>
-
+          <Typography variant='caption'>
+            Ukoliko se unese ukupna masa i masa pakovanja, troškovi i minimalna
+            cena koštanja će automatski biti izračunata za uneto pakovanje.
+          </Typography>
           <Divider />
           <Stack>
             <Stack
