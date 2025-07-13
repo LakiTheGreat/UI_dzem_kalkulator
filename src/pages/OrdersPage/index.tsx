@@ -143,6 +143,23 @@ export default function OrdersPage() {
           <Stack>
             <Stack direction='row' gap={1}>
               <Typography sx={{ width: ORDER_WIDTH }}>
+                Ukupan broj malih tegli:
+              </Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                {data?.totalSmallCups}
+              </Typography>
+            </Stack>
+            <Stack direction='row' gap={1}>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                Ukupan broj velikih tegli:
+              </Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                {data?.totalLargeCups}
+              </Typography>
+            </Stack>
+
+            <Stack direction='row' gap={1}>
+              <Typography sx={{ width: ORDER_WIDTH }}>
                 Ukupni prihod:
               </Typography>
               <FormattedPrice price={data?.totalValue ?? 0} />
@@ -162,22 +179,6 @@ export default function OrdersPage() {
                 Ukupni profit:
               </Typography>
               <FormattedPrice price={data?.totalProfit ?? 0} isBold />
-            </Stack>
-            <Stack direction='row' gap={1}>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                Ukupan broj malih tegli:
-              </Typography>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                {data?.totalSmallCups}
-              </Typography>
-            </Stack>
-            <Stack direction='row' gap={1}>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                Ukupan broj velikih tegli:
-              </Typography>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                {data?.totalLargeCups}
-              </Typography>
             </Stack>
           </Stack>
         )}
