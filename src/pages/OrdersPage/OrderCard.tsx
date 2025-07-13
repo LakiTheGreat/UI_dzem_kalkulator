@@ -47,9 +47,7 @@ export default function OrderCard({
             <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
           </Stack>
           <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>
-              Naziv porudžbine:
-            </Typography>
+            <Typography sx={{ width: ORDER_WIDTH }}>Vrsta džema:</Typography>
             <Typography sx={{ fontWeight: 'bold' }}>
               {order.orderTypeName}
             </Typography>
