@@ -55,7 +55,7 @@ export default function FruitsForm({ mappedData }: Props) {
             <Stack sx={{ width: '100%' }}>
               <RHFSelectInput
                 menuItems={mappedData}
-                label='Naziv voća'
+                label='Voće'
                 name={`fruits.${index}.fruitName`}
               />
             </Stack>
