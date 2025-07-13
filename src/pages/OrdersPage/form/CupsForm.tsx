@@ -46,7 +46,7 @@ export default function CupsForm({ cupCosts }: Props) {
           <Stack sx={{ flex: 1 }}>
             <RHFTextInput
               type='number'
-              label='Broj'
+              label='Broj teglica'
               {...register(`cups.${index}.numberOf`)}
             />
           </Stack>
