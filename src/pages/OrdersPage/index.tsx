@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Id } from 'react-toastify';
 
 import { useGetFruitsQuery } from '../../api/fruitsSlice';
 import {
@@ -22,15 +23,14 @@ import {
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { ORDER_WIDTH } from '../../constants';
 import { routes } from '../../constants/routes';
-import { OrderParams } from '../../types/orders';
+import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
+import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
+import useConfirmDialog from '../../hooks/useConfirmDialog';
+import { OrderParams, PRICE_STATUS } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
+import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import OrderCard from './OrderCard';
 import OrderDetailsDialog from './OrderDetailsDialog';
-import useConfirmDialog from '../../hooks/useConfirmDialog';
-import { Id } from 'react-toastify';
-import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
-import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
-import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
@@ -41,6 +41,7 @@ export default function OrdersPage() {
 
   const param = {
     orderTypeId: 0,
+    priceStatus: PRICE_STATUS.ALL,
   };
 
   const [params, setParams] = useState<OrderParams>(param);
@@ -96,25 +97,43 @@ export default function OrdersPage() {
       />
       <Stack gap={3}>
         {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
-        {!isLoadingFruits && (
+        <Stack direction='row' gap={2}>
+          {!isLoadingFruits && (
+            <FormControl fullWidth>
+              <InputLabel>Vrsta džema</InputLabel>
+              <Select
+                value={params.orderTypeId}
+                label='Vrsta džema'
+                onChange={(e) =>
+                  setParams({ ...params, orderTypeId: Number(e.target.value) })
+                }
+              >
+                <MenuItem value={0}>Prikaži sve</MenuItem>
+                {fruits?.map((fruit) => (
+                  <MenuItem key={fruit.id} value={fruit.id}>
+                    {fruit.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
           <FormControl fullWidth>
-            <InputLabel>Vrsta džema</InputLabel>
+            <InputLabel>Besplatna osnova</InputLabel>
             <Select
-              value={params.orderTypeId}
-              label='Vrsta džema'
+              value={params.priceStatus}
+              label='Besplatna osnova'
               onChange={(e) =>
-                setParams({ ...params, orderTypeId: Number(e.target.value) })
+                setParams({ ...params, priceStatus: Number(e.target.value) })
               }
             >
-              <MenuItem value={0}>Prikaži sve</MenuItem>
-              {fruits?.map((fruit) => (
-                <MenuItem key={fruit.id} value={fruit.id}>
-                  {fruit.label}
-                </MenuItem>
-              ))}
+              <MenuItem value={PRICE_STATUS.ALL}>Prikaži sve</MenuItem>
+              <MenuItem value={PRICE_STATUS.ONLY_FREE}>
+                Besplatna osnova
+              </MenuItem>
+              <MenuItem value={PRICE_STATUS.ONLY_PAID}>Plaćena osnova</MenuItem>
             </Select>
           </FormControl>
-        )}
+        </Stack>
         {isFetching && <Skeleton variant='rounded' height={72} />}
         {!isFetching && (
           <Stack>

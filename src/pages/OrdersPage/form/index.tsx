@@ -48,6 +48,7 @@ export type FormData = {
   fruits: FruitItem[];
   cups: CupItem[];
   orderTypeId: string;
+  baseFruitIsFree: boolean;
 };
 
 export default function OrderForm() {
@@ -77,6 +78,7 @@ export default function OrderForm() {
       fruits: [{ grams: '', price: '', total: '' }],
       cups: [],
       orderTypeId: '',
+      baseFruitIsFree: false,
     },
   });
 
@@ -147,6 +149,7 @@ export default function OrderForm() {
       totalValue: Number(totalOrderPrice),
       profit: profit,
       profitMargin: Number(profitMargin),
+      baseFruitIsFree: data.baseFruitIsFree,
     };
     createNewOrder(req);
     setToastId(setToastIsLoading(`Sačekaj....`));

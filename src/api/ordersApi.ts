@@ -7,10 +7,14 @@ const ordersApiUrl = '/orders';
 const orderApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
     getAllOrders: build.query<OrderResponse, OrderParams>({
-      query: ({ orderTypeId }) => {
+      query: ({ orderTypeId, priceStatus }) => {
         const params = new URLSearchParams();
         if (orderTypeId && orderTypeId > 0) {
           params.set('orderTypeId', String(orderTypeId));
+        }
+
+        if (priceStatus && priceStatus > 0) {
+          params.set('priceStatus', String(priceStatus));
         }
         return {
           url: `${ordersApiUrl}?${params.toString()}`,

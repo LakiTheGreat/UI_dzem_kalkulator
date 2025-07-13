@@ -11,6 +11,7 @@ import RHFTextInput from '../../../components/RHFTextInput';
 import FormattedPrice from '../../../utils/FormattedPrice';
 
 import { FruitItem } from './index';
+import RHFCheckbox from '../../../components/RHFCheckbox';
 
 type Props = {
   mappedData: MenuItemType[];
@@ -52,6 +53,9 @@ export default function FruitsForm({ mappedData }: Props) {
       {fields.map((field, index) => (
         <Stack key={field.id} gap={2}>
           <Stack direction='column' alignItems='center' gap={2}>
+            <Stack sx={{ width: '100%' }}>
+              <RHFCheckbox name='baseFruitIsFree' label='Osnova je besplatna' />
+            </Stack>
             <Stack sx={{ width: '100%' }}>
               <RHFSelectInput
                 menuItems={mappedData}

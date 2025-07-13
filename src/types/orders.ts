@@ -8,6 +8,7 @@ export type Order = {
   totalValue: number;
   profit: number;
   profitMargin: number;
+  baseFruitIsFree: boolean;
   createdAt: Date;
 };
 
@@ -18,6 +19,7 @@ export type NewOrder = { orderTypeId: number } & Omit<
 
 export type OrderParams = {
   orderTypeId: number;
+  priceStatus: PRICE_STATUS;
 };
 
 export type OrderResponse = {
@@ -26,3 +28,9 @@ export type OrderResponse = {
   totalExpense: number;
   totalProfit: number;
 };
+
+export const enum PRICE_STATUS {
+  ALL = 0,
+  ONLY_FREE = 1,
+  ONLY_PAID = 2,
+}

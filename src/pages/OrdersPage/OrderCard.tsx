@@ -9,13 +9,14 @@ import {
   IconButton,
   Stack,
   Typography,
+  useTheme,
 } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
 
 import { ORDER_WIDTH } from '../../constants';
 import { Order } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
-import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   order: Order;
@@ -28,11 +29,18 @@ export default function OrderCard({
   setSelectedId,
   handleDelete,
 }: Props) {
+  const { palette } = useTheme();
+
   return (
     <Card
       key={order.id}
       variant='outlined'
-      sx={{ bgcolor: 'secondary.lighter' }}
+      sx={{
+        bgcolor: 'secondary.lighter',
+        border: `1px solid ${
+          order.baseFruitIsFree ? `${palette.success.dark}` : 'transparent'
+        }`,
+      }}
     >
       <CardContent>
         <Stack>
@@ -57,6 +65,13 @@ export default function OrderCard({
               Broj malih teglica:
             </Typography>
             <Typography> {order.numberOfSmallCups}</Typography>
+          </Stack>
+
+          <Stack direction='row'>
+            <Typography sx={{ width: ORDER_WIDTH }}>
+              Osnova je besplatna:
+            </Typography>
+            <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
           </Stack>
 
           <Stack direction='row'>
