@@ -189,7 +189,7 @@ export default function OrderForm() {
         {!isLoading && (
           <Stack gap={4}>
             <Stack gap={2}>
-              <RHFTextInput name='orderName' label='Naziv serije' />
+              <RHFTextInput name='orderName' label='Napomena' />
 
               <RHFSelectInput
                 name='orderTypeId'
@@ -246,10 +246,7 @@ export default function OrderForm() {
               type='submit'
               size='large'
               disabled={
-                !orderTypeId ||
-                (!cups[0]?.numberOf && !cups[0]?.numberOf) ||
-                fruits[0]?.total === '' ||
-                fruits.length === 0
+                !orderTypeId || (!cups[0]?.numberOf && !cups[0]?.numberOf)
               }
             >
               Sačuvaj

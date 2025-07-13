@@ -37,9 +37,13 @@ export default function OrderCard({
       <CardContent>
         <Stack>
           <Stack direction='row'>
+            <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
             <Typography sx={{ width: ORDER_WIDTH }}>
-              Vreme porudžbine:
+              {order.orderName || '/'}
             </Typography>
+          </Stack>
+          <Stack direction='row'>
+            <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
             <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
           </Stack>
           <Stack direction='row'>
