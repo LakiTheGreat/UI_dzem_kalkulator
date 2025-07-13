@@ -76,15 +76,21 @@ export default function FruitsForm({ mappedData }: Props) {
                 />
               </Stack>
             </Stack>
-            <Stack direction='row' gap={2}>
+            <Stack direction='row' gap={2} alignItems='center'>
               <Stack sx={{ flex: 1, alignItems: 'center' }}>
                 <Typography>Ukupno:</Typography>
                 <FormattedPrice price={fruits[index]?.total ?? ''} isBold />
               </Stack>
 
-              <IconButton color='error' onClick={() => remove(index)}>
-                <DeleteIcon />
-              </IconButton>
+              <Stack>
+                <IconButton
+                  color='error'
+                  onClick={() => remove(index)}
+                  disabled={fruits.length === 1}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
             </Stack>
           </Stack>
           <Divider />
