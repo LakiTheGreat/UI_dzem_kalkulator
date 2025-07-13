@@ -193,7 +193,9 @@ export default function OrdersPage() {
             </Stack>
           )}
           {!isFetching && (
-            <Typography>Broj porudžbina: {data?.orders?.length}</Typography>
+            <Typography>
+              Broj proizvodnih serija: {data?.orders?.length}
+            </Typography>
           )}
           {!isFetching &&
             data?.orders?.map((order) => (
