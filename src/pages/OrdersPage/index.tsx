@@ -98,10 +98,10 @@ export default function OrdersPage() {
         {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
         {!isLoadingFruits && (
           <FormControl fullWidth>
-            <InputLabel>Vrsta proizvodne serije</InputLabel>
+            <InputLabel>Vrsta džema</InputLabel>
             <Select
               value={params.orderTypeId}
-              label='Vrsta proizvodne serije'
+              label='Vrsta džema'
               onChange={(e) =>
                 setParams({ ...params, orderTypeId: Number(e.target.value) })
               }
