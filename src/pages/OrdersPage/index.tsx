@@ -163,6 +163,22 @@ export default function OrdersPage() {
               </Typography>
               <FormattedPrice price={data?.totalProfit ?? 0} isBold />
             </Stack>
+            <Stack direction='row' gap={1}>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                Ukupan broj malih tegli:
+              </Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                {data?.totalSmallCups}
+              </Typography>
+            </Stack>
+            <Stack direction='row' gap={1}>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                Ukupan broj velikih tegli:
+              </Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                {data?.totalLargeCups}
+              </Typography>
+            </Stack>
           </Stack>
         )}
         <Divider />

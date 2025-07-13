@@ -27,6 +27,8 @@ export type OrderResponse = {
   totalValue: number;
   totalExpense: number;
   totalProfit: number;
+  totalSmallCups: number;
+  totalLargeCups: number;
 };
 
 export const enum PRICE_STATUS {
