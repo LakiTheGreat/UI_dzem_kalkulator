@@ -46,9 +46,7 @@ export default function OrderCard({
         <Stack>
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
-            <Typography sx={{ width: ORDER_WIDTH }}>
-              {order.orderName || '/'}
-            </Typography>
+            <Typography>{order.orderName || '/'}</Typography>
           </Stack>
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
@@ -70,11 +68,9 @@ export default function OrderCard({
           {order.cups.map((cup) => (
             <Stack direction='row' key={cup.label}>
               <Typography sx={{ width: ORDER_WIDTH }}>
-                Broj teglica od: {cup.label}
+                Br. teglica od: {cup.label}
               </Typography>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                {cup.numberOf}
-              </Typography>
+              <Typography>{cup.numberOf}</Typography>
             </Stack>
           ))}
 
