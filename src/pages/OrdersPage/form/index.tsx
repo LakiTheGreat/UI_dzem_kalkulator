@@ -29,7 +29,7 @@ import FruitsForm from './FruitsForm';
 import OrderSummary from './OrderSummary';
 
 export type FruitItem = {
-  fruitName: string;
+  fruitId: string;
   grams: string | number;
   price: string | number;
   total: string | number;
@@ -38,7 +38,8 @@ export type FruitItem = {
 export type CupItem = {
   label: string;
   numberOf: number;
-  value: number;
+  cost: number;
+  sellingPrice: number;
   total: number;
 };
 
@@ -53,6 +54,7 @@ export type FormData = {
 export default function OrderForm() {
   const [toastId, setToastId] = useState<Id>('');
 
+  const { data: otherExpensesMargin } = useGetOtherExpansesMarginQuery();
   const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
 
   const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
@@ -137,20 +139,27 @@ export default function OrderForm() {
   }, [cupsWithData, reset]);
 
   const formSubmit = (data: FormData) => {
-    const numberOfSmallCups = data.cups[0]?.numberOf || 0;
-    const numberOFLargeCups = data.cups[1]?.numberOf || 0;
-
+    console.log(data);
     const req: NewOrder = {
       orderTypeId: Number(data.orderTypeId),
       orderName: data.orderName,
-      numberOfSmallCups: Number(numberOfSmallCups),
-      numberOfLargeCups: Number(numberOFLargeCups),
-      totalExpense: totalExpenses,
-      totalValue: Number(totalOrderPrice),
-      profit: profit,
-      profitMargin: Number(profitMargin),
+      fruits: data.fruits.map((fruit) => ({
+        grams: fruit.grams.toString(),
+        price: fruit.price.toString(),
+        total: fruit.total.toString(),
+        fruitId: fruit.fruitId,
+      })),
+      cups: data.cups.map((cup) => ({
+        cost: cup.cost,
+        label: cup.label,
+        numberOf: cup.numberOf,
+        sellingPrice: cup.sellingPrice,
+        total: cup.total,
+      })),
+      otherExpensesMargin: otherExpensesMargin?.value || 1,
       baseFruitIsFree: data.baseFruitIsFree,
     };
+    // console.log(req);
     createNewOrder(req);
     setToastId(setToastIsLoading(`Sačekaj....`));
   };

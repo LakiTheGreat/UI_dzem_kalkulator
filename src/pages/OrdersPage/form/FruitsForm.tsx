@@ -10,8 +10,8 @@ import RHFSelectInput, {
 import RHFTextInput from '../../../components/RHFTextInput';
 import FormattedPrice from '../../../utils/FormattedPrice';
 
-import { FruitItem } from './index';
 import RHFCheckbox from '../../../components/RHFCheckbox';
+import { FruitItem } from './index';
 
 type Props = {
   mappedData: MenuItemType[];
@@ -60,7 +60,7 @@ export default function FruitsForm({ mappedData }: Props) {
               <RHFSelectInput
                 menuItems={mappedData}
                 label='Voće'
-                name={`fruits.${index}.fruitName`}
+                name={`fruits.${index}.fruitId`}
               />
             </Stack>
             <Stack direction='row' gap={1} sx={{ width: '100%' }}>
@@ -104,9 +104,7 @@ export default function FruitsForm({ mappedData }: Props) {
       <Button
         variant='outlined'
         startIcon={<AddIcon />}
-        onClick={() =>
-          append({ fruitName: '', grams: '', price: '', total: '' })
-        }
+        onClick={() => append({ fruitId: '', grams: '', price: '', total: '' })}
       >
         Dodaj voće
       </Button>

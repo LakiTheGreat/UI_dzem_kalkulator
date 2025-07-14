@@ -70,40 +70,40 @@ export default function OrderCard({
             <Typography sx={{ width: ORDER_WIDTH }}>
               Broj malih teglica:
             </Typography>
-            <Typography> {order.numberOfSmallCups}</Typography>
+            {/* <Typography> {order.numberOfSmallCups}</Typography> */}
           </Stack>
 
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>
               Broj velikih teglica:
             </Typography>
-            <Typography>{order.numberOfLargeCups}</Typography>
+            {/* <Typography>{order.numberOfLargeCups}</Typography> */}
           </Stack>
 
           <Divider sx={{ my: 1.5 }} />
 
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>Prihod:</Typography>
-            <FormattedPrice price={order.totalValue} />
+            <FormattedPrice price={order.orderValue} />
           </Stack>
 
           <Stack direction='row' color='primary.main'>
             <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
               Rashod:
             </Typography>
-            <FormattedPrice price={order.totalExpense} isExpense isBold />
+            <FormattedPrice price={order.orderExpense} isExpense isBold />
           </Stack>
 
           <Stack direction='row' color='success.dark'>
             <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
               Profit:
             </Typography>
-            <FormattedPrice price={order.profit} isBold />
+            <FormattedPrice price={order.orderProfit} isBold />
           </Stack>
 
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>Profitna marža:</Typography>
-            <Typography>{`${order.profitMargin}%`}</Typography>
+            <Typography>{`${order.profitMargin}`}</Typography>
           </Stack>
         </Stack>
       </CardContent>

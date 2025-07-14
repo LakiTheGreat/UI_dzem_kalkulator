@@ -146,7 +146,8 @@ export default function OrdersPage() {
                 Ukupan broj malih tegli:
               </Typography>
               <Typography sx={{ width: ORDER_WIDTH }}>
-                {data?.totalSmallCups}
+                {/* {data?.totalSmallCups} */}
+                ISPRAVI
               </Typography>
             </Stack>
             <Stack direction='row' gap={1}>
@@ -154,7 +155,8 @@ export default function OrdersPage() {
                 Ukupan broj velikih tegli:
               </Typography>
               <Typography sx={{ width: ORDER_WIDTH }}>
-                {data?.totalLargeCups}
+                {/* {data?.totalLargeCups} */}
+                ISPRAVI
               </Typography>
             </Stack>
 
