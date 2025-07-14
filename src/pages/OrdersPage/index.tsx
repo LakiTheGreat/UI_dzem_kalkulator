@@ -141,25 +141,16 @@ export default function OrdersPage() {
         {isFetching && <Skeleton variant='rounded' height={72} />}
         {!isFetching && (
           <Stack>
-            <Stack direction='row' gap={1}>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                Ukupan broj malih tegli:
-              </Typography>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                {/* {data?.totalSmallCups} */}
-                ISPRAVI
-              </Typography>
-            </Stack>
-            <Stack direction='row' gap={1}>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                Ukupan broj velikih tegli:
-              </Typography>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                {/* {data?.totalLargeCups} */}
-                ISPRAVI
-              </Typography>
-            </Stack>
-
+            {data?.totalCups.map((cup) => (
+              <Stack direction='row' key={cup.label} gap={1}>
+                <Typography sx={{ width: ORDER_WIDTH }}>
+                  Broj teglica od: {cup.label}
+                </Typography>
+                <Typography sx={{ width: ORDER_WIDTH }}>
+                  {cup.numberOf}
+                </Typography>
+              </Stack>
+            ))}
             <Stack direction='row' gap={1}>
               <Typography sx={{ width: ORDER_WIDTH }}>
                 Ukupni prihod:

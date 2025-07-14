@@ -66,19 +66,17 @@ export default function OrderCard({
             </Typography>
             <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
           </Stack>
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>
-              Broj malih teglica:
-            </Typography>
-            {/* <Typography> {order.numberOfSmallCups}</Typography> */}
-          </Stack>
 
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>
-              Broj velikih teglica:
-            </Typography>
-            {/* <Typography>{order.numberOfLargeCups}</Typography> */}
-          </Stack>
+          {order.cups.map((cup) => (
+            <Stack direction='row' key={cup.label}>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                Broj teglica od: {cup.label}
+              </Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                {cup.numberOf}
+              </Typography>
+            </Stack>
+          ))}
 
           <Divider sx={{ my: 1.5 }} />
 

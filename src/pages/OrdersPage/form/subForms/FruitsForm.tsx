@@ -4,13 +4,12 @@ import { Button, Divider, IconButton, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
+import RHFCheckbox from '../../../../components/RHFCheckbox';
 import RHFSelectInput, {
   MenuItemType,
 } from '../../../../components/RHFSelectInput';
 import RHFTextInput from '../../../../components/RHFTextInput';
 import FormattedPrice from '../../../../utils/FormattedPrice';
-
-import RHFCheckbox from '../../../../components/RHFCheckbox';
 import { FruitItem } from '../index';
 
 type Props = {
@@ -49,13 +48,22 @@ export default function FruitsForm({ mappedData }: Props) {
   }, [fruits, setValue]);
 
   return (
-    <Stack spacing={2}>
+    <Stack>
+      <RHFCheckbox name='baseFruitIsFree' label='Osnova je besplatna' />
+      <Stack gap={1}>
+        <Typography variant='caption'>
+          Neophodno je uneti{' '}
+          <strong>makar jedno voće i njegovu gramažu.</strong>
+        </Typography>
+        <Typography variant='caption'>
+          Cena nije obavezna. Ali da bi sistem ovu seriju upamtio kao "Besplatna
+          osnova" neophodno je čekirati checkbox iznad ("Osnova je besplatna").
+        </Typography>
+      </Stack>
       {fields.map((field, index) => (
         <Stack key={field.id} gap={2}>
           <Stack direction='column' alignItems='center' gap={2}>
-            <Stack sx={{ width: '100%' }}>
-              <RHFCheckbox name='baseFruitIsFree' label='Osnova je besplatna' />
-            </Stack>
+            <Stack sx={{ width: '100%' }}></Stack>
             <Stack sx={{ width: '100%' }}>
               <RHFSelectInput
                 menuItems={mappedData}

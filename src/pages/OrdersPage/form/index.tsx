@@ -1,29 +1,15 @@
-import {
-  Button,
-  Container,
-  Divider,
-  Skeleton,
-  Stack,
-  Typography,
-} from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Button, Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { Id } from 'react-toastify';
 
 import { useGetOtherExpansesMarginQuery } from '../../../api/constantApi';
 import { useGetAllCupsQuery } from '../../../api/cups';
 import { useGetFruitsQuery } from '../../../api/fruitsSlice';
-import { useCreateNewOrderMutation } from '../../../api/ordersApi';
 import FormProvider from '../../../components/FormProvider';
-import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import RHFSelectInput from '../../../components/RHFSelectInput';
 import RHFTextInput from '../../../components/RHFTextInput';
-import { routes } from '../../../constants/routes';
-import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
-import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
-import { NewOrder } from '../../../types/orders';
+import { Order } from '../../../types/orders';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
-import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import CupsForm from './subForms/CupsForm';
 import FruitsForm from './subForms/FruitsForm';
 import OrderSummary from './subForms/OrderSummary';
@@ -51,10 +37,12 @@ export type FormData = {
   baseFruitIsFree: boolean;
 };
 
-export default function OrderForm() {
-  const [toastId, setToastId] = useState<Id>('');
+type Props = {
+  onSubmit: (data: FormData) => void;
+  data: Order | undefined;
+};
 
-  const { data: otherExpensesMargin } = useGetOtherExpansesMarginQuery();
+export default function OrderForm({ onSubmit, data }: Props) {
   const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
 
   const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
@@ -67,8 +55,6 @@ export default function OrderForm() {
 
   const isLoading =
     cupsWithDataIsLoading || otherExpansesMarginLoading || fruitLoading;
-
-  const [createNewOrder, { data, error }] = useCreateNewOrderMutation();
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -134,132 +120,94 @@ export default function OrderForm() {
     }
   }, [cupsWithData, setValue]);
 
-  const formSubmit = (data: FormData) => {
-    const req: NewOrder = {
-      orderTypeId: Number(data.orderTypeId),
-      orderName: data.orderName,
-      fruits: data.fruits.map((fruit) => ({
-        grams: fruit.grams.toString(),
-        price: fruit.price.toString(),
-        total: fruit.total.toString(),
-        fruitId: fruit.fruitId,
-      })),
-      cups: data.cups.map((cup) => ({
-        cost: cup.cost,
-        label: cup.label,
-        numberOf: cup.numberOf,
-        sellingPrice: cup.sellingPrice,
-        total: cup.total,
-      })),
-      otherExpensesMargin: otherExpensesMargin?.value || 1,
-      baseFruitIsFree: data.baseFruitIsFree,
-    };
-
-    createNewOrder(req);
-    setToastId(setToastIsLoading(`Sačekaj....`));
-  };
-
   useEffect(() => {
     if (data) {
-      reset();
+      const defaultCups = data.cups.map((cup) => ({
+        label: cup.label,
+        numberOf: 0,
+        cost: cup.cost,
+        sellingPrice: cup.sellingPrice,
+        total: 0,
+      }));
+      reset({
+        orderName: '',
+        fruits: [{ grams: '', price: '', total: '' }],
+        cups: defaultCups,
+        orderTypeId: '',
+        baseFruitIsFree: false,
+      });
     }
   }, [data, reset]);
 
-  useApiSuccessNotification({
-    data,
-    message: 'Narudžbina uspešno kreirana',
-    toastId,
-  });
-
-  useApiErrorNotification({
-    error,
-    toastId,
-  });
-
   return (
-    <Container maxWidth='sm'>
-      <HeaderBreadcrumbs
-        heading={'Proizvodne serije'}
-        links={[
-          {
-            name: 'Pregled',
-            href: `/${routes.orders}`,
-          },
-          {
-            name: 'Nova serija',
-            href: `${routes.orders}/${routes.new}`,
-          },
-        ]}
-      />
-      <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
-        {isLoading && <Skeleton height='70vh' variant='rounded' />}
-        {!isLoading && (
-          <Stack gap={4}>
-            <Stack gap={2}>
-              <RHFTextInput name='orderName' label='Napomena' />
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {isLoading && <Skeleton height='70vh' variant='rounded' />}
+      {!isLoading && (
+        <Stack gap={4}>
+          <Stack gap={2}>
+            <RHFTextInput name='orderName' label='Napomena' />
 
-              <RHFSelectInput
-                name='orderTypeId'
-                label='Vrsta džema'
-                menuItems={mappedFruits}
-              />
-            </Stack>
-
-            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Troškovi
-            </Typography>
-            <FruitsForm mappedData={mappedFruits} />
-
-            <Divider />
-
-            <CupsForm cupsWithData={cupsWithData} />
-
-            <Divider
-              sx={{
-                borderColor: 'secondary.main',
-                bgcolor: 'secondary.main',
-                height: 3,
-              }}
+            <RHFSelectInput
+              name='orderTypeId'
+              label='Vrsta džema'
+              menuItems={mappedFruits}
             />
-
-            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-              Vrednost serije
-            </Typography>
-
-            <OrderSummary
-              cupsWithData={cupsWithData}
-              cups={cups}
-              totalOrderPrice={Number(totalOrderPrice)}
-              totalFruitPrice={totalFruitPrice}
-              totalCupPrice={totalCupPrice}
-              otherExpenses={otherExpenses}
-              totalExpenses={totalExpenses}
-              profit={profit}
-              profitMargin={Number(profitMargin)}
-              otherExpansesMargin={otherExpansesMargin}
-            />
-
-            <Divider
-              sx={{
-                borderColor: 'secondary.main',
-                bgcolor: 'secondary.main',
-                height: 3,
-              }}
-            />
-
-            <Button
-              variant='contained'
-              type='submit'
-              size='large'
-              disabled={
-                !orderTypeId || (!cups[0]?.numberOf && !cups[0]?.numberOf)
-              }
-            >
-              Sačuvaj
-            </Button>
           </Stack>
-        )}
-      </FormProvider>
-    </Container>
+
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Troškovi
+          </Typography>
+          <FruitsForm mappedData={mappedFruits} />
+
+          <Divider />
+
+          <CupsForm cupsWithData={cupsWithData} />
+
+          <Divider
+            sx={{
+              borderColor: 'secondary.main',
+              bgcolor: 'secondary.main',
+              height: 3,
+            }}
+          />
+
+          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+            Vrednost serije
+          </Typography>
+
+          <OrderSummary
+            cupsWithData={cupsWithData}
+            cups={cups}
+            totalOrderPrice={Number(totalOrderPrice)}
+            totalFruitPrice={totalFruitPrice}
+            totalCupPrice={totalCupPrice}
+            otherExpenses={otherExpenses}
+            totalExpenses={totalExpenses}
+            profit={profit}
+            profitMargin={Number(profitMargin)}
+            otherExpansesMargin={otherExpansesMargin}
+          />
+
+          <Divider
+            sx={{
+              borderColor: 'secondary.main',
+              bgcolor: 'secondary.main',
+              height: 3,
+            }}
+          />
+
+          <Button
+            variant='contained'
+            type='submit'
+            size='large'
+            disabled={
+              !orderTypeId || (!cups[0]?.numberOf && !cups[0]?.numberOf)
+            }
+          >
+            Sačuvaj
+          </Button>
+        </Stack>
+      )}
+    </FormProvider>
   );
 }

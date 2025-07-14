@@ -14,6 +14,11 @@ export type OrderCup = {
   total: number;
 };
 
+export type OrderTotalCups = {
+  label: string;
+  numberOf: number;
+};
+
 export type Order = {
   id: number;
   orderName: string;
@@ -48,6 +53,7 @@ export type OrderResponse = {
   totalValue: number;
   totalExpense: number;
   totalProfit: number;
+  totalCups: OrderTotalCups[];
 };
 
 export const enum PRICE_STATUS {
