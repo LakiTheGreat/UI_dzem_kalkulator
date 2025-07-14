@@ -2,10 +2,10 @@ import { Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { CupItem } from '.';
-import RHFTextInput from '../../../components/RHFTextInput';
-import { CupWithPriceData } from '../../../types/cups';
-import FormattedPrice from '../../../utils/FormattedPrice';
+import { CupItem } from '..';
+import RHFTextInput from '../../../../components/RHFTextInput';
+import { CupWithPriceData } from '../../../../types/cups';
+import FormattedPrice from '../../../../utils/FormattedPrice';
 
 type Props = {
   cupsWithData?: CupWithPriceData[];

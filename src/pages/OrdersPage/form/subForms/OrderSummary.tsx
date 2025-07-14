@@ -1,8 +1,8 @@
 import { Divider, Stack, Typography } from '@mui/material';
 
-import { CupItem } from '.';
-import { CupWithPriceData } from '../../../types/cups';
-import FormattedPrice from '../../../utils/FormattedPrice';
+import { CupItem } from '..';
+import { CupWithPriceData } from '../../../../types/cups';
+import FormattedPrice from '../../../../utils/FormattedPrice';
 
 type Props = {
   cupsWithData?: CupWithPriceData[];

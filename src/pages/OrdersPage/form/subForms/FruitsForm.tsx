@@ -6,12 +6,12 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import RHFSelectInput, {
   MenuItemType,
-} from '../../../components/RHFSelectInput';
-import RHFTextInput from '../../../components/RHFTextInput';
-import FormattedPrice from '../../../utils/FormattedPrice';
+} from '../../../../components/RHFSelectInput';
+import RHFTextInput from '../../../../components/RHFTextInput';
+import FormattedPrice from '../../../../utils/FormattedPrice';
 
-import RHFCheckbox from '../../../components/RHFCheckbox';
-import { FruitItem } from './index';
+import RHFCheckbox from '../../../../components/RHFCheckbox';
+import { FruitItem } from '../index';
 
 type Props = {
   mappedData: MenuItemType[];

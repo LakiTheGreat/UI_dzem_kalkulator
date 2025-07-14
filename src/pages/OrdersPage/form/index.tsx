@@ -24,9 +24,9 @@ import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotificat
 import { NewOrder } from '../../../types/orders';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
-import CupsForm from './CupsForm';
-import FruitsForm from './FruitsForm';
-import OrderSummary from './OrderSummary';
+import CupsForm from './subForms/CupsForm';
+import FruitsForm from './subForms/FruitsForm';
+import OrderSummary from './subForms/OrderSummary';
 
 export type FruitItem = {
   fruitId: string;
@@ -80,7 +80,7 @@ export default function OrderForm() {
     },
   });
 
-  const { handleSubmit, reset, control, watch } = methods;
+  const { handleSubmit, reset, control, watch, setValue } = methods;
 
   const cups = useWatch({ control, name: 'cups' });
   const fruits = useWatch({ control, name: 'fruits' });
@@ -130,16 +130,11 @@ export default function OrderForm() {
         sellingPrice: cup.sellingPrice,
         total: 0,
       }));
-
-      reset({
-        fruits: [{ grams: '', price: '', total: '' }],
-        cups: defaultCups,
-      });
+      setValue('cups', defaultCups);
     }
-  }, [cupsWithData, reset]);
+  }, [cupsWithData, setValue]);
 
   const formSubmit = (data: FormData) => {
-    console.log(data);
     const req: NewOrder = {
       orderTypeId: Number(data.orderTypeId),
       orderName: data.orderName,
@@ -159,7 +154,7 @@ export default function OrderForm() {
       otherExpensesMargin: otherExpensesMargin?.value || 1,
       baseFruitIsFree: data.baseFruitIsFree,
     };
-    // console.log(req);
+
     createNewOrder(req);
     setToastId(setToastIsLoading(`Sačekaj....`));
   };
