@@ -1,16 +1,11 @@
 import { Divider, Stack, Typography } from '@mui/material';
 
-import FormattedPrice from '../../../utils/FormattedPrice';
 import { CupItem } from '.';
-
-type CupCost = {
-  label: string;
-  value: number;
-};
+import { CupWithPriceData } from '../../../types/cups';
+import FormattedPrice from '../../../utils/FormattedPrice';
 
 type Props = {
-  cupCosts: CupCost[];
-  cupValues: CupCost[];
+  cupsWithData?: CupWithPriceData[];
   cups: CupItem[];
   totalOrderPrice: number;
   totalFruitPrice: number;
@@ -23,8 +18,7 @@ type Props = {
 };
 
 export default function OrderSummary({
-  cupCosts,
-  cupValues,
+  cupsWithData,
   cups,
   totalOrderPrice,
   totalFruitPrice,
@@ -37,10 +31,10 @@ export default function OrderSummary({
 }: Props) {
   return (
     <Stack gap={1}>
-      {cupCosts.map((cost, index) => {
+      {cupsWithData?.map((cost, index) => {
         const numberOf = Number(cups[index]?.numberOf ?? 0);
-        const valueMatch = cupValues.find((val) => val.label === cost.label);
-        const cupValue = Number(valueMatch?.value ?? 0);
+        const valueMatch = cupsWithData.find((val) => val.label === cost.label);
+        const cupValue = Number(valueMatch?.sellingPrice ?? 0);
         const total = numberOf * cupValue;
 
         return (

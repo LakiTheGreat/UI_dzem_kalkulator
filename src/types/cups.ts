@@ -7,8 +7,8 @@ export type Cup = {
 
 export type CupWithPriceData = {
   id: number;
-  value: number;
   label: string;
-  const: number;
+  isDeleted: boolean;
+  cost: number;
   sellingPrice: number;
 };

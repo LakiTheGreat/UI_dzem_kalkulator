@@ -11,8 +11,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { Id } from 'react-toastify';
 
 import { useGetOtherExpansesMarginQuery } from '../../../api/constantApi';
-import { useGetAllCupCostsQuery } from '../../../api/cupCosts';
-import { useGetAllCupValuesQuery } from '../../../api/cupValues';
+import { useGetAllCupsQuery } from '../../../api/cups';
 import { useGetFruitsQuery } from '../../../api/fruitsSlice';
 import { useCreateNewOrderMutation } from '../../../api/ordersApi';
 import FormProvider from '../../../components/FormProvider';
@@ -55,20 +54,17 @@ export default function OrderForm() {
   const [toastId, setToastId] = useState<Id>('');
 
   const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
-  const { data: cupCosts = [], isLoading: cupCostsLoading } =
-    useGetAllCupCostsQuery();
-  const { data: cupValues = [], isLoading: cupValuesLoading } =
-    useGetAllCupValuesQuery();
+
+  const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
+    useGetAllCupsQuery();
+
   const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
     useGetOtherExpansesMarginQuery();
 
   const mappedFruits = mapFruitToMenuItems(fruitData);
 
   const isLoading =
-    cupCostsLoading ||
-    cupValuesLoading ||
-    otherExpansesMarginLoading ||
-    fruitLoading;
+    cupsWithDataIsLoading || otherExpansesMarginLoading || fruitLoading;
 
   const [createNewOrder, { data, error }] = useCreateNewOrderMutation();
 
@@ -88,26 +84,29 @@ export default function OrderForm() {
   const fruits = useWatch({ control, name: 'fruits' });
   const { orderTypeId } = watch();
 
-  const totalCupPrice = cupCosts.reduce((acc, cost, index) => {
-    const numberOf = Number(cups[index]?.numberOf ?? 0);
-    const cupCost = Number(cost.value ?? 0); // this is the COST
-    return acc + numberOf * cupCost;
-  }, 0);
+  const totalCupPrice =
+    cupsWithData?.reduce((acc, cost, index) => {
+      const numberOf = Number(cups[index]?.numberOf ?? 0);
+      const cupCost = Number(cost.cost ?? 0);
+      return acc + numberOf * cupCost;
+    }, 0) || 0;
 
   const totalFruitPrice = fruits.reduce((acc, fruit) => {
     const total = Number(fruit.total ?? 0);
     return acc + total;
   }, 0);
 
-  const totalOrderPrice = cupCosts
-    .reduce((acc, cost, index) => {
-      const numberOf = Number(cups[index]?.numberOf ?? 0);
-      const cupValue = Number(
-        cupValues.find((val) => val.label === cost.label)?.value ?? 0
-      );
-      return acc + numberOf * cupValue;
-    }, 0)
-    .toFixed(2);
+  const totalOrderPrice =
+    cupsWithData
+      ?.reduce((acc, cost, index) => {
+        const numberOf = Number(cups[index]?.numberOf ?? 0);
+        const cupValue = Number(
+          cupsWithData.find((val) => val.label === cost.label)?.sellingPrice ??
+            0
+        );
+        return acc + numberOf * cupValue;
+      }, 0)
+      .toFixed(2) || 0;
 
   const otherExpenses =
     Number(totalFruitPrice + totalCupPrice) *
@@ -121,11 +120,12 @@ export default function OrderForm() {
   ).toFixed(0);
 
   useEffect(() => {
-    if (cupCosts.length > 0) {
-      const defaultCups = cupCosts.map((cup) => ({
+    if (cupsWithData) {
+      const defaultCups = cupsWithData.map((cup) => ({
         label: cup.label,
         numberOf: 0,
-        value: cup.value,
+        cost: cup.cost,
+        sellingPrice: cup.sellingPrice,
         total: 0,
       }));
 
@@ -134,7 +134,7 @@ export default function OrderForm() {
         cups: defaultCups,
       });
     }
-  }, [cupCosts, reset]);
+  }, [cupsWithData, reset]);
 
   const formSubmit = (data: FormData) => {
     const numberOfSmallCups = data.cups[0]?.numberOf || 0;
@@ -208,7 +208,7 @@ export default function OrderForm() {
 
             <Divider />
 
-            <CupsForm cupCosts={cupCosts} />
+            <CupsForm cupsWithData={cupsWithData} />
 
             <Divider
               sx={{
@@ -223,8 +223,7 @@ export default function OrderForm() {
             </Typography>
 
             <OrderSummary
-              cupCosts={cupCosts}
-              cupValues={cupValues}
+              cupsWithData={cupsWithData}
               cups={cups}
               totalOrderPrice={Number(totalOrderPrice)}
               totalFruitPrice={totalFruitPrice}
