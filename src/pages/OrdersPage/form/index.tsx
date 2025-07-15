@@ -1,15 +1,15 @@
-import { Button, Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
-import { useGetOtherExpansesMarginQuery } from '../../../api/constantApi';
-import { useGetAllCupsQuery } from '../../../api/cups';
-import { useGetFruitsQuery } from '../../../api/fruitsSlice';
 import FormProvider from '../../../components/FormProvider';
-import RHFSelectInput from '../../../components/RHFSelectInput';
+import RHFSelectInput, {
+  MenuItemType,
+} from '../../../components/RHFSelectInput';
 import RHFTextInput from '../../../components/RHFTextInput';
+import { Constant } from '../../../types/constants';
+import { CupWithPriceData } from '../../../types/cups';
 import { Order } from '../../../types/orders';
-import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import CupsForm from './subForms/CupsForm';
 import FruitsForm from './subForms/FruitsForm';
 import OrderSummary from './subForms/OrderSummary';
@@ -40,29 +40,27 @@ export type FormData = {
 type Props = {
   onSubmit: (data: FormData) => void;
   data: Order | undefined;
+  values?: FormData;
+  cupsWithData: CupWithPriceData[] | undefined;
+  mappedFruits: MenuItemType[] | undefined;
+  otherExpansesMargin: Constant | undefined;
 };
 
-export default function OrderForm({ onSubmit, data }: Props) {
-  const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
-
-  const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
-    useGetAllCupsQuery();
-
-  const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
-    useGetOtherExpansesMarginQuery();
-
-  const mappedFruits = mapFruitToMenuItems(fruitData);
-
-  const isLoading =
-    cupsWithDataIsLoading || otherExpansesMarginLoading || fruitLoading;
-
+export default function OrderForm({
+  onSubmit,
+  data,
+  values,
+  cupsWithData,
+  mappedFruits,
+  otherExpansesMargin,
+}: Props) {
   const methods = useForm<FormData>({
     defaultValues: {
-      orderName: '',
-      fruits: [{ grams: '', price: '', total: '' }],
-      cups: [],
-      orderTypeId: '',
-      baseFruitIsFree: false,
+      orderName: values?.orderName || '',
+      fruits: values?.fruits || [{ grams: '', price: '', total: '' }],
+      cups: values?.cups || [],
+      orderTypeId: values?.orderTypeId || '',
+      baseFruitIsFree: values?.baseFruitIsFree || false,
     },
   });
 
@@ -108,7 +106,7 @@ export default function OrderForm({ onSubmit, data }: Props) {
   ).toFixed(0);
 
   useEffect(() => {
-    if (cupsWithData) {
+    if (cupsWithData && !values) {
       const defaultCups = cupsWithData.map((cup) => ({
         label: cup.label,
         numberOf: 0,
@@ -118,7 +116,7 @@ export default function OrderForm({ onSubmit, data }: Props) {
       }));
       setValue('cups', defaultCups);
     }
-  }, [cupsWithData, setValue]);
+  }, [cupsWithData, values, setValue]);
 
   useEffect(() => {
     if (data) {
@@ -141,73 +139,68 @@ export default function OrderForm({ onSubmit, data }: Props) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      {isLoading && <Skeleton height='70vh' variant='rounded' />}
-      {!isLoading && (
-        <Stack gap={4}>
-          <Stack gap={2}>
-            <RHFTextInput name='orderName' label='Napomena' />
+      <Stack gap={4}>
+        <Stack gap={2}>
+          <RHFTextInput name='orderName' label='Napomena' />
 
-            <RHFSelectInput
-              name='orderTypeId'
-              label='Vrsta džema'
-              menuItems={mappedFruits}
-            />
-          </Stack>
-
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Troškovi
-          </Typography>
-          <FruitsForm mappedData={mappedFruits} />
-
-          <Divider />
-
-          <CupsForm cupsWithData={cupsWithData} />
-
-          <Divider
-            sx={{
-              borderColor: 'secondary.main',
-              bgcolor: 'secondary.main',
-              height: 3,
-            }}
+          <RHFSelectInput
+            name='orderTypeId'
+            label='Vrsta džema'
+            menuItems={mappedFruits || []}
           />
-
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Vrednost serije
-          </Typography>
-
-          <OrderSummary
-            cupsWithData={cupsWithData}
-            cups={cups}
-            totalOrderPrice={Number(totalOrderPrice)}
-            totalFruitPrice={totalFruitPrice}
-            totalCupPrice={totalCupPrice}
-            otherExpenses={otherExpenses}
-            totalExpenses={totalExpenses}
-            profit={profit}
-            profitMargin={Number(profitMargin)}
-            otherExpansesMargin={otherExpansesMargin}
-          />
-
-          <Divider
-            sx={{
-              borderColor: 'secondary.main',
-              bgcolor: 'secondary.main',
-              height: 3,
-            }}
-          />
-
-          <Button
-            variant='contained'
-            type='submit'
-            size='large'
-            disabled={
-              !orderTypeId || (!cups[0]?.numberOf && !cups[0]?.numberOf)
-            }
-          >
-            Sačuvaj
-          </Button>
         </Stack>
-      )}
+
+        <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+          Troškovi
+        </Typography>
+        <FruitsForm mappedData={mappedFruits || []} />
+
+        <Divider />
+
+        <CupsForm cupsWithData={cupsWithData} />
+
+        <Divider
+          sx={{
+            borderColor: 'secondary.main',
+            bgcolor: 'secondary.main',
+            height: 3,
+          }}
+        />
+
+        <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+          Vrednost serije
+        </Typography>
+
+        <OrderSummary
+          cupsWithData={cupsWithData}
+          cups={cups}
+          totalOrderPrice={Number(totalOrderPrice)}
+          totalFruitPrice={totalFruitPrice}
+          totalCupPrice={totalCupPrice}
+          otherExpenses={otherExpenses}
+          totalExpenses={totalExpenses}
+          profit={profit}
+          profitMargin={Number(profitMargin)}
+          otherExpansesMargin={otherExpansesMargin}
+        />
+
+        <Divider
+          sx={{
+            borderColor: 'secondary.main',
+            bgcolor: 'secondary.main',
+            height: 3,
+          }}
+        />
+
+        <Button
+          variant='contained'
+          type='submit'
+          size='large'
+          disabled={!orderTypeId || (!cups[0]?.numberOf && !cups[0]?.numberOf)}
+        >
+          Sačuvaj
+        </Button>
+      </Stack>
     </FormProvider>
   );
 }

@@ -1,39 +1,53 @@
 import { Container, Skeleton } from '@mui/material';
-import { useState } from 'react';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { Id } from 'react-toastify';
 
 import OrderForm, { FormData } from '.';
 import { useGetOtherExpansesMarginQuery } from '../../../api/constantApi';
 import { useGetAllCupsQuery } from '../../../api/cups';
 import { useGetFruitsQuery } from '../../../api/fruitsSlice';
-import { useCreateNewOrderMutation } from '../../../api/ordersApi';
+import {
+  useGetOrderByIdQuery,
+  usePatchOrderMutation,
+} from '../../../api/ordersApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routes } from '../../../constants/routes';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
-import { NewOrder } from '../../../types/orders';
+import { OrderPatchRequest } from '../../../types/orders';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 
-export default function CreateOrder() {
+export default function EditOrder() {
   const [toastId, setToastId] = useState<Id>('');
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
   const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
     useGetOtherExpansesMarginQuery();
+
+  const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
+  const { data: singleOrder, isLoading: isLoadingSingleOrder } =
+    useGetOrderByIdQuery(id ?? skipToken);
 
   const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
     useGetAllCupsQuery();
 
-  const [createNewOrder, { data, error }] = useCreateNewOrderMutation();
-
   const mappedFruits = mapFruitToMenuItems(fruitData);
 
   const isLoading =
-    cupsWithDataIsLoading || fruitLoading || otherExpansesMarginLoading;
+    cupsWithDataIsLoading ||
+    isLoadingSingleOrder ||
+    fruitLoading ||
+    otherExpansesMarginLoading;
+
+  const [patchOrder, { data, error }] = usePatchOrderMutation();
 
   const handleSubmit = (data: FormData) => {
-    const req: NewOrder = {
+    const req: OrderPatchRequest = {
+      id: Number(id),
       orderTypeId: Number(data.orderTypeId),
       orderName: data.orderName,
       fruits: data.fruits.map((fruit) => ({
@@ -55,13 +69,19 @@ export default function CreateOrder() {
       baseFruitIsFree: data.baseFruitIsFree,
     };
 
-    createNewOrder(req);
+    patchOrder(req);
     setToastId(setToastIsLoading(`Sačekaj....`));
   };
 
+  useEffect(() => {
+    if (data) {
+      navigate(`/${routes.orders}`);
+    }
+  }, [data, navigate]);
+
   useApiSuccessNotification({
     data,
-    message: 'Serija uspešno kreirana',
+    message: 'Serija uspešno izmenjena',
     toastId,
   });
 
@@ -80,19 +100,26 @@ export default function CreateOrder() {
             href: `/${routes.orders}`,
           },
           {
-            name: 'Nova serija',
+            name: 'Izmeni seriju',
             href: `${routes.orders}/${routes.new}`,
           },
         ]}
       />
       {isLoading && <Skeleton height={'70vh'} variant='rounded' />}
-      {!isLoading && (
+      {!isLoading && singleOrder && (
         <OrderForm
           onSubmit={handleSubmit}
-          data={data}
+          data={undefined}
           cupsWithData={cupsWithData}
           mappedFruits={mappedFruits}
           otherExpansesMargin={otherExpansesMargin}
+          values={{
+            orderName: singleOrder.orderName,
+            orderTypeId: String(singleOrder.orderTypeId),
+            baseFruitIsFree: singleOrder.baseFruitIsFree,
+            fruits: singleOrder.fruits,
+            cups: singleOrder.cups,
+          }}
         />
       )}
     </Container>

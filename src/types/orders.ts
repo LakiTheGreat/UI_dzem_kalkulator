@@ -43,6 +43,8 @@ export type NewOrder = {
   otherExpensesMargin: number;
 };
 
+export type OrderPatchRequest = NewOrder & { id: number };
+
 export type OrderParams = {
   orderTypeId: number;
   priceStatus: PRICE_STATUS;

@@ -7,6 +7,7 @@ import CalculatorPage from './pages/CalculatorPage';
 import SettingsPage from './pages/SettingsPage';
 import OrdersPage from './pages/OrdersPage';
 import CreateOrder from './pages/OrdersPage/form/CreateOrder';
+import EditOrder from './pages/OrdersPage/form/EditOrder';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: `${routes.orders}/${routes.new}`,
         element: <CreateOrder />,
+      },
+      {
+        path: `${routes.orders}/:id`,
+        element: <EditOrder />,
       },
       {
         path: `${routes.general_calculator}`,

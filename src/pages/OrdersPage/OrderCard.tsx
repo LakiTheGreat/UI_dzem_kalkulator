@@ -1,5 +1,5 @@
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
-// import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 // import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {
   Card,
@@ -12,11 +12,13 @@ import {
   useTheme,
 } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router';
 
 import { ORDER_WIDTH } from '../../constants';
 import { Order } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
+import { routes } from '../../constants/routes';
 
 type Props = {
   order: Order;
@@ -30,6 +32,7 @@ export default function OrderCard({
   handleDelete,
 }: Props) {
   const { palette } = useTheme();
+  const navigate = useNavigate();
 
   return (
     <Card
@@ -117,9 +120,9 @@ export default function OrderCard({
             <RemoveRedEyeIcon />
           </IconButton> */}
 
-          {/* <IconButton>
+          <IconButton onClick={() => navigate(`/${routes.orders}/${order.id}`)}>
             <EditIcon />
-          </IconButton> */}
+          </IconButton>
 
           <IconButton onClick={() => handleDelete(order.id)}>
             <DeleteIcon />

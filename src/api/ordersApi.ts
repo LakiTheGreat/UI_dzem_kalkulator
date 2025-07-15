@@ -1,6 +1,11 @@
 import { api } from '.';
-
-import { NewOrder, Order, OrderParams, OrderResponse } from '../types/orders';
+import {
+  NewOrder,
+  Order,
+  OrderParams,
+  OrderPatchRequest,
+  OrderResponse,
+} from '../types/orders';
 
 const ordersApiUrl = '/orders';
 
@@ -23,7 +28,7 @@ const orderApiEndpoints = api.injectEndpoints({
       providesTags: ['Order'],
     }),
 
-    getOrderById: build.query<Order, number>({
+    getOrderById: build.query<Order, string | number>({
       query: (id) => ({
         url: `${ordersApiUrl}/${id}`,
         method: 'GET',
@@ -35,6 +40,15 @@ const orderApiEndpoints = api.injectEndpoints({
       query: (body) => ({
         url: `${ordersApiUrl}`,
         method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Order'],
+    }),
+
+    patchOrder: build.mutation<Order, OrderPatchRequest>({
+      query: (body) => ({
+        url: `${ordersApiUrl}/${body.id}`,
+        method: 'PUT',
         body,
       }),
       invalidatesTags: ['Order'],
@@ -57,4 +71,5 @@ export const {
   useGetAllOrdersQuery,
   useGetOrderByIdQuery,
   useDeleteOrderMutation,
+  usePatchOrderMutation,
 } = orderApiEndpoints;
