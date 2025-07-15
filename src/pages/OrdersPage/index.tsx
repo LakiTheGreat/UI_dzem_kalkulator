@@ -138,7 +138,7 @@ export default function OrdersPage() {
           </Stack>
         )}
 
-        {isFetching && <Skeleton variant='rounded' height={72} />}
+        {isFetching && <Skeleton variant='rounded' height={120} />}
         {!isFetching && (
           <Stack>
             {data?.totalCups.map((cup) => (
