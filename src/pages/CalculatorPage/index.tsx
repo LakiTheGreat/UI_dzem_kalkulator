@@ -1,20 +1,22 @@
-import { Container, Divider, Stack, Typography } from '@mui/material';
+import { Container, Divider, Skeleton, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import {
+  useGetOtherExpansesMarginQuery,
+  useGetProfitMarginQuery,
+} from '../../api/constantApi';
 import FormProvider from '../../components/FormProvider';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import RHFTextInput from '../../components/RHFTextInput';
 import { routes } from '../../constants/routes';
 import FormattedPrice from '../../utils/FormattedPrice';
-import {
-  useGetOtherExpansesMarginQuery,
-  useGetProfitMarginQuery,
-} from '../../api/constantApi';
 
 export default function Calculator() {
-  const { data: otherExpences } = useGetOtherExpansesMarginQuery();
-  const { data: profitMargin } = useGetProfitMarginQuery();
+  const { data: otherExpences, isLoading: otherExpenceIsLoading } =
+    useGetOtherExpansesMarginQuery();
+  const { data: profitMargin, isLoading: profitMarginIsLoading } =
+    useGetProfitMarginQuery();
 
   type FormData = {
     basePrice: number | string;
@@ -43,6 +45,8 @@ export default function Calculator() {
   });
 
   const { handleSubmit, watch, setValue } = methods;
+
+  const isLoading = otherExpenceIsLoading || profitMarginIsLoading;
 
   const {
     basePrice,
@@ -139,6 +143,7 @@ export default function Calculator() {
           },
         ]}
       />
+
       <FormProvider methods={methods} onSubmit={handleSubmit(formSubmit)}>
         <Stack gap={4}>
           <Stack gap={2} sx={{ py: 1 }}>
@@ -173,71 +178,76 @@ export default function Calculator() {
             cena koštanja će automatski biti izračunata za uneto pakovanje.
           </Typography>
           <Divider />
-          <Stack>
-            <Stack
-              gap={1}
-              direction='row'
-              justifyContent='space-between'
-              sx={{ p: 1 }}
-            >
-              <Typography>Fiksni troškovi:</Typography>
-              <FormattedPrice price={fixedExpense} isExpense={true} />
-            </Stack>
-            <Stack
-              gap={1}
-              direction='row'
-              justifyContent='space-between'
-              sx={{ p: 1 }}
-            >
-              <Typography>{`Ostali troškovi ${otherExpences?.label} :`}</Typography>
-              <FormattedPrice price={additionalExpense} isExpense={true} />
-            </Stack>
-            <Stack
-              gap={1}
-              direction='row'
-              justifyContent='space-between'
-              sx={{
-                border: `2px solid ${'red'}`,
-                borderRadius: 1,
-                p: 1,
-              }}
-            >
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Ukupni troškovi :
-              </Typography>
-              <FormattedPrice
-                price={totalExpense}
-                isBold={true}
-                isExpense={true}
-              />
-            </Stack>
-          </Stack>
-          <Stack>
-            <Stack
-              gap={1}
-              direction='row'
-              justifyContent='space-between'
-              sx={{ p: 1 }}
-            >
-              <Typography>{`Profitna marža (${profitMargin?.label}):`}</Typography>
-              <FormattedPrice price={profitMarginValue} />
-            </Stack>
-            <Stack
-              gap={1}
-              direction='row'
-              justifyContent='space-between'
-              sx={{
-                border: `2px solid ${'lightgreen'}`,
-                borderRadius: 1,
-                p: 1,
-              }}
-            >
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Minimalna cena koštanja:
-              </Typography>
-              <FormattedPrice price={minPrice} isBold={true} />
-            </Stack>
-          </Stack>
+          {isLoading && <Skeleton variant='rounded' height={240} />}
+          {!isLoading && (
+            <>
+              <Stack>
+                <Stack
+                  gap={1}
+                  direction='row'
+                  justifyContent='space-between'
+                  sx={{ p: 1 }}
+                >
+                  <Typography>Fiksni troškovi:</Typography>
+                  <FormattedPrice price={fixedExpense} isExpense={true} />
+                </Stack>
+                <Stack
+                  gap={1}
+                  direction='row'
+                  justifyContent='space-between'
+                  sx={{ p: 1 }}
+                >
+                  <Typography>{`Ostali troškovi ${otherExpences?.label} :`}</Typography>
+                  <FormattedPrice price={additionalExpense} isExpense={true} />
+                </Stack>
+                <Stack
+                  gap={1}
+                  direction='row'
+                  justifyContent='space-between'
+                  sx={{
+                    border: `2px solid ${'red'}`,
+                    borderRadius: 1,
+                    p: 1,
+                  }}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    Ukupni troškovi :
+                  </Typography>
+                  <FormattedPrice
+                    price={totalExpense}
+                    isBold={true}
+                    isExpense={true}
+                  />
+                </Stack>
+              </Stack>
+              <Stack>
+                <Stack
+                  gap={1}
+                  direction='row'
+                  justifyContent='space-between'
+                  sx={{ p: 1 }}
+                >
+                  <Typography>{`Profitna marža (${profitMargin?.label}):`}</Typography>
+                  <FormattedPrice price={profitMarginValue} />
+                </Stack>
+                <Stack
+                  gap={1}
+                  direction='row'
+                  justifyContent='space-between'
+                  sx={{
+                    border: `2px solid ${'lightgreen'}`,
+                    borderRadius: 1,
+                    p: 1,
+                  }}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    Minimalna cena koštanja:
+                  </Typography>
+                  <FormattedPrice price={minPrice} isBold={true} />
+                </Stack>
+              </Stack>
+            </>
+          )}
         </Stack>
       </FormProvider>
     </Container>
