@@ -178,10 +178,10 @@ export default function OrdersPage() {
         <Stack gap={3}>
           {isFetching && (
             <Stack gap={3}>
-              <Skeleton variant='rounded' height={24} width={145} />
-              <Skeleton variant='rounded' height={280} />
-              <Skeleton variant='rounded' height={280} />
-              <Skeleton variant='rounded' height={280} />
+              <Skeleton variant='rounded' height={24} width={185} />
+              <Skeleton variant='rounded' height={354} />
+              <Skeleton variant='rounded' height={354} />
+              <Skeleton variant='rounded' height={354} />
             </Stack>
           )}
           {!isFetching && (
