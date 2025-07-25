@@ -44,6 +44,7 @@ type Props = {
   cupsWithData: CupWithPriceData[] | undefined;
   mappedFruits: MenuItemType[] | undefined;
   otherExpansesMargin: Constant | undefined;
+  isLoading: boolean;
 };
 
 export default function OrderForm({
@@ -53,6 +54,7 @@ export default function OrderForm({
   cupsWithData,
   mappedFruits,
   otherExpansesMargin,
+  isLoading,
 }: Props) {
   const methods = useForm<FormData>({
     defaultValues: {
@@ -196,6 +198,7 @@ export default function OrderForm({
           variant='contained'
           type='submit'
           size='large'
+          loading={isLoading}
           disabled={!orderTypeId || (!cups[0]?.numberOf && !cups[0]?.numberOf)}
         >
           Sačuvaj

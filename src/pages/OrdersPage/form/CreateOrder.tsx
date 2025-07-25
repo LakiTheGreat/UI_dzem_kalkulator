@@ -27,7 +27,8 @@ export default function CreateOrder() {
   const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
     useGetAllCupsQuery();
 
-  const [createNewOrder, { data, error }] = useCreateNewOrderMutation();
+  const [createNewOrder, { data, error, isLoading: createIsLoading }] =
+    useCreateNewOrderMutation();
 
   const mappedFruits = mapFruitToMenuItems(fruitData);
 
@@ -90,6 +91,7 @@ export default function CreateOrder() {
       {isLoading && <Skeleton height={'70vh'} variant='rounded' />}
       {!isLoading && (
         <OrderForm
+          isLoading={createIsLoading}
           onSubmit={handleSubmit}
           data={data}
           cupsWithData={cupsWithData}

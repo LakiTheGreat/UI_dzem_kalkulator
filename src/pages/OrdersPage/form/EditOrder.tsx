@@ -45,7 +45,8 @@ export default function EditOrder() {
     fruitLoading ||
     otherExpansesMarginLoading;
 
-  const [patchOrder, { data, error }] = usePatchOrderMutation();
+  const [patchOrder, { data, error, isLoading: putIsLoading }] =
+    usePatchOrderMutation();
 
   const handleSubmit = (data: FormData) => {
     const req: OrderPatchRequest = {
@@ -115,6 +116,7 @@ export default function EditOrder() {
           cupsWithData={cupsWithData}
           mappedFruits={mappedFruits}
           otherExpansesMargin={otherExpansesMargin}
+          isLoading={putIsLoading}
           values={{
             orderName: singleOrder.orderName,
             orderTypeId: String(singleOrder.orderTypeId),
