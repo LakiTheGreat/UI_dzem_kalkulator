@@ -14,13 +14,15 @@ import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotificat
 import { NewOrder } from '../../../types/orders';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
+import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 
 export default function CreateOrder() {
   const [toastId, setToastId] = useState<Id>('');
+  const userId = useAppSelector((state) => state.auth.userId);
 
   const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
   const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
-    useGetOtherExpansesMarginQuery();
+    useGetOtherExpansesMarginQuery(userId || 0);
 
   const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
     useGetAllCupsQuery();

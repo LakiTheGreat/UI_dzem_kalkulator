@@ -19,14 +19,16 @@ import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotificat
 import { OrderPatchRequest } from '../../../types/orders';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
+import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 
 export default function EditOrder() {
   const [toastId, setToastId] = useState<Id>('');
   const { id } = useParams();
   const navigate = useNavigate();
+  const userId = useAppSelector((state) => state.auth.userId);
 
   const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
-    useGetOtherExpansesMarginQuery();
+    useGetOtherExpansesMarginQuery(userId || 0);
 
   const { data: fruitData, isLoading: fruitLoading } = useGetFruitsQuery();
   const { data: singleOrder, isLoading: isLoadingSingleOrder } =

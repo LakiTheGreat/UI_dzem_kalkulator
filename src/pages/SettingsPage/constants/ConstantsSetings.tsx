@@ -7,12 +7,15 @@ import {
   useGetProfitMarginQuery,
 } from '../../../api/constantApi';
 import EditConstant from './form/EditConstant';
+import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 
 export default function ConstantsSettings() {
+  const userId = useAppSelector((state) => state.auth.userId);
+
   const { data: profitMargin, isLoading: profitMarginLoading } =
-    useGetProfitMarginQuery();
+    useGetProfitMarginQuery(userId || 0);
   const { data: otherExpansesMargin, isLoading: otherExpansesMarginLoading } =
-    useGetOtherExpansesMarginQuery();
+    useGetOtherExpansesMarginQuery(userId || 0);
 
   const [selectedId, setSelectedId] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);

@@ -11,12 +11,15 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import RHFTextInput from '../../components/RHFTextInput';
 import { routes } from '../../constants/routes';
 import FormattedPrice from '../../utils/FormattedPrice';
+import { useAppSelector } from '../../hooks/reduxStoreHooks';
 
 export default function Calculator() {
+  const userId = useAppSelector((state) => state.auth.userId);
+
   const { data: otherExpences, isLoading: otherExpenceIsLoading } =
-    useGetOtherExpansesMarginQuery();
+    useGetOtherExpansesMarginQuery(userId || 0);
   const { data: profitMargin, isLoading: profitMarginIsLoading } =
-    useGetProfitMarginQuery();
+    useGetProfitMarginQuery(userId || 0);
 
   type FormData = {
     basePrice: number | string;

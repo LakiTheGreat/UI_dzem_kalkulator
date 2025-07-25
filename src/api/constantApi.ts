@@ -5,15 +5,15 @@ const constantApiUrl = '/constants';
 
 const constantApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    getOtherExpansesMargin: build.query<Constant, void>({
-      query: () => ({
-        url: `${constantApiUrl}/1`,
+    getOtherExpansesMargin: build.query<Constant, number>({
+      query: (userId) => ({
+        url: `${constantApiUrl}/${userId === 1 ? 3 : 1}`,
       }),
       providesTags: ['Constant'],
     }),
-    getProfitMargin: build.query<Constant, void>({
-      query: () => ({
-        url: `${constantApiUrl}/2`,
+    getProfitMargin: build.query<Constant, number>({
+      query: (userId) => ({
+        url: `${constantApiUrl}/${userId === 1 ? 4 : 2} `,
       }),
       providesTags: ['Constant'],
     }),
