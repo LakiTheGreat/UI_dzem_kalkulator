@@ -1,4 +1,5 @@
 export const routes = {
+  login: 'login',
   orders: 'orders',
   new: 'new',
   general_calculator: 'general-calculator',
