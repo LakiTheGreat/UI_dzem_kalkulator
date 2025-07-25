@@ -1,6 +1,7 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
+  Button,
   Divider,
   IconButton,
   Stack,
@@ -18,8 +19,12 @@ import { NavItems } from '../../../constants/NavItems';
 import useResponsive from '../../../hooks/useResponsive';
 import Logo from '../../Logo';
 import NavItemButton from '../NavItemButton';
+import { useAppDispatch } from '../../../hooks/reduxStoreHooks';
+import { logOutUser } from '../../../store/authSlice';
+import { api } from '../../../api';
 
 export default function MobileNav() {
+  const dispatch = useAppDispatch();
   const isTablet = useResponsive('down', 'md');
   const isMobile = useResponsive('down', 'sm');
 
@@ -68,19 +73,29 @@ export default function MobileNav() {
       </AppBar>
 
       <Drawer anchor={'left'} open={open} onClose={() => setOpen(false)}>
-        <Stack alignItems='center' sx={{ pt: 1 }}>
-          <List sx={{ px: 1 }}>
-            {NavItems.map((navItem) => (
-              <Stack key={navItem.label}>
-                <NavItemButton
-                  navItem={navItem}
-                  open={open}
-                  setClose={() => setOpen(false)}
-                />
-                {navItem.addDividerAfter && <Divider sx={{ my: 2 }} />}
-              </Stack>
-            ))}
-          </List>
+        <Stack justifyContent='space-between' sx={{ height: '90%' }}>
+          <Stack alignItems='center' sx={{ pt: 1 }}>
+            <List sx={{ px: 1 }}>
+              {NavItems.map((navItem) => (
+                <Stack key={navItem.label}>
+                  <NavItemButton
+                    navItem={navItem}
+                    open={open}
+                    setClose={() => setOpen(false)}
+                  />
+                  {navItem.addDividerAfter && <Divider sx={{ my: 2 }} />}
+                </Stack>
+              ))}
+            </List>
+          </Stack>
+          <Button
+            onClick={() => {
+              dispatch(logOutUser());
+              dispatch(api.util.resetApiState());
+            }}
+          >
+            Izloguj se
+          </Button>
         </Stack>
       </Drawer>
       <Box
