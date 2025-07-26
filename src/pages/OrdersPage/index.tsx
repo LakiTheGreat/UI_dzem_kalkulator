@@ -1,5 +1,9 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 import {
+  Box,
   Container,
   Divider,
   FormControl,
@@ -31,9 +35,12 @@ import FormattedPrice from '../../utils/FormattedPrice';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import OrderCard from './OrderCard';
 import OrderDetailsDialog from './OrderDetailsDialog';
+import { Tab } from '@mui/material';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
+
+  const [value, setValue] = useState<number>(0);
 
   const [toastId, setToastId] = useState<Id>('');
   const [getConfirmation, Confirmation] = useConfirmDialog();
@@ -174,36 +181,58 @@ export default function OrdersPage() {
           </Stack>
         )}
         <Divider />
+        <TabContext value={value}>
+          <TabList
+            onChange={(e, newValue) => setValue(newValue)}
+            variant='scrollable'
+            scrollButtons='auto'
+            allowScrollButtonsMobile
+            sx={{ mt: -2 }}
+          >
+            <Tab label={'Kartice'} value={0} />
+            <Tab label={'Tabela'} value={1} />
+          </TabList>
+          <Stack gap={3}>
+            {isFetching && (
+              <Stack gap={3}>
+                <Skeleton variant='rounded' height={24} width={185} />
+                <Skeleton
+                  variant='rounded'
+                  height={354}
+                  sx={{ mt: 3, mx: 3 }}
+                />
+                <Skeleton variant='rounded' height={354} sx={{ mx: 3 }} />
+              </Stack>
+            )}
 
-        <Stack gap={3}>
-          {isFetching && (
-            <Stack gap={3}>
-              <Skeleton variant='rounded' height={24} width={185} />
-              <Skeleton variant='rounded' height={354} />
-              <Skeleton variant='rounded' height={354} />
-              <Skeleton variant='rounded' height={354} />
-            </Stack>
-          )}
-          {!isFetching && (
-            <Typography>
-              Broj proizvodnih serija: {data?.orders?.length}
-            </Typography>
-          )}
-          {!isFetching &&
-            data?.orders?.map((order) => (
-              <OrderCard
-                key={order.id}
-                order={order}
-                setSelectedId={setSelectedId}
-                handleDelete={handleDelete}
-              />
-            ))}
-          {data?.orders?.length === 0 && (
-            <Typography textAlign='center' sx={{ mt: 3 }}>
-              Još nema porudžbina za ovu voćku.
-            </Typography>
-          )}
-        </Stack>
+            {!isFetching && (
+              <Typography>
+                Broj proizvodnih serija: {data?.orders?.length}
+              </Typography>
+            )}
+
+            <TabPanel value={0}>
+              <Stack gap={3}>
+                {!isFetching &&
+                  data?.orders?.map((order) => (
+                    <OrderCard
+                      key={order.id}
+                      order={order}
+                      setSelectedId={setSelectedId}
+                      handleDelete={handleDelete}
+                    />
+                  ))}
+                {data?.orders?.length === 0 && (
+                  <Typography textAlign='center' sx={{ mt: 3 }}>
+                    Još nema porudžbina za ovu voćku.
+                  </Typography>
+                )}
+              </Stack>
+            </TabPanel>
+
+            <TabPanel value={1}>TABELA</TabPanel>
+          </Stack>
+        </TabContext>
       </Stack>
       {selectedId && (
         <OrderDetailsDialog
