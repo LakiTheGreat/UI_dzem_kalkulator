@@ -3,7 +3,6 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
-  Box,
   Container,
   Divider,
   FormControl,
@@ -36,6 +35,7 @@ import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import OrderCard from './OrderCard';
 import OrderDetailsDialog from './OrderDetailsDialog';
 import { Tab } from '@mui/material';
+import OrdersTable from './OrdersTable';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ export default function OrdersPage() {
   });
 
   return (
-    <Container maxWidth='sm'>
+    <Container>
       <HeaderBreadcrumbs
         heading={'Proizvodne serije'}
         links={[
@@ -230,7 +230,9 @@ export default function OrdersPage() {
               </Stack>
             </TabPanel>
 
-            <TabPanel value={1}>TABELA</TabPanel>
+            <TabPanel value={1}>
+              <OrdersTable data={data?.orders} />
+            </TabPanel>
           </Stack>
         </TabContext>
       </Stack>
