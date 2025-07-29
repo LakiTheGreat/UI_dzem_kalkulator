@@ -19,19 +19,19 @@ export default function useGetOrderColumns({ data }: Props) {
       field: 'orderName',
       headerName: 'Napomena',
       flex: 1,
-      minWidth: 200,
+      minWidth: 170,
     },
     {
       field: 'orderTypeName',
       headerName: 'Vrsta džema',
       flex: 1,
-      minWidth: 200,
+      minWidth: 150,
     },
     {
       field: 'createdAt',
       headerName: 'Vreme unosa',
       flex: 1,
-      minWidth: 200,
+      minWidth: 170,
       renderCell: ({ row }) => {
         return <>{formatDate(row.createdAt || '', 'DD.MMM YY, HH:mm')}</>;
       },
@@ -40,7 +40,7 @@ export default function useGetOrderColumns({ data }: Props) {
       field: 'orderValue',
       headerName: 'Prihod',
       flex: 1,
-      minWidth: 200,
+      minWidth: 150,
       renderCell: ({ row }) => {
         return (
           <Stack justifyContent='center' sx={{ height: '100%' }}>
@@ -53,7 +53,7 @@ export default function useGetOrderColumns({ data }: Props) {
       field: 'orderExpenses',
       headerName: 'Rashod',
       flex: 1,
-      minWidth: 200,
+      minWidth: 150,
       renderCell: ({ row }) => {
         return (
           <Stack
@@ -70,7 +70,7 @@ export default function useGetOrderColumns({ data }: Props) {
       field: 'orderProfit',
       headerName: 'Profit',
       flex: 1,
-      minWidth: 200,
+      minWidth: 150,
       renderCell: ({ row }) => {
         return (
           <Stack
