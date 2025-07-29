@@ -15,10 +15,10 @@ import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router';
 
 import { ORDER_WIDTH } from '../../constants';
+import { routes } from '../../constants/routes';
 import { Order } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
-import { routes } from '../../constants/routes';
 
 type Props = {
   order: Order;
@@ -71,7 +71,7 @@ export default function OrderCard({
           {order.cups.map((cup) => (
             <Stack direction='row' key={cup.label}>
               <Typography sx={{ width: ORDER_WIDTH }}>
-                Br. teglica od: {cup.label}
+                Teglice: {cup.label}
               </Typography>
               <Typography>{cup.numberOf}</Typography>
             </Stack>

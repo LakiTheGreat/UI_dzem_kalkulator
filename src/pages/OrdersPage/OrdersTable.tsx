@@ -1,9 +1,10 @@
+import { useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-
-import useGetOrderColumns from './useGetOrderColumns';
 import { Order } from '../../types/orders';
-import { useTheme } from '@mui/material';
+import useGetOrderColumns from './useGetOrderColumns';
+
+import CustomToolbar from '../../components/CustomToolbar';
 
 type Props = {
   data: Order[] | undefined;
@@ -15,7 +16,28 @@ export default function OrdersTable({ data }: Props) {
     page: 0,
   });
   const { palette } = useTheme();
-  const columns = useGetOrderColumns();
+
+  function transformOrders(rawOrders: Order[]) {
+    return rawOrders.map((order) => {
+      const base = {
+        ...order,
+        orderExpenses: order.orderExpense,
+      };
+
+      const baseAny = base as any;
+
+      order.cups?.forEach((cup) => {
+        const fieldName = `cup_${cup.label.trim().replace(/\s+/g, '_')}`;
+        baseAny[fieldName] = cup.numberOf ?? 0;
+      });
+
+      return baseAny;
+    });
+  }
+
+  const transformedOrdersData = transformOrders(data || []);
+
+  const columns = useGetOrderColumns({ data: data || [] });
 
   return (
     <DataGrid
@@ -28,24 +50,20 @@ export default function OrdersTable({ data }: Props) {
         },
       }}
       //   disableColumnMenu
-      //   pageSizeOptions={PAGE_SIZE_OPTIONS}
+      pageSizeOptions={[10, 25, 50, 100]}
       initialState={{
         sorting: {
-          sortModel: [{ field: 'invalidRowNumber', sort: 'asc' }],
+          sortModel: [{ field: 'createdAt', sort: 'desc' }],
         },
       }}
       paginationModel={paginationModel}
       onPaginationModelChange={setPaginationModel}
-      rows={data || []}
+      rows={transformedOrdersData || []}
       columns={columns}
-      //   getRowId={(row) => row.id}
-      //   localeText={useGetDataGridTranslations()}
-      slots={
-        {
-          // toolbar: () => <DataGridToolbar />,
-          // pagination: () => <CustomDataGridPagination hasDownloadButton={true} />,
-        }
-      }
+      slots={{
+        toolbar: CustomToolbar,
+      }}
+      showToolbar
     />
   );
 }

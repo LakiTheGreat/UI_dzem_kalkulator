@@ -1,10 +1,19 @@
 import { Stack } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
+import { Order } from '../../types/orders';
 import { formatDate } from '../../utils/formatDate';
 import FormattedPrice from '../../utils/FormattedPrice';
 
-export default function useGetOrderColumns() {
+type Props = {
+  data: Order[];
+};
+export default function useGetOrderColumns({ data }: Props) {
+  const uniqueCups = new Set<string>();
+  data.forEach((order) =>
+    order.cups?.forEach((cup) => uniqueCups.add(cup.label.trim()))
+  );
+
   const columns: GridColDef[] = [
     {
       field: 'orderName',
@@ -75,6 +84,15 @@ export default function useGetOrderColumns() {
       },
     },
   ];
+  // ✅ Dynamic cup columns
+  uniqueCups.forEach((label) => {
+    columns.push({
+      field: `cup_${label}`,
+      headerName: `${label}`,
+      flex: 1,
+      minWidth: 100,
+    });
+  });
 
   return columns;
 }
