@@ -1,5 +1,6 @@
 import { Stack } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
+import CheckIcon from '@mui/icons-material/Check';
 
 import { Order } from '../../types/orders';
 import { formatDate } from '../../utils/formatDate';
@@ -26,6 +27,19 @@ export default function useGetOrderColumns({ data }: Props) {
       headerName: 'Vrsta džema',
       flex: 1,
       minWidth: 150,
+    },
+    {
+      field: 'baseFruitIsFree',
+      headerName: 'Besplatna osnova',
+      flex: 1,
+      minWidth: 170,
+      renderCell: ({ row }) => {
+        return (
+          <Stack justifyContent='center' sx={{ height: '100%' }}>
+            {row.baseFruitIsFree ? <CheckIcon color='success' /> : ''}
+          </Stack>
+        );
+      },
     },
     {
       field: 'createdAt',
