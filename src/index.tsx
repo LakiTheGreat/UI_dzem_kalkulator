@@ -1,3 +1,4 @@
+import '@fontsource/montserrat'; // Defaults to weight 400
 import CssBaseline from '@mui/material/CssBaseline';
 import { Analytics } from '@vercel/analytics/react';
 import React from 'react';

@@ -10,6 +10,9 @@ type Props = {
 export default function AppTheme({ children }: Props) {
   const theme = useMemo(() => {
     return createTheme({
+      typography: {
+        fontFamily: `'Montserrat', sans-serif`,
+      },
       cssVariables: {
         colorSchemeSelector: 'data-mui-color-scheme',
         cssVarPrefix: 'template',
