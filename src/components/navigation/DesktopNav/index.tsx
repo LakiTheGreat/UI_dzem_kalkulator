@@ -109,7 +109,7 @@ export default function DesktopNav() {
   const theme = useTheme();
 
   const dispatch = useAppDispatch();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
