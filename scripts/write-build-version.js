@@ -1,21 +1,28 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
-const packageJsonPath = path.join(__dirname, '../package.json');
-const versionFilePath = path.join(__dirname, '../src/version.ts');
+// Get version from package.json
+const pkg = require('../package.json');
+const baseVersion = pkg.version;
 
-// Read and parse package.json
-const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+// Get number of commits in the Git repository
+let commitCount = 'dev';
+try {
+  commitCount = execSync('git rev-list --count HEAD').toString().trim();
+} catch (err) {
+  console.warn('⚠️ Could not get Git commit count. Falling back to "dev".');
+}
 
-// Increment buildVersion
-pkg.buildVersion =
-  typeof pkg.buildVersion === 'number' ? pkg.buildVersion + 1 : 1;
+// Generate final version string
+const versionString = `${baseVersion}.${commitCount}`;
 
-// Write updated buildVersion back to package.json.
-fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2), 'utf8');
+// Write to src/version.ts
+const versionTsPath = path.join(__dirname, '../src/version.ts');
+fs.writeFileSync(
+  versionTsPath,
+  `export const APP_VERSION = "${versionString}";\n`,
+  'utf8'
+);
 
-// Create or overwrite src/version.ts
-const content = `export const APP_VERSION = "${pkg.version}.${pkg.buildVersion}";\n`;
-fs.writeFileSync(versionFilePath, content, 'utf8');
-
-console.log(`✅ APP_VERSION set to: ${pkg.version}.${pkg.buildVersion}`);
+console.log(`✅ Generated APP_VERSION = ${versionString}`);
