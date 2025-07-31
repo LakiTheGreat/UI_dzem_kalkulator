@@ -64,6 +64,7 @@ export default function CreateOrder() {
     data,
     message: 'Serija uspešno kreirana',
     toastId,
+    navigateToAfter: `/${routes.orders}`,
   });
 
   useApiErrorNotification({

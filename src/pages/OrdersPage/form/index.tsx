@@ -60,22 +60,7 @@ export default function OrderForm({
     defaultValues: {
       orderName: values?.orderName || '',
       fruits: values?.fruits || [{ grams: '', price: '', total: '' }],
-      cups: values?.cups || [
-        {
-          label: '212ml',
-          numberOf: 0,
-          cost: 35,
-          sellingPrice: 350,
-          total: 0,
-        },
-        {
-          label: '370ml',
-          numberOf: 0,
-          cost: 46,
-          sellingPrice: 550,
-          total: 0,
-        },
-      ],
+      cups: values?.cups || [],
       orderTypeId: values?.orderTypeId || '',
       baseFruitIsFree: values?.baseFruitIsFree || false,
     },
@@ -123,23 +108,22 @@ export default function OrderForm({
   ).toFixed(0);
 
   useEffect(() => {
-    if (data) {
-      const defaultCups = data.cups.map((cup) => ({
+    if (cupsWithData && !values) {
+      const defaultCups = cupsWithData.map((cup) => ({
         label: cup.label,
         numberOf: 0,
         cost: cup.cost,
         sellingPrice: cup.sellingPrice,
         total: 0,
       }));
+
+      //Set value doesn't work with "register" at dynamic fields
       reset({
-        orderName: '',
-        fruits: [{ grams: '', price: '', total: '' }],
+        ...methods.getValues(), // preserves other fields like `fruits`
         cups: defaultCups,
-        orderTypeId: '',
-        baseFruitIsFree: false,
       });
     }
-  }, [data, reset]);
+  }, [cupsWithData, methods, reset, values]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
