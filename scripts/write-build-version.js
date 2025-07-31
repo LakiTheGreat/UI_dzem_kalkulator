@@ -1,10 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 
-const version = new Date().toISOString(); // or use package.json version if you prefer
-const filePath = path.join(__dirname, '../src/version.ts');
+const packageJsonPath = path.join(__dirname, '../package.json');
+const versionFilePath = path.join(__dirname, '../src/version.ts');
 
-const content = `export const APP_VERSION = "${version}";\n`;
+// Read and parse package.json
+const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 
-fs.writeFileSync(filePath, content, 'utf8');
-console.log(`✅ APP_VERSION written to version.ts: ${version}`);
+// Increment buildVersion
+pkg.buildVersion =
+  typeof pkg.buildVersion === 'number' ? pkg.buildVersion + 1 : 1;
+
+// Write updated buildVersion back to package.json
+fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2), 'utf8');
+
+// Create or overwrite src/version.ts
+const content = `export const APP_VERSION = "${pkg.version}.${pkg.buildVersion}";\n`;
+fs.writeFileSync(versionFilePath, content, 'utf8');
+
+console.log(`✅ APP_VERSION set to: ${pkg.version}.${pkg.buildVersion}`);
