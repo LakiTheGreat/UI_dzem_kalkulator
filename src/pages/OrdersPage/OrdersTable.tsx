@@ -1,17 +1,19 @@
 import { useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-import { Order } from '../../types/orders';
-import useGetOrderColumns from './useGetOrderColumns';
 
 import CustomToolbar from '../../components/CustomToolbar';
 import { GRID_DEFAULT_LOCALE_TEXT } from '../../hooks/useGetDataGridTranslations';
+import { Order } from '../../types/orders';
+import useGetOrderColumns from './useGetOrderColumns';
 
 type Props = {
   data: Order[] | undefined;
+  handleDelete: (id: number) => void;
+  handleEdit: (id: number) => void;
 };
 
-export default function OrdersTable({ data }: Props) {
+export default function OrdersTable({ data, handleDelete, handleEdit }: Props) {
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
     page: 0,
@@ -38,7 +40,11 @@ export default function OrdersTable({ data }: Props) {
 
   const transformedOrdersData = transformOrders(data || []);
 
-  const columns = useGetOrderColumns({ data: data || [] });
+  const columns = useGetOrderColumns({
+    data: data || [],
+    handleDelete,
+    handleEdit,
+  });
 
   return (
     <DataGrid

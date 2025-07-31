@@ -13,6 +13,7 @@ import {
   Select,
   Skeleton,
   Stack,
+  Tab,
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
@@ -35,7 +36,6 @@ import FormattedPrice from '../../utils/FormattedPrice';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import OrderCard from './OrderCard';
 import OrderDetailsDialog from './OrderDetailsDialog';
-import { Tab } from '@mui/material';
 import OrdersTable from './OrdersTable';
 
 export default function OrdersPage() {
@@ -71,6 +71,10 @@ export default function OrdersPage() {
       deleteOrder(id);
       setToastId(setToastIsLoading(`Sačekaj....`));
     }
+  };
+
+  const handleEdit = (id: number) => {
+    navigate(`/${routes.orders}/${id}`);
   };
 
   useApiSuccessNotification({
@@ -232,6 +236,7 @@ export default function OrdersPage() {
                         order={order}
                         setSelectedId={setSelectedId}
                         handleDelete={handleDelete}
+                        handleEdit={handleEdit}
                       />
                     </Grid>
                   ))}
@@ -244,7 +249,11 @@ export default function OrdersPage() {
             </TabPanel>
 
             <TabPanel value={1}>
-              <OrdersTable data={data?.orders} />
+              <OrdersTable
+                data={data?.orders}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
             </TabPanel>
           </Stack>
         </TabContext>

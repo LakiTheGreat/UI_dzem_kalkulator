@@ -1,15 +1,23 @@
+import CheckIcon from '@mui/icons-material/Check';
 import { Stack } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import CheckIcon from '@mui/icons-material/Check';
 
 import { Order } from '../../types/orders';
 import { formatDate } from '../../utils/formatDate';
 import FormattedPrice from '../../utils/FormattedPrice';
+import DataGridRowActions from './DataGridRowActions';
 
 type Props = {
   data: Order[];
+  handleDelete: (id: number) => void;
+  handleEdit: (id: number) => void;
 };
-export default function useGetOrderColumns({ data }: Props) {
+
+export default function useGetOrderColumns({
+  data,
+  handleEdit,
+  handleDelete,
+}: Props) {
   const uniqueCups = new Set<string>();
   data.forEach((order) =>
     order.cups?.forEach((cup) => uniqueCups.add(cup.label.trim()))
@@ -97,19 +105,40 @@ export default function useGetOrderColumns({ data }: Props) {
     });
   });
 
-  columns.push({
-    field: 'baseFruitIsFree',
-    headerName: 'Besplatna osnova',
-    flex: 1,
-    minWidth: 170,
-    renderCell: ({ row }) => {
-      return (
-        <Stack justifyContent='center' sx={{ height: '100%' }}>
-          {row.baseFruitIsFree ? <CheckIcon color='success' /> : ''}
-        </Stack>
-      );
+  columns.push(
+    {
+      field: 'baseFruitIsFree',
+      headerName: 'Besplatna osnova',
+      flex: 1,
+      minWidth: 170,
+      renderCell: ({ row }) => {
+        return (
+          <Stack justifyContent='center' sx={{ height: '100%' }}>
+            {row.baseFruitIsFree ? <CheckIcon color='success' /> : ''}
+          </Stack>
+        );
+      },
     },
-  });
+    {
+      field: '',
+      headerName: '',
+      flex: 1,
+      minWidth: 60,
+      maxWidth: 70,
+      resizable: false,
+      sortable: false,
+      disableColumnMenu: true,
+
+      renderCell: ({ row }) => {
+        return (
+          <DataGridRowActions
+            onEdit={() => handleEdit(row.id)}
+            onDelete={() => handleDelete(row.id)}
+          />
+        );
+      },
+    }
+  );
 
   return columns;
 }

@@ -12,10 +12,8 @@ import {
   useTheme,
 } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import { useNavigate } from 'react-router';
 
 import { ORDER_WIDTH } from '../../constants';
-import { routes } from '../../constants/routes';
 import { Order } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
@@ -24,15 +22,16 @@ type Props = {
   order: Order;
   setSelectedId: Dispatch<SetStateAction<number | null>>;
   handleDelete: (id: number) => void;
+  handleEdit: (id: number) => void;
 };
 
 export default function OrderCard({
   order,
   setSelectedId,
   handleDelete,
+  handleEdit,
 }: Props) {
   const { palette } = useTheme();
-  const navigate = useNavigate();
 
   return (
     <Card
@@ -120,7 +119,7 @@ export default function OrderCard({
             <RemoveRedEyeIcon />
           </IconButton> */}
 
-          <IconButton onClick={() => navigate(`/${routes.orders}/${order.id}`)}>
+          <IconButton onClick={() => handleEdit(order.id)}>
             <EditIcon />
           </IconButton>
 
