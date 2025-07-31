@@ -38,82 +38,86 @@ export default function OrderCard({
       key={order.id}
       variant='outlined'
       sx={{
+        height: '100%',
         bgcolor: 'secondary.lighter',
         border: `1px solid ${
           order.baseFruitIsFree ? `${palette.success.dark}` : 'transparent'
         }`,
       }}
     >
-      <CardContent>
-        <Stack>
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
-            <Typography sx={{ width: ORDER_WIDTH }}>
-              {order.orderName || '/'}
-            </Typography>
-          </Stack>
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
-            <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
-          </Stack>
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>Vrsta džema:</Typography>
-            <Typography sx={{ fontWeight: 'bold' }}>
-              {order.orderTypeName}
-            </Typography>
-          </Stack>
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>
-              Besplatna osnova:
-            </Typography>
-            <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
-          </Stack>
-
-          {order.cups.map((cup) => (
-            <Stack direction='row' key={cup.label}>
+      <Stack sx={{ height: '100%', justifyContent: 'space-between' }}>
+        <CardContent>
+          <Stack>
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
               <Typography sx={{ width: ORDER_WIDTH }}>
-                Teglice: {cup.label}
+                {order.orderName || '/'}
               </Typography>
-              <Typography>{cup.numberOf}</Typography>
             </Stack>
-          ))}
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
+              <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
+            </Stack>
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>Vrsta džema:</Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                {order.orderTypeName}
+              </Typography>
+            </Stack>
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                Besplatna osnova:
+              </Typography>
+              <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
+            </Stack>
 
-          <Divider sx={{ my: 1.5 }} />
+            {order.cups.map((cup) => (
+              <Stack direction='row' key={cup.label}>
+                <Typography sx={{ width: ORDER_WIDTH }}>
+                  Teglice: {cup.label}
+                </Typography>
+                <Typography>{cup.numberOf}</Typography>
+              </Stack>
+            ))}
 
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>Prihod:</Typography>
-            <FormattedPrice price={order.orderValue} />
+            <Divider sx={{ my: 1.5 }} />
+
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>Prihod:</Typography>
+              <FormattedPrice price={order.orderValue} />
+            </Stack>
+
+            <Stack direction='row' color='primary.main'>
+              <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
+                Rashod:
+              </Typography>
+              <FormattedPrice price={order.orderExpense} isExpense isBold />
+            </Stack>
+
+            <Stack direction='row' color='success.dark'>
+              <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
+                Profit:
+              </Typography>
+              <FormattedPrice price={order.orderProfit} isBold />
+            </Stack>
+
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                Profitna marža:
+              </Typography>
+              <Typography>{`${order.profitMargin}`}</Typography>
+            </Stack>
           </Stack>
+        </CardContent>
 
-          <Stack direction='row' color='primary.main'>
-            <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-              Rashod:
-            </Typography>
-            <FormattedPrice price={order.orderExpense} isExpense isBold />
-          </Stack>
-
-          <Stack direction='row' color='success.dark'>
-            <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-              Profit:
-            </Typography>
-            <FormattedPrice price={order.orderProfit} isBold />
-          </Stack>
-
-          <Stack direction='row'>
-            <Typography sx={{ width: ORDER_WIDTH }}>Profitna marža:</Typography>
-            <Typography>{`${order.profitMargin}`}</Typography>
-          </Stack>
-        </Stack>
-      </CardContent>
-
-      <CardActions>
-        <Stack
-          direction='row'
-          justifyContent='center'
-          sx={{ width: '100%' }}
-          gap={3}
-        >
-          {/* <IconButton
+        <CardActions>
+          <Stack
+            direction='row'
+            justifyContent='center'
+            sx={{ width: '100%' }}
+            gap={3}
+          >
+            {/* <IconButton
             onClick={() => {
               setSelectedId(order.id);
             }}
@@ -121,15 +125,16 @@ export default function OrderCard({
             <RemoveRedEyeIcon />
           </IconButton> */}
 
-          <IconButton onClick={() => handleEdit(order.id)}>
-            <EditIcon />
-          </IconButton>
+            <IconButton onClick={() => handleEdit(order.id)}>
+              <EditIcon />
+            </IconButton>
 
-          <IconButton onClick={() => handleDelete(order.id)}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      </CardActions>
+            <IconButton onClick={() => handleDelete(order.id)}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
+        </CardActions>
+      </Stack>
     </Card>
   );
 }
