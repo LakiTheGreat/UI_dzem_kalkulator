@@ -19,7 +19,6 @@ import { routes } from '../../constants/routes';
 import { Order } from '../../types/orders';
 import FormattedPrice from '../../utils/FormattedPrice';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
-import useResponsive from '../../hooks/useResponsive';
 
 type Props = {
   order: Order;
@@ -34,8 +33,6 @@ export default function OrderCard({
 }: Props) {
   const { palette } = useTheme();
   const navigate = useNavigate();
-
-  const isMobile = useResponsive('down', 'sm');
 
   return (
     <Card
