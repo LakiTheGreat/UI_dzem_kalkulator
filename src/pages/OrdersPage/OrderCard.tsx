@@ -48,7 +48,9 @@ export default function OrderCard({
         <Stack>
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
-            <Typography>{order.orderName || '/'}</Typography>
+            <Typography sx={{ width: ORDER_WIDTH }}>
+              {order.orderName || '/'}
+            </Typography>
           </Stack>
           <Stack direction='row'>
             <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
