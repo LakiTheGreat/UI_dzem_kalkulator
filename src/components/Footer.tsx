@@ -1,10 +1,9 @@
 import { Stack, Typography } from '@mui/material';
 
 import { AppName } from '../constants';
+import { APP_VERSION } from '../version';
 
 export default function Footer() {
-  const APP_VERSION = 'dev';
-
   return (
     <Stack
       sx={{
