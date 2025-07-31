@@ -11,7 +11,7 @@ const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 pkg.buildVersion =
   typeof pkg.buildVersion === 'number' ? pkg.buildVersion + 1 : 1;
 
-// Write updated buildVersion back to package.json
+// Write updated buildVersion back to package.json.
 fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2), 'utf8');
 
 // Create or overwrite src/version.ts
