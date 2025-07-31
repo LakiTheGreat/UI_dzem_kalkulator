@@ -28,19 +28,7 @@ export default function useGetOrderColumns({ data }: Props) {
       flex: 1,
       minWidth: 150,
     },
-    {
-      field: 'baseFruitIsFree',
-      headerName: 'Besplatna osnova',
-      flex: 1,
-      minWidth: 170,
-      renderCell: ({ row }) => {
-        return (
-          <Stack justifyContent='center' sx={{ height: '100%' }}>
-            {row.baseFruitIsFree ? <CheckIcon color='success' /> : ''}
-          </Stack>
-        );
-      },
-    },
+
     {
       field: 'createdAt',
       headerName: 'Vreme unosa',
@@ -107,6 +95,20 @@ export default function useGetOrderColumns({ data }: Props) {
       flex: 1,
       minWidth: 100,
     });
+  });
+
+  columns.push({
+    field: 'baseFruitIsFree',
+    headerName: 'Besplatna osnova',
+    flex: 1,
+    minWidth: 170,
+    renderCell: ({ row }) => {
+      return (
+        <Stack justifyContent='center' sx={{ height: '100%' }}>
+          {row.baseFruitIsFree ? <CheckIcon color='success' /> : ''}
+        </Stack>
+      );
+    },
   });
 
   return columns;

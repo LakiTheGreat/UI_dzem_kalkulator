@@ -54,7 +54,7 @@ export default function CustomToolbar() {
         <StyledQuickFilter>
           <QuickFilterTrigger
             render={(triggerProps, state) => (
-              <Tooltip title='Search' enterDelay={0}>
+              <Tooltip title='Pretraži' enterDelay={0}>
                 <StyledToolbarButton
                   {...triggerProps}
                   ownerState={{ expanded: state.expanded }}
@@ -72,8 +72,8 @@ export default function CustomToolbar() {
                 {...controlProps}
                 ownerState={{ expanded: state.expanded }}
                 inputRef={ref}
-                aria-label='Search'
-                placeholder='Search...'
+                aria-label='Pretraži'
+                placeholder='Pretraži...'
                 size='small'
                 slotProps={{
                   input: {
@@ -87,7 +87,7 @@ export default function CustomToolbar() {
                         <QuickFilterClear
                           edge='end'
                           size='small'
-                          aria-label='Clear search'
+                          aria-label='Obriši'
                           material={{ sx: { marginRight: -0.75 } }}
                         >
                           <CancelIcon fontSize='small' />

@@ -104,83 +104,93 @@ export default function OrdersPage() {
         }
       />
       <Stack gap={3}>
-        {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
+        <Container maxWidth='sm'>
+          <Stack gap={3}>
+            {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
 
-        {!isLoadingFruits && (
-          <Stack direction='row' gap={2}>
-            <FormControl fullWidth>
-              <InputLabel>Vrsta džema</InputLabel>
-              <Select
-                value={params.orderTypeId}
-                label='Vrsta džema'
-                onChange={(e) =>
-                  setParams({ ...params, orderTypeId: Number(e.target.value) })
-                }
-              >
-                <MenuItem value={0}>Prikaži sve</MenuItem>
-                {fruits?.map((fruit) => (
-                  <MenuItem key={fruit.id} value={fruit.id}>
-                    {fruit.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel>Besplatna osnova</InputLabel>
-              <Select
-                value={params.priceStatus}
-                label='Besplatna osnova'
-                onChange={(e) =>
-                  setParams({ ...params, priceStatus: Number(e.target.value) })
-                }
-              >
-                <MenuItem value={PRICE_STATUS.ALL}>Prikaži sve</MenuItem>
-                <MenuItem value={PRICE_STATUS.ONLY_FREE}>
-                  Besplatna osnova
-                </MenuItem>
-                <MenuItem value={PRICE_STATUS.ONLY_PAID}>
-                  Plaćena osnova
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
-        )}
-
-        {isFetching && <Skeleton variant='rounded' height={120} />}
-        {!isFetching && (
-          <Stack>
-            {data?.totalCups.map((cup) => (
-              <Stack direction='row' key={cup.label} gap={1}>
-                <Typography sx={{ width: ORDER_WIDTH }}>
-                  Br. teglica od: {cup.label}
-                </Typography>
-                <Typography>{cup.numberOf}</Typography>
+            {!isLoadingFruits && (
+              <Stack direction='row' gap={2}>
+                <FormControl fullWidth>
+                  <InputLabel>Vrsta džema</InputLabel>
+                  <Select
+                    value={params.orderTypeId}
+                    label='Vrsta džema'
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        orderTypeId: Number(e.target.value),
+                      })
+                    }
+                  >
+                    <MenuItem value={0}>Prikaži sve</MenuItem>
+                    {fruits?.map((fruit) => (
+                      <MenuItem key={fruit.id} value={fruit.id}>
+                        {fruit.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel>Besplatna osnova</InputLabel>
+                  <Select
+                    value={params.priceStatus}
+                    label='Besplatna osnova'
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        priceStatus: Number(e.target.value),
+                      })
+                    }
+                  >
+                    <MenuItem value={PRICE_STATUS.ALL}>Prikaži sve</MenuItem>
+                    <MenuItem value={PRICE_STATUS.ONLY_FREE}>
+                      Besplatna osnova
+                    </MenuItem>
+                    <MenuItem value={PRICE_STATUS.ONLY_PAID}>
+                      Plaćena osnova
+                    </MenuItem>
+                  </Select>
+                </FormControl>
               </Stack>
-            ))}
-            <Stack direction='row' gap={1}>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                Ukupni prihod:
-              </Typography>
-              <FormattedPrice price={data?.totalValue ?? 0} />
-            </Stack>
-            <Stack direction='row' color='primary.main' gap={1}>
-              <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
-                Ukupni rashod:
-              </Typography>
-              <FormattedPrice
-                price={data?.totalExpense ?? 0}
-                isBold
-                isExpense
-              />
-            </Stack>
-            <Stack direction='row' color='success.dark' gap={1}>
-              <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
-                Ukupni profit:
-              </Typography>
-              <FormattedPrice price={data?.totalProfit ?? 0} isBold />
-            </Stack>
+            )}
+
+            {isFetching && <Skeleton variant='rounded' height={120} />}
+            {!isFetching && (
+              <Stack>
+                {data?.totalCups.map((cup) => (
+                  <Stack direction='row' key={cup.label} gap={1}>
+                    <Typography sx={{ width: ORDER_WIDTH }}>
+                      Br. teglica od: {cup.label}
+                    </Typography>
+                    <Typography>{cup.numberOf}</Typography>
+                  </Stack>
+                ))}
+                <Stack direction='row' gap={1}>
+                  <Typography sx={{ width: ORDER_WIDTH }}>
+                    Ukupni prihod:
+                  </Typography>
+                  <FormattedPrice price={data?.totalValue ?? 0} />
+                </Stack>
+                <Stack direction='row' color='primary.main' gap={1}>
+                  <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
+                    Ukupni rashod:
+                  </Typography>
+                  <FormattedPrice
+                    price={data?.totalExpense ?? 0}
+                    isBold
+                    isExpense
+                  />
+                </Stack>
+                <Stack direction='row' color='success.dark' gap={1}>
+                  <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
+                    Ukupni profit:
+                  </Typography>
+                  <FormattedPrice price={data?.totalProfit ?? 0} isBold />
+                </Stack>
+              </Stack>
+            )}
           </Stack>
-        )}
+        </Container>
         <Divider />
         <TabContext value={value}>
           <TabList
@@ -239,6 +249,7 @@ export default function OrdersPage() {
           </Stack>
         </TabContext>
       </Stack>
+
       {selectedId && (
         <OrderDetailsDialog
           selectedId={selectedId}

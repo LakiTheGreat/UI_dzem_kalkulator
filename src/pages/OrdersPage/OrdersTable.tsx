@@ -5,6 +5,7 @@ import { Order } from '../../types/orders';
 import useGetOrderColumns from './useGetOrderColumns';
 
 import CustomToolbar from '../../components/CustomToolbar';
+import { GRID_DEFAULT_LOCALE_TEXT } from '../../hooks/useGetDataGridTranslations';
 
 type Props = {
   data: Order[] | undefined;
@@ -60,6 +61,7 @@ export default function OrdersTable({ data }: Props) {
       onPaginationModelChange={setPaginationModel}
       rows={transformedOrdersData || []}
       columns={columns}
+      localeText={GRID_DEFAULT_LOCALE_TEXT}
       slots={{
         toolbar: CustomToolbar,
       }}
