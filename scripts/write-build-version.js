@@ -8,4 +8,4 @@ const content = `export const BUILD_VERSION = "${commitCount}";\n`;
 
 fs.writeFileSync('./src/version.ts', content);
 
-console.log('✔ Build version set to', commitCount);
+console.log('✔ Build version set to:', commitCount);
