@@ -98,6 +98,7 @@ export default function useGetOrderColumns({ data }: Props) {
       },
     },
   ];
+
   // ✅ Dynamic cup columns
   uniqueCups.forEach((label) => {
     columns.push({

@@ -3,6 +3,8 @@ import { Stack, Typography } from '@mui/material';
 import { AppName } from '../constants';
 
 export default function Footer() {
+  const APP_VERSION = 'dev';
+
   return (
     <Stack
       sx={{
@@ -21,7 +23,7 @@ export default function Footer() {
         textAlign='center'
         sx={{ fontWeight: 'bold', fontStyle: 'italic' }}
       >
-        {`${AppName} - Sva prava Dule zadržo © ${new Date().getFullYear()}`}
+        {`${AppName} - Sva prava Dule zadržo © ${new Date().getFullYear()} Verzija: ${APP_VERSION}`}
       </Typography>
     </Stack>
   );
