@@ -6,6 +6,7 @@ import {
   Container,
   Divider,
   FormControl,
+  Grid,
   IconButton,
   InputLabel,
   MenuItem,
@@ -212,22 +213,24 @@ export default function OrdersPage() {
             )}
 
             <TabPanel value={0}>
-              <Stack gap={3}>
+              <Grid container spacing={3}>
                 {!isFetching &&
                   data?.orders?.map((order) => (
-                    <OrderCard
-                      key={order.id}
-                      order={order}
-                      setSelectedId={setSelectedId}
-                      handleDelete={handleDelete}
-                    />
+                    <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+                      <OrderCard
+                        key={order.id}
+                        order={order}
+                        setSelectedId={setSelectedId}
+                        handleDelete={handleDelete}
+                      />
+                    </Grid>
                   ))}
                 {data?.orders?.length === 0 && (
-                  <Typography textAlign='center' sx={{ mt: 3 }}>
-                    Još nema porudžbina za ovu voćku.
+                  <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
+                    Nema još ništa od ove voćke.
                   </Typography>
                 )}
-              </Stack>
+              </Grid>
             </TabPanel>
 
             <TabPanel value={1}>

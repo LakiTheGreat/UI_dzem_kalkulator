@@ -52,8 +52,7 @@ export default function FruitsForm({ mappedData }: Props) {
       <RHFCheckbox name='baseFruitIsFree' label='Osnova je besplatna' />
       <Stack gap={1}>
         <Typography variant='caption'>
-          Neophodno je uneti{' '}
-          <strong>makar jedno voće i njegovu gramažu.</strong>
+          Neophodno je uneti <strong>makar jedno voće.</strong>
         </Typography>
         <Typography variant='caption'>
           Cena nije obavezna. Ali da bi sistem ovu seriju upamtio kao "Besplatna
