@@ -60,13 +60,28 @@ export default function OrderForm({
     defaultValues: {
       orderName: values?.orderName || '',
       fruits: values?.fruits || [{ grams: '', price: '', total: '' }],
-      cups: values?.cups || [],
+      cups: values?.cups || [
+        {
+          label: '212ml',
+          numberOf: 0,
+          cost: 35,
+          sellingPrice: 350,
+          total: 0,
+        },
+        {
+          label: '370ml',
+          numberOf: 0,
+          cost: 46,
+          sellingPrice: 550,
+          total: 0,
+        },
+      ],
       orderTypeId: values?.orderTypeId || '',
       baseFruitIsFree: values?.baseFruitIsFree || false,
     },
   });
 
-  const { handleSubmit, reset, control, watch, setValue } = methods;
+  const { handleSubmit, reset, control, watch } = methods;
 
   const cups = useWatch({ control, name: 'cups' });
   const fruits = useWatch({ control, name: 'fruits' });
@@ -106,19 +121,6 @@ export default function OrderForm({
   const profitMargin = (
     Number(totalOrderPrice) > 0 ? (profit / Number(totalOrderPrice)) * 100 : 0
   ).toFixed(0);
-
-  useEffect(() => {
-    if (cupsWithData && !values) {
-      const defaultCups = cupsWithData.map((cup) => ({
-        label: cup.label,
-        numberOf: 0,
-        cost: cup.cost,
-        sellingPrice: cup.sellingPrice,
-        total: 0,
-      }));
-      setValue('cups', defaultCups);
-    }
-  }, [cupsWithData, values, setValue]);
 
   useEffect(() => {
     if (data) {

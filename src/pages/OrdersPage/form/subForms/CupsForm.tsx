@@ -18,7 +18,6 @@ export default function CupsForm({ cupsWithData }: Props) {
     control,
     name: 'cups',
   });
-
   useEffect(() => {
     if (!cupsWithData?.length) return;
     if (!cups?.length) return;

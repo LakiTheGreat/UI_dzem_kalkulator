@@ -230,9 +230,8 @@ export default function OrdersPage() {
               <Grid container spacing={3}>
                 {!isFetching &&
                   data?.orders?.map((order) => (
-                    <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+                    <Grid size={{ xs: 12, md: 6, lg: 4 }} key={order.id}>
                       <OrderCard
-                        key={order.id}
                         order={order}
                         setSelectedId={setSelectedId}
                         handleDelete={handleDelete}

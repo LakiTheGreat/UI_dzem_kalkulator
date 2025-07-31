@@ -45,15 +45,13 @@ export default function CreateOrder() {
         total: fruit.total.toString(),
         fruitId: fruit.fruitId,
       })),
-      cups: data.cups
-        .filter((cup) => cup.numberOf > 0)
-        .map((cup) => ({
-          cost: cup.cost,
-          label: cup.label,
-          numberOf: cup.numberOf,
-          sellingPrice: cup.sellingPrice,
-          total: cup.total,
-        })),
+      cups: data.cups.map((cup) => ({
+        cost: cup.cost,
+        label: cup.label,
+        numberOf: cup.numberOf,
+        sellingPrice: cup.sellingPrice,
+        total: cup.total,
+      })),
       otherExpensesMargin: otherExpansesMargin?.value || 1,
       baseFruitIsFree: data.baseFruitIsFree,
     };
