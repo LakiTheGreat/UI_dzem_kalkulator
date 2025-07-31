@@ -1,11 +1,10 @@
-// scripts/write-build-version.js
 const fs = require('fs');
-const { execSync } = require('child_process');
+const path = require('path');
 
-const commitCount = execSync('git rev-list --count HEAD').toString().trim();
+const version = new Date().toISOString(); // or use package.json version if you prefer
+const filePath = path.join(__dirname, '../src/version.ts');
 
-const content = `export const BUILD_VERSION = "${commitCount}";\n`;
+const content = `export const APP_VERSION = "${version}";\n`;
 
-fs.writeFileSync('./src/version.ts', content);
-
-console.log('✔ Build version set to:', commitCount);
+fs.writeFileSync(filePath, content, 'utf8');
+console.log(`✅ APP_VERSION written to version.ts: ${version}`);
