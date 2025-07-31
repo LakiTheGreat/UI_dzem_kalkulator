@@ -151,7 +151,9 @@ export default function DesktopNav() {
           >
             <Stack direction='row' alignItems='center' gap={1}>
               <Logo />
-              <Typography variant='h3'>{AppName}</Typography>
+              <Typography variant='h3' sx={{ fontWeight: 'bold' }}>
+                {AppName}
+              </Typography>
             </Stack>
 
             {/* <Stack direction='row' gap={1} alignItems='center'>
