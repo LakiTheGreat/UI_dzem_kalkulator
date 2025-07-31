@@ -2,9 +2,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import { Stack } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
-import { Order } from '../../types/orders';
-import { formatDate } from '../../utils/formatDate';
-import FormattedPrice from '../../utils/FormattedPrice';
+import { Order } from '../../../types/orders';
+import { formatDate } from '../../../utils/formatDate';
+import FormattedPrice from '../../../utils/FormattedPrice';
 import DataGridRowActions from './DataGridRowActions';
 
 type Props = {

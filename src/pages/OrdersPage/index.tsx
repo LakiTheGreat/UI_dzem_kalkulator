@@ -36,7 +36,7 @@ import FormattedPrice from '../../utils/FormattedPrice';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import OrderCard from './OrderCard';
 import OrderDetailsDialog from './OrderDetailsDialog';
-import OrdersTable from './OrdersTable';
+import OrdersTable from './table/OrdersTable';
 
 export default function OrdersPage() {
   const navigate = useNavigate();

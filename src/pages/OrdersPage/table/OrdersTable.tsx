@@ -1,10 +1,9 @@
 import { useTheme } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GRID_DEFAULT_LOCALE_TEXT } from '@mui/x-data-grid';
 import { useState } from 'react';
 
-import CustomToolbar from '../../components/CustomToolbar';
-import { GRID_DEFAULT_LOCALE_TEXT } from '../../hooks/useGetDataGridTranslations';
-import { Order } from '../../types/orders';
+import CustomToolbar from '../../../components/CustomToolbar';
+import { Order } from '../../../types/orders';
 import useGetOrderColumns from './useGetOrderColumns';
 
 type Props = {
