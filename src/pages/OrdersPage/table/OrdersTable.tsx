@@ -2,9 +2,9 @@ import { useTheme } from '@mui/material';
 import { DataGrid, GRID_DEFAULT_LOCALE_TEXT } from '@mui/x-data-grid';
 import { useState } from 'react';
 
-import CustomToolbar from '../../../components/CustomToolbar';
-import { Order } from '../../../types/orders';
 import useGetOrderColumns from './useGetOrderColumns';
+import { Order } from '../../../types/orders';
+import CustomToolbar from '../../../components/CustomToolbar';
 
 type Props = {
   data: Order[] | undefined;
@@ -54,8 +54,15 @@ export default function OrdersTable({ data, handleDelete, handleEdit }: Props) {
         '& .MuiDataGrid-columnHeaderTitle': {
           fontWeight: 'bold',
         },
+        '& .negative-profit-row': {
+          backgroundColor: palette.error.lighter,
+        },
       }}
       //   disableColumnMenu
+      getRowClassName={(params) =>
+        params.row.orderProfit < 0 ? 'negative-profit-row' : ''
+      }
+      disableRowSelectionOnClick
       pageSizeOptions={[10, 25, 50, 100]}
       initialState={{
         sorting: {
@@ -66,7 +73,10 @@ export default function OrdersTable({ data, handleDelete, handleEdit }: Props) {
       onPaginationModelChange={setPaginationModel}
       rows={transformedOrdersData || []}
       columns={columns}
-      localeText={GRID_DEFAULT_LOCALE_TEXT}
+      localeText={{
+        ...GRID_DEFAULT_LOCALE_TEXT,
+        paginationRowsPerPage: 'Redova po stranici:',
+      }}
       slots={{
         toolbar: CustomToolbar,
       }}

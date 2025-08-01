@@ -39,7 +39,11 @@ export default function OrderCard({
       variant='outlined'
       sx={{
         height: '100%',
-        bgcolor: 'secondary.lighter',
+        bgcolor: ` ${
+          order.orderProfit > 0
+            ? `${palette.secondary.lighter}`
+            : `${palette.error.lighter}`
+        }`,
         border: `1px solid ${
           order.baseFruitIsFree ? `${palette.success.dark}` : 'transparent'
         }`,
