@@ -185,7 +185,11 @@ export default function OrderForm({
           type='submit'
           size='large'
           loading={isLoading}
-          disabled={!orderTypeId || (!cups[0]?.numberOf && !cups[0]?.numberOf)}
+          disabled={
+            !orderTypeId || //Mora da postoji vrsta džema
+            !cups.some((cup) => Number(cup.numberOf) > 0) || //Mora biti uneta makar jedna tegla
+            fruits.some((fruit) => !fruit.grams || Number(fruit.grams) <= 0) // Ni jedno voce ne sme da bude bez gramaze
+          }
         >
           Sačuvaj
         </Button>

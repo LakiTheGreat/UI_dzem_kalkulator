@@ -61,7 +61,7 @@ export default function MobileNav() {
               gap={2}
             >
               <Logo isSmall={true} />
-              <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+              <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
                 {AppName}
               </Typography>
             </Stack>

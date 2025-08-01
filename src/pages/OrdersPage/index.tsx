@@ -179,11 +179,13 @@ export default function OrdersPage() {
                   <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
                     Ukupni rashod:
                   </Typography>
-                  <FormattedPrice
-                    price={data?.totalExpense ?? 0}
-                    isBold
-                    isExpense
-                  />
+                  <Stack sx={{ ml: -1.3 }}>
+                    <FormattedPrice
+                      price={data?.totalExpense ?? 0}
+                      isBold
+                      isExpense
+                    />
+                  </Stack>
                 </Stack>
                 <Stack direction='row' color='success.dark' gap={1}>
                   <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>

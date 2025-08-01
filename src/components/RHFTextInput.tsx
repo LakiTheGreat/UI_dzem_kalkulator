@@ -44,7 +44,7 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
     };
 
     const handleClear = () => {
-      setValue(name, '');
+      setValue(name, type === 'number' ? 0 : '');
     };
 
     const togglePasswordVisibility = () => {
