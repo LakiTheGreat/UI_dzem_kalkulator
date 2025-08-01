@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material';
 import { DataGrid, GRID_DEFAULT_LOCALE_TEXT } from '@mui/x-data-grid';
 import { useState } from 'react';
 
@@ -17,7 +16,6 @@ export default function OrdersTable({ data, handleDelete, handleEdit }: Props) {
     pageSize: 10,
     page: 0,
   });
-  const { palette } = useTheme();
 
   function transformOrders(rawOrders: Order[]) {
     return rawOrders.map((order) => {
