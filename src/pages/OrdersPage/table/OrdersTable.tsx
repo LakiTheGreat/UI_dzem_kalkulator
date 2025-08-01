@@ -47,22 +47,9 @@ export default function OrdersTable({ data, handleDelete, handleEdit }: Props) {
 
   return (
     <DataGrid
-      sx={{
-        '& .MuiDataGrid-columnHeader': {
-          backgroundColor: palette.secondary.lighter,
-        },
-        '& .MuiDataGrid-columnHeaderTitle': {
-          fontWeight: 'bold',
-        },
-        '& .negative-profit-row': {
-          backgroundColor: palette.error.lighter,
-        },
-      }}
-      //   disableColumnMenu
       getRowClassName={(params) =>
         params.row.orderProfit < 0 ? 'negative-profit-row' : ''
       }
-      disableRowSelectionOnClick
       pageSizeOptions={[10, 25, 50, 100]}
       initialState={{
         sorting: {

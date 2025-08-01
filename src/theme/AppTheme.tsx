@@ -1,5 +1,6 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ReactNode, useMemo } from 'react';
+import { DataGrid } from './overrides/DataGrid';
 
 import palette from './palette';
 
@@ -19,7 +20,9 @@ export default function AppTheme({ children }: Props) {
       },
 
       palette: palette.light,
-
+      components: {
+        ...DataGrid,
+      },
       shape: {
         borderRadius: 8,
       },
