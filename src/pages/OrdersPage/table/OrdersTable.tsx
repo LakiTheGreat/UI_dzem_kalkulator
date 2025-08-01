@@ -1,9 +1,10 @@
-import { DataGrid, GRID_DEFAULT_LOCALE_TEXT } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
 
 import useGetOrderColumns from './useGetOrderColumns';
 import { Order } from '../../../types/orders';
 import CustomToolbar from '../../../components/CustomToolbar';
+import { GRID_DEFAULT_LOCALE_TEXT } from '../../../hooks/useGetDataGridTranslations';
 
 type Props = {
   data: Order[] | undefined;
@@ -58,10 +59,7 @@ export default function OrdersTable({ data, handleDelete, handleEdit }: Props) {
       onPaginationModelChange={setPaginationModel}
       rows={transformedOrdersData || []}
       columns={columns}
-      localeText={{
-        ...GRID_DEFAULT_LOCALE_TEXT,
-        paginationRowsPerPage: 'Redova po stranici:',
-      }}
+      localeText={GRID_DEFAULT_LOCALE_TEXT}
       slots={{
         toolbar: CustomToolbar,
       }}
