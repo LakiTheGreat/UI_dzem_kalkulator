@@ -36,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set NODE_OPTIONS=--max-old-space-size=4096 && react-scripts start",
     "prebuild": "node scripts/write-build-version.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

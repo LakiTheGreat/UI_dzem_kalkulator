@@ -250,11 +250,13 @@ export default function OrdersPage() {
             </TabPanel>
 
             <TabPanel value={1}>
-              <OrdersTable
-                data={data?.orders}
-                handleDelete={handleDelete}
-                handleEdit={handleEdit}
-              />
+              {!isFetching && (
+                <OrdersTable
+                  data={data?.orders}
+                  handleDelete={handleDelete}
+                  handleEdit={handleEdit}
+                />
+              )}
             </TabPanel>
           </Stack>
         </TabContext>
