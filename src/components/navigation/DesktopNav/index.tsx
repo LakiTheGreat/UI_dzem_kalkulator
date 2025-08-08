@@ -197,7 +197,7 @@ export default function DesktopNav() {
                   <NavItemButton navItem={navItem} open={open} />
                 </span>
               </Tooltip>
-              {navItem.addDividerAfter && <Divider sx={{ my: 2 }} />}
+              {navItem.addDividerAfter && <Divider sx={{ my: 1 }} />}
             </Box>
           ))}
         </List>

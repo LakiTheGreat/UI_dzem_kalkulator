@@ -1,5 +1,6 @@
-import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import CalculateIcon from '@mui/icons-material/Calculate';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import { NavItem } from '../types/nav';
@@ -10,6 +11,11 @@ export const NavItems: NavItem[] = [
     label: 'Proizvodne serije',
     icon: FolderCopyIcon,
     to: routes.orders,
+  },
+  {
+    label: 'Inventar',
+    icon: InventoryIcon,
+    to: routes.inventory,
     addDividerAfter: true,
   },
   {

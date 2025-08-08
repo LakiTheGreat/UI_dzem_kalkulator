@@ -4,13 +4,14 @@ import App from './App';
 import { routes } from './constants/routes';
 
 import AuthGuard from './components/guards/AuthGuard';
+import GuestGuard from './components/guards/GuestGuard';
 import CalculatorPage from './pages/CalculatorPage';
+import InventoryPage from './pages/InventoryPage';
 import LoginPage from './pages/LoginPage';
 import OrdersPage from './pages/OrdersPage';
 import CreateOrder from './pages/OrdersPage/form/CreateOrder';
 import EditOrder from './pages/OrdersPage/form/EditOrder';
 import SettingsPage from './pages/SettingsPage';
-import GuestGuard from './components/guards/GuestGuard';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Navigate to={routes.orders} replace />,
+          },
+          {
+            path: routes.inventory,
+            element: <InventoryPage />,
           },
           {
             path: routes.orders,

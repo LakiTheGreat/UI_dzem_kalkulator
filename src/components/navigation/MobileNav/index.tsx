@@ -80,7 +80,7 @@ export default function MobileNav() {
                     open={open}
                     setClose={() => setOpen(false)}
                   />
-                  {navItem.addDividerAfter && <Divider sx={{ my: 2 }} />}
+                  {navItem.addDividerAfter && <Divider sx={{ my: 1 }} />}
                 </Stack>
               ))}
             </List>
