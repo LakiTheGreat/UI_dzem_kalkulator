@@ -41,7 +41,7 @@ export default function GeneralDialog({
           </IconButton>
         </Stack>
       </DialogTitle>
-      <Divider sx={{ mb: 1.5 }} />
+      <Divider />
 
       <DialogContent>{children}</DialogContent>
     </Dialog>

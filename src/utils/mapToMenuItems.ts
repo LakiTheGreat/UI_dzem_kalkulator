@@ -1,5 +1,5 @@
 import { MenuItemType } from '../components/RHFSelectInput';
-import { Cup } from '../types/cups';
+import { Cup, CupWithPriceData } from '../types/cups';
 import { Fruit } from '../types/fruits';
 
 export const mapFruitToMenuItems = (
@@ -22,6 +22,20 @@ export const mapCupsToMenuItems = (cups: Cup[] | undefined): MenuItemType[] => {
     (cup: Cup): MenuItemType => ({
       id: cup.id,
       value: cup.label,
+      menuItemLabel: cup.label,
+      isDeleted: cup.isDeleted,
+    })
+  );
+};
+
+export const mapCupsWithDataToMenuItems = (
+  cups: CupWithPriceData[] | undefined
+): MenuItemType[] => {
+  if (!cups) return [];
+  return cups.map(
+    (cup: CupWithPriceData): MenuItemType => ({
+      id: cup.id,
+      value: cup.id,
       menuItemLabel: cup.label,
       isDeleted: cup.isDeleted,
     })
