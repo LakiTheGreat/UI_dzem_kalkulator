@@ -11,7 +11,7 @@ const inventoryApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
     getInventory: build.query<Inventory[], void>({
       query: () => ({
-        url: `${inventoryApiUrl}/`,
+        url: `${inventoryApiUrl}`,
       }),
       providesTags: ['Inventory'],
     }),
