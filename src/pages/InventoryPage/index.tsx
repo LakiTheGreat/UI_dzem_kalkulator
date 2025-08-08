@@ -88,7 +88,7 @@ export default function InventoryPage() {
               Stanje po voćkama:
             </Typography>
             {groupedInventoryIsLoading && (
-              <Skeleton variant='rounded' height={200} />
+              <Skeleton variant='rounded' height={260} />
             )}
             {!groupedInventoryIsLoading && (
               <Stack>
