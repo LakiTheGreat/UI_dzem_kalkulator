@@ -2,8 +2,7 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store/store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://be-dzem-kalkulator.onrender.com/api',
-  // baseUrl: 'http://localhost:3333/api',
+  baseUrl: `${process.env.REACT_APP_API_URL}`,
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
     const userId = state.auth.userId;
