@@ -135,7 +135,12 @@ export default function InventoryConfigForm({ open, handleClose }: Props) {
               />
             )}
 
-            <RHFTextInput name='numberOf' label='Broj teglica' type='number' />
+            <RHFTextInput
+              name='numberOf'
+              label='Broj teglica'
+              type='number'
+              allowNegative
+            />
 
             <Button type='submit' variant='contained' loading={isLoading}>
               Sačuvaj

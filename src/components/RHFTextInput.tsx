@@ -17,11 +17,20 @@ type RHFTextInputProps = TextFieldProps & {
   type?: HTMLInputTypeAttribute;
   disabled?: boolean;
   showCurrency?: boolean;
+  allowNegative?: boolean;
 };
 
 const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
   (
-    { name, label, type, disabled = false, showCurrency = false, ...rest },
+    {
+      name,
+      label,
+      type,
+      disabled = false,
+      showCurrency = false,
+      allowNegative = false,
+      ...rest
+    },
     ref
   ) => {
     const { control, getValues, setValue } = useFormContext();
@@ -90,11 +99,14 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
                   onBlur={onBlur}
                   onWheel={(e) => (e.target as HTMLElement).blur()}
                   onKeyDown={(e) => {
-                    if (
-                      type === 'number' &&
-                      ['e', 'E', '+', '-'].includes(e.key)
-                    ) {
-                      e.preventDefault();
+                    if (type === 'number') {
+                      const blockedKeys = ['e', 'E', '+'];
+                      if (!allowNegative) {
+                        blockedKeys.push('-');
+                      }
+                      if (blockedKeys.includes(e.key)) {
+                        e.preventDefault();
+                      }
                     }
                   }}
                   sx={{

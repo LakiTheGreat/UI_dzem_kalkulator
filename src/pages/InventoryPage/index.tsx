@@ -40,12 +40,13 @@ export default function InventoryPage() {
         <Stack gap={1}>
           <Typography variant='caption'>
             Kreiranjem "Proizvodne serije" stanje inventara se
+            <br />
             <strong> NE AŽURIRA AUTOMATSKI</strong>.
           </Typography>
           <Typography variant='caption'>
             Podaci u okviru "Inventara" su nezavisni od stanja u "Proizvodne
-            serije" i neophodno je posebno uneti podatke kako za "ulaz" tako i
-            za "izlaz".
+            serije". Neophodno je posebno uneti podatke na stranici
+            "Transakcije".
           </Typography>
         </Stack>
 
@@ -67,18 +68,20 @@ export default function InventoryPage() {
                 <SettingsIcon />
               </IconButton>
             </Stack>
-
-            {data.map((item) => (
-              <Stack direction='row' gap={1} key={item.label}>
-                <Typography sx={{ width: 60 }}>{`${item.label}:`}</Typography>
-                <Typography key={item.label}>
-                  {`${item.numberOf} kom. `}
-                </Typography>
-              </Stack>
-            ))}
+            <Stack direction='row' gap={4}>
+              {data.map((item) => (
+                <Stack gap={1} key={item.label}>
+                  <Typography sx={{ width: 60 }}>{`${item.label}:`}</Typography>
+                  <Typography key={item.label}>
+                    {`${item.numberOf} kom. `}
+                  </Typography>
+                </Stack>
+              ))}
+            </Stack>
           </Stack>
         )}
         <Divider />
+
         <Stack gap={1}>
           <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
             Stanje po voćkama:
@@ -91,16 +94,15 @@ export default function InventoryPage() {
               <Divider />
               {groupedInventory?.map((item) => (
                 <Stack key={item.label} gap={1}>
-                  <Stack direction='row' sx={{ py: 0.5 }}>
-                    <Typography
-                      sx={{ width: 105 }}
-                    >{`${item.label}`}</Typography>
+                  <Stack direction='row' sx={{ pt: 1 }}>
+                    <Typography sx={{ flex: 1 }}>{`${item.label}`}</Typography>
 
-                    <Stack gap={1}>
+                    <Stack sx={{ flex: 2 }} direction='row' gap={4}>
                       {item.cups.map((cup) => (
-                        <Typography key={cup.label}>
-                          {`${cup.numberOf} kom. (${cup.label})`}
-                        </Typography>
+                        <Stack key={cup.label}>
+                          <Typography>{`${cup.label}:`}</Typography>
+                          <Typography>{`${cup.numberOf} kom.`}</Typography>
+                        </Stack>
                       ))}
                     </Stack>
                   </Stack>
