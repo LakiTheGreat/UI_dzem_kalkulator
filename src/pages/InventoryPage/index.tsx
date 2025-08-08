@@ -47,7 +47,7 @@ export default function InventoryPage() {
               <Stack direction='row' gap={1} key={item.label}>
                 <Typography sx={{ width: 105 }}>{`Broj teglica:`}</Typography>
                 <Typography key={item.label}>
-                  {`${item.numberOf} (${item.label})`}
+                  {`${item.numberOf} kom. (${item.label})`}
                 </Typography>
               </Stack>
             ))}
