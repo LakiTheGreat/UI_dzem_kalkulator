@@ -52,7 +52,7 @@ export default function InventoryPage() {
 
         <Divider />
 
-        {isLoading && <Skeleton variant='rounded' height={148} />}
+        {isLoading && <Skeleton variant='rounded' height={104} />}
         <Stack gap={4}>
           {!isLoading && data && (
             <Stack gap={1}>
