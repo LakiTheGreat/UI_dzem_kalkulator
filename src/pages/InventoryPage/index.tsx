@@ -36,8 +36,6 @@ export default function InventoryPage() {
         {isLoading && <Skeleton variant='rounded' height={148} />}
 
         {!isLoading && data && (
-          // <Card variant='outlined'>
-          //   <CardContent>
           <Stack gap={1}>
             <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
               Ukupno stanje:
@@ -52,8 +50,6 @@ export default function InventoryPage() {
               </Stack>
             ))}
           </Stack>
-          //   </CardContent>
-          // </Card>
         )}
         <Divider />
       </Stack>
