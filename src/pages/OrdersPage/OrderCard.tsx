@@ -64,7 +64,15 @@ export default function OrderCard({
             </Stack>
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH }}>Vrsta džema:</Typography>
-              <Typography sx={{ fontWeight: 'bold' }}>
+              <Typography
+                sx={{
+                  width: ORDER_WIDTH,
+                  fontWeight: 'bold',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
                 {order.orderTypeName}
               </Typography>
             </Stack>

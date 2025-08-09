@@ -66,7 +66,9 @@ export default function InventoryPage() {
                 {data.map((item) => (
                   <Stack gap={1} key={item.label}>
                     <Typography
-                      sx={{ width: 60 }}
+                      sx={{
+                        width: 60,
+                      }}
                       textAlign='center'
                     >{`${item.label}:`}</Typography>
                     <Typography key={item.label} textAlign='center'>
@@ -93,7 +95,11 @@ export default function InventoryPage() {
                     <Stack key={item.label} gap={1}>
                       <Stack direction='row' sx={{ pt: 1 }} alignItems='center'>
                         <Typography
-                          sx={{ width: 120 }}
+                          sx={{
+                            width: 120,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
                         >{`${item.label}`}</Typography>
 
                         <Stack direction='row' gap={4}>
