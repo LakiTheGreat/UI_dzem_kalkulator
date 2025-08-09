@@ -14,12 +14,12 @@ import { useState } from 'react';
 import { Outlet } from 'react-router';
 import { AppName } from '../../../constants';
 
+import { api } from '../../../api';
 import { NavItems } from '../../../constants/NavItems';
-import { useAppDispatch } from '../../../hooks/reduxStoreHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxStoreHooks';
 import { logOutUser } from '../../../store/authSlice';
 import Logo from '../../Logo';
 import NavItemButton from '../NavItemButton';
-import { api } from '../../../api';
 
 const drawerWidth = 260;
 
@@ -107,6 +107,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 export default function DesktopNav() {
   const theme = useTheme();
+  const userId = useAppSelector((state) => state.auth.userId);
 
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
@@ -159,15 +160,20 @@ export default function DesktopNav() {
             {/* <Stack direction='row' gap={1} alignItems='center'>
               Account popover
             </Stack> */}
-            <Button
-              variant='outlined'
-              onClick={() => {
-                dispatch(logOutUser());
-                dispatch(api.util.resetApiState());
-              }}
-            >
-              Izloguj se
-            </Button>
+            <Stack>
+              <Typography>
+                {userId === 1 ? 'Testni korisnik' : 'Dušan Pantelić'}
+              </Typography>
+              <Button
+                variant='outlined'
+                onClick={() => {
+                  dispatch(logOutUser());
+                  dispatch(api.util.resetApiState());
+                }}
+              >
+                Izloguj se
+              </Button>
+            </Stack>
           </Stack>
         </Toolbar>
       </AppBar>

@@ -14,19 +14,20 @@ import List from '@mui/material/List';
 import { useState } from 'react';
 import { Outlet } from 'react-router';
 
+import { api } from '../../../api';
 import { AppName } from '../../../constants';
 import { NavItems } from '../../../constants/NavItems';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxStoreHooks';
 import useResponsive from '../../../hooks/useResponsive';
+import { logOutUser } from '../../../store/authSlice';
 import Logo from '../../Logo';
 import NavItemButton from '../NavItemButton';
-import { useAppDispatch } from '../../../hooks/reduxStoreHooks';
-import { logOutUser } from '../../../store/authSlice';
-import { api } from '../../../api';
 
 export default function MobileNav() {
   const dispatch = useAppDispatch();
   const isTablet = useResponsive('down', 'md');
   const isMobile = useResponsive('down', 'sm');
+  const userId = useAppSelector((state) => state.auth.userId);
 
   const [open, setOpen] = useState(false);
 
@@ -70,7 +71,7 @@ export default function MobileNav() {
       </AppBar>
 
       <Drawer anchor={'left'} open={open} onClose={() => setOpen(false)}>
-        <Stack justifyContent='space-between' sx={{ height: '90%' }}>
+        <Stack justifyContent='space-between' sx={{ height: '100%' }}>
           <Stack alignItems='center' sx={{ pt: 1 }}>
             <List sx={{ px: 1 }}>
               {NavItems.map((navItem) => (
@@ -85,14 +86,21 @@ export default function MobileNav() {
               ))}
             </List>
           </Stack>
-          <Button
-            onClick={() => {
-              dispatch(logOutUser());
-              dispatch(api.util.resetApiState());
-            }}
-          >
-            Izloguj se
-          </Button>
+          <Stack sx={{ mb: 6 }}>
+            <Typography textAlign='center'>
+              {userId === 1 ? 'Testni korisnik' : 'Dušan Pantelić'}
+            </Typography>
+            <Button
+              sx={{ mx: 1 }}
+              variant='outlined'
+              onClick={() => {
+                dispatch(logOutUser());
+                dispatch(api.util.resetApiState());
+              }}
+            >
+              Izloguj se
+            </Button>
+          </Stack>
         </Stack>
       </Drawer>
       <Box
