@@ -39,14 +39,8 @@ export default function InventoryPage() {
       <Stack gap={3}>
         <Stack gap={1}>
           <Typography variant='caption'>
-            Kreiranjem "Proizvodne serije" stanje inventara se
-            <br />
-            <strong> NE AŽURIRA AUTOMATSKI</strong>.
-          </Typography>
-          <Typography variant='caption'>
-            Podaci u okviru "Inventara" su nezavisni od stanja u "Proizvodne
-            serije". Neophodno je posebno uneti podatke na stranici
-            "Transakcije".
+            Kreiranjem "Proizvodne serije" ili "Transakcije" stanje inventara se
+            <strong> AUTOMATSKI AŽURIRA</strong>.
           </Typography>
         </Stack>
 

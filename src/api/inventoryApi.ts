@@ -13,14 +13,14 @@ const inventoryApiEndpoints = api.injectEndpoints({
       query: () => ({
         url: `${inventoryApiUrl}`,
       }),
-      providesTags: ['Inventory'],
+      providesTags: ['Inventory', 'Order'],
     }),
 
     getTotalInventory: build.query<InventoryItem[], void>({
       query: () => ({
         url: `${inventoryApiUrl}/overview`,
       }),
-      providesTags: ['Inventory'],
+      providesTags: ['Inventory', 'Order'],
     }),
 
     postInventory: build.mutation<InventoryPostRequest, InventoryPostRequest>({

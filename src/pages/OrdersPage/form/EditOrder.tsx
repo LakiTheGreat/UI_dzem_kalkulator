@@ -62,6 +62,7 @@ export default function EditOrder() {
       cups: data.cups
         .filter((cup) => cup.numberOf > 0)
         .map((cup) => ({
+          id: cup.id,
           cost: cup.cost,
           label: cup.label,
           numberOf: cup.numberOf,

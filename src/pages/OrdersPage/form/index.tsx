@@ -22,6 +22,7 @@ export type FruitItem = {
 };
 
 export type CupItem = {
+  id: number;
   label: string;
   numberOf: number;
   cost: number;
@@ -110,6 +111,7 @@ export default function OrderForm({
   useEffect(() => {
     if (cupsWithData && !values) {
       const defaultCups = cupsWithData.map((cup) => ({
+        id: cup.id,
         label: cup.label,
         numberOf: 0,
         cost: cup.cost,

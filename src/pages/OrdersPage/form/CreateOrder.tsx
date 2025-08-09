@@ -46,6 +46,7 @@ export default function CreateOrder() {
         fruitId: fruit.fruitId,
       })),
       cups: data.cups.map((cup) => ({
+        id: cup.id,
         cost: cup.cost,
         label: cup.label,
         numberOf: cup.numberOf,

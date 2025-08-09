@@ -7,6 +7,7 @@ export type OrderFruit = {
 };
 
 export type OrderCup = {
+  id: number;
   label: string;
   numberOf: number;
   cost: number;

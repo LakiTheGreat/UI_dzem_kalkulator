@@ -107,8 +107,8 @@ export default function InventoryConfigForm({ open, handleClose }: Props) {
               Inicijalna konfiguracija inventara, odnosno unos početnog stanja.
             </Typography>
             <Typography variant='caption'>
-              Sve naknade promene se vrše pomoću kreiranja transakcija
-              (ulaz/izlaz).
+              Sve naknade promene se vrše automatski pomoću kreiranja
+              transakcija odnosno proizvodnih serija.
             </Typography>
           </Stack>
 
