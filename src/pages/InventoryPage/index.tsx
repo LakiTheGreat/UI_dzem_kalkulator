@@ -84,35 +84,37 @@ export default function InventoryPage() {
           )}
 
           <Stack gap={1}>
-            <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-              Stanje po voćkama:
-            </Typography>
             {groupedInventoryIsLoading && (
               <Skeleton variant='rounded' height={260} />
             )}
             {!groupedInventoryIsLoading && (
-              <Stack>
-                {/* <Divider /> */}
-                {groupedInventory?.map((item) => (
-                  <Stack key={item.label} gap={1}>
-                    <Stack direction='row' sx={{ pt: 1 }} alignItems='center'>
-                      <Typography
-                        sx={{ flex: 1 }}
-                      >{`${item.label}`}</Typography>
+              <>
+                <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+                  Stanje po voćkama:
+                </Typography>
+                <Stack>
+                  {/* <Divider /> */}
+                  {groupedInventory?.map((item) => (
+                    <Stack key={item.label} gap={1}>
+                      <Stack direction='row' sx={{ pt: 1 }} alignItems='center'>
+                        <Typography
+                          sx={{ flex: 1 }}
+                        >{`${item.label}`}</Typography>
 
-                      <Stack sx={{ flex: 2 }} direction='row' gap={4}>
-                        {item.cups.map((cup) => (
-                          <Stack key={cup.label}>
-                            <Typography>{`${cup.label}:`}</Typography>
-                            <Typography>{`${cup.numberOf} kom.`}</Typography>
-                          </Stack>
-                        ))}
+                        <Stack sx={{ flex: 2 }} direction='row' gap={4}>
+                          {item.cups.map((cup) => (
+                            <Stack key={cup.label}>
+                              <Typography>{`${cup.label}:`}</Typography>
+                              <Typography>{`${cup.numberOf} kom.`}</Typography>
+                            </Stack>
+                          ))}
+                        </Stack>
                       </Stack>
+                      <Divider />
                     </Stack>
-                    <Divider />
-                  </Stack>
-                ))}
-              </Stack>
+                  ))}
+                </Stack>
+              </>
             )}
           </Stack>
         </Stack>
