@@ -67,9 +67,10 @@ export default function InventoryPage() {
                   <Stack gap={1} key={item.label}>
                     <Typography
                       sx={{ width: 60 }}
+                      textAlign='center'
                     >{`${item.label}:`}</Typography>
-                    <Typography key={item.label}>
-                      {`${item.numberOf} kom. `}
+                    <Typography key={item.label} textAlign='center'>
+                      {`${item.numberOf}  `}
                     </Typography>
                   </Stack>
                 ))}
@@ -92,14 +93,20 @@ export default function InventoryPage() {
                     <Stack key={item.label} gap={1}>
                       <Stack direction='row' sx={{ pt: 1 }} alignItems='center'>
                         <Typography
-                          sx={{ flex: 1 }}
+                          sx={{ width: 120 }}
                         >{`${item.label}`}</Typography>
 
-                        <Stack sx={{ flex: 2 }} direction='row' gap={4}>
+                        <Stack direction='row' gap={4}>
                           {item.cups.map((cup) => (
                             <Stack key={cup.label}>
-                              <Typography>{`${cup.label}:`}</Typography>
-                              <Typography>{`${cup.numberOf} kom.`}</Typography>
+                              <Typography
+                                sx={{ width: 60 }}
+                                textAlign='center'
+                              >{`${cup.label}:`}</Typography>
+                              <Typography
+                                sx={{ width: 60 }}
+                                textAlign='center'
+                              >{`${cup.numberOf}`}</Typography>
                             </Stack>
                           ))}
                         </Stack>
