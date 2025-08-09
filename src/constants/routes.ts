@@ -5,4 +5,5 @@ export const routes = {
   general_calculator: 'general-calculator',
   settings: 'settings',
   inventory: 'inventory',
+  transactions: 'transactions',
 };
