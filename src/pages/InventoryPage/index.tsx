@@ -18,9 +18,9 @@ import { routes } from '../../constants/routes';
 import InventoryConfigForm from './InventoryConfigForm';
 
 export default function InventoryPage() {
-  const { data, isLoading } = useGetTotalInventoryQuery();
+  const { data, isFetching } = useGetTotalInventoryQuery();
 
-  const { data: groupedInventory, isLoading: groupedInventoryIsLoading } =
+  const { data: groupedInventory, isFetching: groupedInventoryIsFetching } =
     useGetInventoryQuery();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -46,9 +46,9 @@ export default function InventoryPage() {
 
         <Divider />
 
-        {isLoading && <Skeleton variant='rounded' height={104} />}
+        {isFetching && <Skeleton variant='rounded' height={104} />}
         <Stack gap={4}>
-          {!isLoading && data && (
+          {!isFetching && data && (
             <Stack gap={1}>
               <Stack
                 direction='row'
@@ -79,10 +79,10 @@ export default function InventoryPage() {
           )}
 
           <Stack gap={1}>
-            {groupedInventoryIsLoading && (
+            {groupedInventoryIsFetching && (
               <Skeleton variant='rounded' height={260} />
             )}
-            {!groupedInventoryIsLoading && (
+            {!groupedInventoryIsFetching && (
               <>
                 <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                   Stanje po voćkama:
