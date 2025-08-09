@@ -28,6 +28,7 @@ export type InventoryConfigFormData = {
   orderTypeId: number | string;
   cupId: number | string;
   numberOf: number;
+  code: string;
 };
 
 export default function InventoryConfigForm({ open, handleClose }: Props) {
@@ -49,9 +50,12 @@ export default function InventoryConfigForm({ open, handleClose }: Props) {
       orderTypeId: '',
       cupId: '',
       numberOf: 0,
+      code: '',
     },
   });
-  const { handleSubmit, setValue, reset } = methods;
+  const { handleSubmit, setValue, reset, watch } = methods;
+
+  const { code, numberOf } = watch();
 
   useEffect(() => {
     if (fruits) {
@@ -107,8 +111,8 @@ export default function InventoryConfigForm({ open, handleClose }: Props) {
               Inicijalna konfiguracija inventara, odnosno unos početnog stanja.
             </Typography>
             <Typography variant='caption'>
-              Sve naknade promene se vrše automatski pomoću kreiranja
-              transakcija odnosno proizvodnih serija.
+              Sve naknade promene se vrše automatski kreiranjem transakcija i
+              proizvodnih serija.
             </Typography>
           </Stack>
 
@@ -142,7 +146,25 @@ export default function InventoryConfigForm({ open, handleClose }: Props) {
               allowNegative
             />
 
-            <Button type='submit' variant='contained' loading={isLoading}>
+            <Divider />
+
+            <Typography variant='caption'>
+              Za unos direktnih izmena u inventar neophodno je uneti lozinku.
+            </Typography>
+
+            <RHFTextInput
+              name='code'
+              label='Lozinka'
+              type='password'
+              allowNegative
+            />
+
+            <Button
+              type='submit'
+              variant='contained'
+              loading={isLoading}
+              disabled={code !== '12397' || numberOf === 0}
+            >
               Sačuvaj
             </Button>
           </Stack>

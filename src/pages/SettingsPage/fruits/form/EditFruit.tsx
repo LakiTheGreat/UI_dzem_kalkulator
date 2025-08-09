@@ -23,7 +23,6 @@ export default function EditFruit({ open, fruit, handleClose }: Props) {
   ] = usePatchFruitMutation();
 
   const handleEdit = (values: FruitsFormData) => {
-    console.log(values);
     patchFruit({ id: fruit?.id || -1, label: values.label });
 
     setToastId(setToastIsLoading(`Sačekaj...`));

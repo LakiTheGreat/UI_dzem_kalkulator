@@ -18,8 +18,6 @@ export default function LoginPage() {
 
   const [login, { data, isLoading, error }] = useLoginMutation();
 
-  console.log(data);
-
   const handleLogin = () => {
     setToastId(setToastIsLoading(`Sačekaj....`));
     login({ password });
