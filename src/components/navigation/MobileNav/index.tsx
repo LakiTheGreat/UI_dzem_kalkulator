@@ -86,7 +86,7 @@ export default function MobileNav() {
               ))}
             </List>
           </Stack>
-          <Stack sx={{ mb: 6 }}>
+          <Stack sx={{ mb: 6 }} gap={1}>
             <Typography textAlign='center'>
               {userId === 1 ? 'Testni korisnik' : 'Dušan Pantelić'}
             </Typography>

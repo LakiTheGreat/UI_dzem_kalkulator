@@ -160,7 +160,7 @@ export default function DesktopNav() {
             {/* <Stack direction='row' gap={1} alignItems='center'>
               Account popover
             </Stack> */}
-            <Stack>
+            <Stack gap={2} direction='row' alignItems='center'>
               <Typography>
                 {userId === 1 ? 'Testni korisnik' : 'Dušan Pantelić'}
               </Typography>
