@@ -75,14 +75,16 @@ export default function OrderCard({
               <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
             </Stack>
 
-            {order.cups.map((cup) => (
-              <Stack direction='row' key={cup.label}>
-                <Typography sx={{ width: ORDER_WIDTH }}>
-                  Teglice: {cup.label}
-                </Typography>
-                <Typography>{cup.numberOf}</Typography>
-              </Stack>
-            ))}
+            {order.cups
+              .filter((cup) => cup.numberOf > 0)
+              .map((cup) => (
+                <Stack direction='row' key={cup.label}>
+                  <Typography sx={{ width: ORDER_WIDTH }}>
+                    Teglice: {cup.label}
+                  </Typography>
+                  <Typography>{cup.numberOf}</Typography>
+                </Stack>
+              ))}
 
             <Divider sx={{ my: 1.5 }} />
 
