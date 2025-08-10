@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
+
 import { RootState } from '../store/store';
 
 const baseQuery = fetchBaseQuery({
@@ -20,6 +21,6 @@ const baseQueryWithRetry = retry(baseQuery, { maxRetries: 0 });
 export const api = createApi({
   reducerPath: 'realApi',
   baseQuery: baseQueryWithRetry,
-  tagTypes: ['Fruit', 'Cups', 'Constant', 'Order', 'Inventory'],
+  tagTypes: ['Fruit', 'Cups', 'Constant', 'Order', 'Inventory', 'Transactions'],
   endpoints: (build) => ({}),
 });

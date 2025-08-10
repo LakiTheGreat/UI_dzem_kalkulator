@@ -1,33 +1,32 @@
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-// import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {
   Card,
   CardActions,
   CardContent,
-  Divider,
   IconButton,
   Stack,
   Typography,
   useTheme,
 } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
 
 import { ORDER_WIDTH } from '../../constants';
-import { Order } from '../../types/orders';
-import FormattedPrice from '../../utils/FormattedPrice';
+import {
+  Transaction,
+  TransactionStatusStrings,
+} from '../../types/transactions';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
+import getStatusTranslation from '../../utils/getStatusTranslation';
 
 type Props = {
-  order: Order;
-  setSelectedId: Dispatch<SetStateAction<number | null>>;
+  transaction: Transaction;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
 };
 
-export default function OrderCard({
-  order,
-  setSelectedId,
+export default function TransactionCard({
+  transaction,
+
   handleDelete,
   handleEdit,
 }: Props) {
@@ -35,18 +34,18 @@ export default function OrderCard({
 
   return (
     <Card
-      key={order.id}
+      key={transaction.id}
       variant='outlined'
       sx={{
         height: '100%',
         bgcolor: ` ${
-          order.orderProfit > 0
+          transaction.status === TransactionStatusStrings.SOLD
             ? `${palette.secondary.lighter}`
             : `${palette.error.lighter}`
         }`,
-        border: `1px solid ${
-          order.baseFruitIsFree ? `${palette.success.dark}` : 'transparent'
-        }`,
+        // border: `1px solid ${
+        //   order.baseFruitIsFree ? `${palette.success.dark}` : 'transparent'
+        // }`,
       }}
     >
       <Stack sx={{ height: '100%', justifyContent: 'space-between' }}>
@@ -55,12 +54,14 @@ export default function OrderCard({
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
               <Typography sx={{ width: ORDER_WIDTH }}>
-                {order.orderName || '/'}
+                {transaction.note || '/'}
               </Typography>
             </Stack>
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
-              <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
+              <Typography>
+                {formatLocalDateTime(transaction.createdAt)}
+              </Typography>
             </Stack>
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH }}>Džem:</Typography>
@@ -73,54 +74,26 @@ export default function OrderCard({
                   textOverflow: 'ellipsis',
                 }}
               >
-                {order.orderTypeName}
+                {transaction.orderType}
               </Typography>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                Besplatna osnova:
+              <Typography sx={{ width: ORDER_WIDTH }}>Transakcija:</Typography>
+              <Typography>
+                {getStatusTranslation(transaction.status)}
               </Typography>
-              <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
             </Stack>
 
-            {order.cups
-              .filter((cup) => cup.numberOf > 0)
+            {transaction.cups
+              .filter((cup) => cup.quantity > 0)
               .map((cup) => (
                 <Stack direction='row' key={cup.label}>
                   <Typography sx={{ width: ORDER_WIDTH }}>
                     Teglica: {cup.label}
                   </Typography>
-                  <Typography>{cup.numberOf}</Typography>
+                  <Typography>{cup.quantity}</Typography>
                 </Stack>
               ))}
-
-            <Divider sx={{ my: 1.5 }} />
-
-            <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>Prihod:</Typography>
-              <FormattedPrice price={order.orderValue} />
-            </Stack>
-
-            <Stack direction='row' color='primary.main'>
-              <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-                Rashod:
-              </Typography>
-              <FormattedPrice price={order.orderExpense} isExpense isBold />
-            </Stack>
-
-            <Stack direction='row' color='success.dark'>
-              <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-                Profit:
-              </Typography>
-              <FormattedPrice price={order.orderProfit} isBold />
-            </Stack>
-
-            <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                Profitna marža:
-              </Typography>
-              <Typography>{`${order.profitMargin}`}</Typography>
-            </Stack>
           </Stack>
         </CardContent>
 
@@ -139,11 +112,11 @@ export default function OrderCard({
             <RemoveRedEyeIcon />
           </IconButton> */}
 
-            <IconButton onClick={() => handleEdit(order.id)}>
+            <IconButton onClick={() => handleEdit(transaction.id)}>
               <EditIcon />
             </IconButton>
 
-            <IconButton onClick={() => handleDelete(order.id)}>
+            <IconButton onClick={() => handleDelete(transaction.id)}>
               <DeleteIcon />
             </IconButton>
           </Stack>
