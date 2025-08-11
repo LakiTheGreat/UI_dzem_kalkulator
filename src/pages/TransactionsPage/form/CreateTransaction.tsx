@@ -74,7 +74,7 @@ export default function CreateTransaction() {
           },
         ]}
       />
-      {isLoading && <Skeleton height={'70vh'} variant='rounded' />}
+      {isLoading && <Skeleton height={380} variant='rounded' />}
       {!isLoading && (
         <TransactionsForm
           isLoading={createIsLoading}
