@@ -208,7 +208,7 @@ export default function TransactionsPage() {
                   ))}
                 {data?.length === 0 && (
                   <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
-                    Nema još transakcija.
+                    Još nema ni jedne takve transakcije.
                   </Typography>
                 )}
               </Grid>
