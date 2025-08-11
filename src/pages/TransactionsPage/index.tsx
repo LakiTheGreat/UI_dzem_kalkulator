@@ -13,25 +13,59 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Id } from 'react-toastify';
 
-import { useGetTransactionsQuery } from '../../api/transactionsApi';
+import {
+  useDeleteTransactionMutation,
+  useGetTransactionsQuery,
+} from '../../api/transactionsApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
+import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
+import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
+import useConfirmDialog from '../../hooks/useConfirmDialog';
+import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 
 export default function TransactionsPage() {
-  const { data, isFetching } = useGetTransactionsQuery();
   const navigate = useNavigate();
 
+  const [getConfirmation, Confirmation] = useConfirmDialog();
+  const [toastId, setToastId] = useState<Id>('');
   const [value, setValue] = useState<number>(0);
+
+  const { data, isFetching } = useGetTransactionsQuery();
+  const [deleteTransaction, { data: deleteTransactionData, error }] =
+    useDeleteTransactionMutation();
 
   const handleEdit = (id: number) => {
     navigate(`/${routes.transactions}/${id}`);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     console.log(id);
+    const isConfirmed = await getConfirmation({
+      title: 'Jesi li siguran da želiš da obrišeš ovu transakciju?',
+      contentSubtitle: 'Posle nema nazad (ima)!',
+      confirmLabel: 'Da',
+    });
+
+    if (isConfirmed) {
+      deleteTransaction(id);
+      setToastId(setToastIsLoading(`Sačekaj....`));
+    }
   };
+
+  useApiSuccessNotification({
+    data: deleteTransactionData,
+    message: 'Transakcija uspešno obrisana',
+    toastId,
+  });
+
+  useApiErrorNotification({
+    error,
+    toastId,
+  });
 
   return (
     <Container maxWidth='sm'>
@@ -109,6 +143,7 @@ export default function TransactionsPage() {
           </Stack>
         </TabContext>
       </Stack>
+      <Confirmation />
     </Container>
   );
 }

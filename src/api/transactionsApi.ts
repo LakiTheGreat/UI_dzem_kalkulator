@@ -39,6 +39,14 @@ const transactionsApiEndpoints = api.injectEndpoints({
         invalidatesTags: ['Inventory', 'Transactions'],
       }
     ),
+    deleteTransaction: build.mutation<UnsavedTransaction, number>({
+      query: (id) => ({
+        url: `${transactionsApiUrl}/${id}`,
+        method: 'DELETE',
+        body: { isDeleted: true },
+      }),
+      invalidatesTags: ['Inventory', 'Transactions'],
+    }),
   }),
 
   overrideExisting: false,
@@ -49,4 +57,5 @@ export const {
   useCreateTransactionMutation,
   useGetTransactionByIdQuery,
   useUpdateTransactionMutation,
+  useDeleteTransactionMutation,
 } = transactionsApiEndpoints;
