@@ -16,7 +16,7 @@ import { Outlet } from 'react-router';
 
 import { api } from '../../../api';
 import { AppName } from '../../../constants';
-import { NavItems } from '../../../constants/NavItems';
+import { GroupedNavItems } from '../../../constants/NavItems';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxStoreHooks';
 import useResponsive from '../../../hooks/useResponsive';
 import { logOutUser } from '../../../store/authSlice';
@@ -74,14 +74,26 @@ export default function MobileNav() {
         <Stack justifyContent='space-between' sx={{ height: '100%' }}>
           <Stack alignItems='center' sx={{ pt: 1 }}>
             <List sx={{ px: 1 }}>
-              {NavItems.map((navItem) => (
-                <Stack key={navItem.label}>
-                  <NavItemButton
-                    navItem={navItem}
-                    open={open}
-                    setClose={() => setOpen(false)}
-                  />
-                  {navItem.addDividerAfter && <Divider sx={{ my: 1 }} />}
+              {Object.entries(GroupedNavItems).map(([groupTitle, items]) => (
+                <Stack key={groupTitle}>
+                  {groupTitle !== '__ungrouped' && (
+                    <Typography
+                      variant='subtitle2'
+                      sx={{ px: 2, my: 1, fontWeight: 'bold' }}
+                    >
+                      {groupTitle}
+                    </Typography>
+                  )}
+                  {items.map((navItem) => (
+                    <Stack key={navItem.label}>
+                      <NavItemButton
+                        navItem={navItem}
+                        open={open}
+                        setClose={() => setOpen(false)}
+                      />
+                      {navItem.addDividerAfter && <Divider sx={{ my: 1 }} />}
+                    </Stack>
+                  ))}
                 </Stack>
               ))}
             </List>

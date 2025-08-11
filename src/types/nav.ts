@@ -6,4 +6,5 @@ export type NavItem = {
   icon: ComponentType<SvgIconProps>;
   to: string;
   addDividerAfter?: boolean;
+  groupTitle?: string;
 };

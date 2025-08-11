@@ -12,10 +12,10 @@ import { CSSObject, styled, Theme, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import { useState } from 'react';
 import { Outlet } from 'react-router';
-import { AppName } from '../../../constants';
 
 import { api } from '../../../api';
-import { NavItems } from '../../../constants/NavItems';
+import { AppName } from '../../../constants';
+import { GroupedNavItems } from '../../../constants/NavItems';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxStoreHooks';
 import { logOutUser } from '../../../store/authSlice';
 import Logo from '../../Logo';
@@ -191,20 +191,52 @@ export default function DesktopNav() {
 
         <Divider />
         <List sx={{ px: 1, mt: 1 }}>
-          {NavItems.map((navItem) => (
-            <Box key={navItem.label}>
-              <Tooltip
-                arrow
-                title={navItem.label}
-                placement='right'
-                disableHoverListener={open}
-              >
-                <span>
-                  <NavItemButton navItem={navItem} open={open} />
-                </span>
-              </Tooltip>
-              {navItem.addDividerAfter && <Divider sx={{ my: 1 }} />}
-            </Box>
+          {Object.entries(GroupedNavItems).map(([groupTitle, items]) => (
+            <Stack key={groupTitle}>
+              {groupTitle !== '__ungrouped' && open && (
+                <Typography
+                  variant='subtitle2'
+                  sx={{
+                    px: 2,
+                    my: 1,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {groupTitle}
+                </Typography>
+              )}
+              {groupTitle !== '__ungrouped' && !open && (
+                <Typography
+                  variant='subtitle2'
+                  sx={{
+                    px: 2,
+                    my: 1,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  ---
+                </Typography>
+              )}
+              {items.map((navItem) => (
+                <Stack key={navItem.label}>
+                  <Tooltip
+                    arrow
+                    title={navItem.label}
+                    placement='right'
+                    disableHoverListener={open}
+                  >
+                    <Box>
+                      <NavItemButton
+                        navItem={navItem}
+                        open={open}
+                        setClose={() => setOpen(false)}
+                      />
+                      {navItem.addDividerAfter && <Divider sx={{ my: 1 }} />}
+                    </Box>
+                  </Tooltip>
+                </Stack>
+              ))}
+            </Stack>
           ))}
         </List>
       </Drawer>

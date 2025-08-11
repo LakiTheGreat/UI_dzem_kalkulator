@@ -75,7 +75,7 @@ export default function EditTransaction() {
         heading={'Transakcije'}
         links={[
           {
-            name: 'Pregled',
+            name: 'Džemovi',
             href: `/${routes.transactions}`,
           },
           {

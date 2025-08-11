@@ -65,12 +65,12 @@ export default function CreateTransaction() {
         heading={'Transakcije'}
         links={[
           {
-            name: 'Pregled',
-            href: `/${routes.orders}`,
+            name: 'Džemovi',
+            href: `/${routes.transactions}`,
           },
           {
             name: 'Nova transakcija',
-            href: `${routes.orders}/${routes.new}`,
+            href: `${routes.transactions}/${routes.new}`,
           },
         ]}
       />

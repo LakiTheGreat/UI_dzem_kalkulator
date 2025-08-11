@@ -6,4 +6,5 @@ export const routes = {
   settings: 'settings',
   inventory: 'inventory',
   transactions: 'transactions',
+  bouquets: 'bouquets',
 };

@@ -90,7 +90,7 @@ export default function TransactionsPage() {
         heading={'Transakcije'}
         links={[
           {
-            name: 'Pregled',
+            name: 'Džemovi',
             href: routes.inventory,
           },
         ]}
