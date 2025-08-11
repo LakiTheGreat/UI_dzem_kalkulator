@@ -26,7 +26,7 @@ export default function TransactionsPage() {
   const [value, setValue] = useState<number>(0);
 
   const handleEdit = (id: number) => {
-    console.log(id);
+    navigate(`/${routes.transactions}/${id}`);
   };
 
   const handleDelete = (id: number) => {

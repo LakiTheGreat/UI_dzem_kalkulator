@@ -11,6 +11,12 @@ const transactionsApiEndpoints = api.injectEndpoints({
       }),
       providesTags: ['Inventory', 'Transactions'],
     }),
+    getTransactionById: build.query<Transaction, string>({
+      query: (id) => ({
+        url: `${transactionsApiUrl}/${id}`,
+      }),
+      providesTags: ['Inventory', 'Transactions'],
+    }),
 
     createTransaction: build.mutation<UnsavedTransaction, UnsavedTransaction>({
       query: (body) => ({
@@ -25,5 +31,8 @@ const transactionsApiEndpoints = api.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetTransactionsQuery, useCreateTransactionMutation } =
-  transactionsApiEndpoints;
+export const {
+  useGetTransactionsQuery,
+  useCreateTransactionMutation,
+  useGetTransactionByIdQuery,
+} = transactionsApiEndpoints;

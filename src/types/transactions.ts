@@ -2,7 +2,8 @@ import { CupData } from './inventory';
 
 export type Transaction = {
   id: number;
-  orderType: string;
+  orderType?: string;
+  orderTypeId?: number;
   cups: CupData[];
   status: TransactionStatusStrings;
   createdAt: Date;
