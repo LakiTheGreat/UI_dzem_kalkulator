@@ -85,7 +85,7 @@ export default function TransactionsPage() {
   });
 
   return (
-    <Container maxWidth='sm'>
+    <Container>
       <HeaderBreadcrumbs
         heading={'Transakcije'}
         links={[
@@ -104,60 +104,64 @@ export default function TransactionsPage() {
         }
       />
       <Stack gap={4}>
-        <Stack>
-          {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
-          {!isLoadingFruits && (
-            <Stack direction='row' gap={2}>
-              <FormControl fullWidth>
-                <InputLabel>Vrsta džema</InputLabel>
-                <Select
-                  value={params.orderTypeId}
-                  label='Vrsta džema'
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      orderTypeId: Number(e.target.value),
-                    })
-                  }
-                >
-                  <MenuItem value={0}>Prikaži sve</MenuItem>
-                  {fruits?.map((fruit) => (
-                    <MenuItem key={fruit.id} value={fruit.id}>
-                      {fruit.label}
+        <Container maxWidth='sm'>
+          <Stack>
+            {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
+            {!isLoadingFruits && (
+              <Stack direction='row' gap={2}>
+                <FormControl fullWidth>
+                  <InputLabel>Vrsta džema</InputLabel>
+                  <Select
+                    value={params.orderTypeId}
+                    label='Vrsta džema'
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        orderTypeId: Number(e.target.value),
+                      })
+                    }
+                  >
+                    <MenuItem value={0}>Prikaži sve</MenuItem>
+                    {fruits?.map((fruit) => (
+                      <MenuItem key={fruit.id} value={fruit.id}>
+                        {fruit.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel>Vrsta transakcije</InputLabel>
+                  <Select
+                    value={params.transactionStatus}
+                    label='Vrsta transakcije'
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        transactionStatus: e.target.value,
+                      })
+                    }
+                  >
+                    <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
+                    <MenuItem value={TransactionStatusStrings.SOLD}>
+                      {getStatusTranslation(TransactionStatusStrings.SOLD)}
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel>Vrsta transakcije</InputLabel>
-                <Select
-                  value={params.transactionStatus}
-                  label='Vrsta transakcije'
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      transactionStatus: e.target.value,
-                    })
-                  }
-                >
-                  <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
-                  <MenuItem value={TransactionStatusStrings.SOLD}>
-                    {getStatusTranslation(TransactionStatusStrings.SOLD)}
-                  </MenuItem>
-                  <MenuItem value={TransactionStatusStrings.CONSUMED}>
-                    {getStatusTranslation(TransactionStatusStrings.CONSUMED)}
-                  </MenuItem>
-                  <MenuItem value={TransactionStatusStrings.GIVEN_AWAY}>
-                    {getStatusTranslation(TransactionStatusStrings.GIVEN_AWAY)}
-                  </MenuItem>
-                  <MenuItem value={TransactionStatusStrings.OTHER}>
-                    {getStatusTranslation(TransactionStatusStrings.OTHER)}
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Stack>
-          )}
-        </Stack>
+                    <MenuItem value={TransactionStatusStrings.CONSUMED}>
+                      {getStatusTranslation(TransactionStatusStrings.CONSUMED)}
+                    </MenuItem>
+                    <MenuItem value={TransactionStatusStrings.GIVEN_AWAY}>
+                      {getStatusTranslation(
+                        TransactionStatusStrings.GIVEN_AWAY
+                      )}
+                    </MenuItem>
+                    <MenuItem value={TransactionStatusStrings.OTHER}>
+                      {getStatusTranslation(TransactionStatusStrings.OTHER)}
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Stack>
+            )}
+          </Stack>
+        </Container>
         <TabContext value={value}>
           <TabList
             onChange={(e, newValue) => setValue(newValue)}
