@@ -13,6 +13,7 @@ export type TransactionFormData = {
   orderTypeId: string;
   status: TransactionStatusStrings;
   cupData: CupData[];
+  note: string;
 };
 
 type Props = {
@@ -46,6 +47,7 @@ export default function TransactionsForm({
       orderTypeId: values?.orderTypeId || '',
       status: values?.status || TransactionStatusStrings.SOLD,
       cupData: mergedCupData,
+      note: values?.note || '',
     },
   });
 
@@ -58,15 +60,17 @@ export default function TransactionsForm({
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack gap={3}>
-        <RHFSelectInput
-          name='status'
-          label='Transakcija'
-          menuItems={mappedStatus || []}
-        />
+        <RHFTextInput name='note' label='Napomena' />
+
         <RHFSelectInput
           name='orderTypeId'
           label='Voće'
           menuItems={mappedFruits || []}
+        />
+        <RHFSelectInput
+          name='status'
+          label='Transakcija'
+          menuItems={mappedStatus || []}
         />
         {mappedCups?.map((cup, index) => (
           <Stack

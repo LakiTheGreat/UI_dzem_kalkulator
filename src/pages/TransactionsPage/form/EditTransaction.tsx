@@ -43,16 +43,18 @@ export default function EditTransaction() {
   const isLoading = cupsWithDataIsLoading || fruitLoading;
 
   const handleSubmit = (data: TransactionFormData) => {
+    console.log(data.note);
     const transformed = {
       id: Number(id),
-      ...data,
+      note: data.note,
+      status: data.status,
       orderTypeId: Number(data.orderTypeId),
       cupData: data.cupData.map((cup) => ({
         ...cup,
         quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
       })),
     };
-
+    console.log(transformed);
     updateTransaction(transformed);
     setToastId(setToastIsLoading(`Sačekaj....`));
   };
@@ -88,6 +90,7 @@ export default function EditTransaction() {
       {!isLoading && transaction && (
         <TransactionsForm
           values={{
+            note: transaction.note,
             orderTypeId: String(transaction.orderTypeId),
             status: transaction.status,
             cupData: transaction.cups.map((cup) => ({
