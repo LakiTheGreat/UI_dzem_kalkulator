@@ -8,8 +8,8 @@ import TransactionsForm, { TransactionFormData } from '.';
 import { useGetAllCupsQuery } from '../../../api/cups';
 import { useGetFruitsQuery } from '../../../api/fruitsSlice';
 import {
-  useCreateTransactionMutation,
   useGetTransactionByIdQuery,
+  useUpdateTransactionMutation,
 } from '../../../api/transactionsApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routes } from '../../../constants/routes';
@@ -33,8 +33,8 @@ export default function EditTransaction() {
   const { data: cupsWithData, isLoading: cupsWithDataIsLoading } =
     useGetAllCupsQuery();
 
-  const [createTransaction, { data, error, isLoading: createIsLoading }] =
-    useCreateTransactionMutation();
+  const [updateTransaction, { data, error, isLoading: updateIsLoading }] =
+    useUpdateTransactionMutation();
 
   const mappedFruits = mapFruitToMenuItems(fruitData);
   const mappedCups = mapCupsWithDataToMenuItems(cupsWithData);
@@ -44,6 +44,7 @@ export default function EditTransaction() {
 
   const handleSubmit = (data: TransactionFormData) => {
     const transformed = {
+      id: Number(id),
       ...data,
       orderTypeId: Number(data.orderTypeId),
       cupData: data.cupData.map((cup) => ({
@@ -51,8 +52,8 @@ export default function EditTransaction() {
         quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
       })),
     };
-    console.log(transformed);
-    createTransaction(transformed);
+
+    updateTransaction(transformed);
     setToastId(setToastIsLoading(`Sačekaj....`));
   };
 
@@ -94,7 +95,7 @@ export default function EditTransaction() {
               quantity: Math.abs(cup.quantity),
             })),
           }}
-          isLoading={createIsLoading}
+          isLoading={updateIsLoading}
           onSubmit={handleSubmit}
           mappedCups={mappedCups}
           mappedFruits={mappedFruits}

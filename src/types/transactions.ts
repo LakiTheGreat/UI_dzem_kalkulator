@@ -17,6 +17,13 @@ export type UnsavedTransaction = {
   cupData: CupData[];
 };
 
+export type UpdateTransactionReq = {
+  id: number;
+  orderTypeId: number;
+  status: TransactionStatusStrings;
+  cupData: CupData[];
+};
+
 export enum TransactionStatusEnum {
   CONSUMED = 1,
   SOLD,
