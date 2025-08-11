@@ -1,10 +1,10 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 
 import App from './App';
-import { routes } from './constants/routes';
-
 import AuthGuard from './components/guards/AuthGuard';
 import GuestGuard from './components/guards/GuestGuard';
+import { routes } from './constants/routes';
+import BouquetPage from './pages/BouquetPage';
 import CalculatorPage from './pages/CalculatorPage';
 import InventoryPage from './pages/InventoryPage';
 import LoginPage from './pages/LoginPage';
@@ -55,6 +55,10 @@ const router = createBrowserRouter([
           {
             path: `${routes.transactions}/:id`,
             element: <EditTransaction />,
+          },
+          {
+            path: routes.bouquets,
+            element: <BouquetPage />,
           },
           {
             path: routes.orders,
