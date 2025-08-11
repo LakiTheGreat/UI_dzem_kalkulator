@@ -46,7 +46,7 @@ export default function TransactionsPage() {
         action={
           <IconButton
             color='primary'
-            onClick={() => navigate(`/${routes.orders}/${routes.new}`)}
+            onClick={() => navigate(`/${routes.transactions}/${routes.new}`)}
           >
             <AddCircleOutlineIcon fontSize='large' />
           </IconButton>

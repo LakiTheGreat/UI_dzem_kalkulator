@@ -1,5 +1,5 @@
 import { api } from '.';
-import { Transaction } from '../types/transactions';
+import { Transaction, UnsavedTransaction } from '../types/transactions';
 
 const transactionsApiUrl = '/transactions';
 
@@ -12,17 +12,18 @@ const transactionsApiEndpoints = api.injectEndpoints({
       providesTags: ['Inventory', 'Transactions'],
     }),
 
-    // postInventory: build.mutation<InventoryPostRequest, InventoryPostRequest>({
-    //   query: (body) => ({
-    //     url: `${inventoryApiUrl}/input`,
-    //     method: 'POST',
-    //     body,
-    //   }),
-    //   invalidatesTags: ['Inventory'],
-    // }),
+    createTransaction: build.mutation<UnsavedTransaction, UnsavedTransaction>({
+      query: (body) => ({
+        url: `${transactionsApiUrl}`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Inventory'],
+    }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useGetTransactionsQuery } = transactionsApiEndpoints;
+export const { useGetTransactionsQuery, useCreateTransactionMutation } =
+  transactionsApiEndpoints;

@@ -10,6 +10,12 @@ export type Transaction = {
   note: string;
 };
 
+export type UnsavedTransaction = {
+  orderTypeId: number;
+  status: TransactionStatusStrings;
+  cupData: CupData[];
+};
+
 export enum TransactionStatusEnum {
   CONSUMED = 1,
   SOLD,
@@ -18,8 +24,8 @@ export enum TransactionStatusEnum {
 }
 
 export enum TransactionStatusStrings {
-  CONSUMED = 'CONSUMED',
   SOLD = 'SOLD',
+  CONSUMED = 'CONSUMED',
   GIVEN_AWAY = 'GIVEN_AWAY',
   OTHER = 'OTHER',
 }

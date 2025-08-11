@@ -13,6 +13,7 @@ import CreateOrder from './pages/OrdersPage/form/CreateOrder';
 import EditOrder from './pages/OrdersPage/form/EditOrder';
 import SettingsPage from './pages/SettingsPage';
 import TransactionsPage from './pages/TransactionsPage';
+import CreateTransaction from './pages/TransactionsPage/form/CreateTransaction';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
           {
             path: routes.transactions,
             element: <TransactionsPage />,
+          },
+          {
+            path: `${routes.transactions}/${routes.new}`,
+            element: <CreateTransaction />,
           },
           {
             path: routes.orders,

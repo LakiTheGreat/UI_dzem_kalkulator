@@ -16,7 +16,7 @@ export type InventoryPostRequest = {
 };
 
 export type CupData = {
-  cupId: number;
+  cupId: number | string;
   quantity: number;
   label?: string;
 };

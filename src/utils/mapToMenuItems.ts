@@ -1,6 +1,8 @@
 import { MenuItemType } from '../components/RHFSelectInput';
 import { Cup, CupWithPriceData } from '../types/cups';
 import { Fruit } from '../types/fruits';
+import { TransactionStatusStrings } from '../types/transactions';
+import getStatusTranslation from './getStatusTranslation';
 
 export const mapFruitToMenuItems = (
   fruits: Fruit[] | undefined
@@ -40,4 +42,12 @@ export const mapCupsWithDataToMenuItems = (
       isDeleted: cup.isDeleted,
     })
   );
+};
+
+export const mapAllTransactionStatusesToMenuItems = (): MenuItemType[] => {
+  return Object.values(TransactionStatusStrings).map((status) => ({
+    id: status,
+    value: status,
+    menuItemLabel: getStatusTranslation(status),
+  }));
 };
