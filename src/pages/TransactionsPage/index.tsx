@@ -4,8 +4,12 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
   Container,
+  FormControl,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Skeleton,
   Stack,
   Tab,
@@ -15,6 +19,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Id } from 'react-toastify';
 
+import { useGetFruitsQuery } from '../../api/fruitsSlice';
 import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
@@ -24,6 +29,11 @@ import { routes } from '../../constants/routes';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
+import {
+  TransactionParams,
+  TransactionStatusStrings,
+} from '../../types/transactions';
+import getStatusTranslation from '../../utils/getStatusTranslation';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 
@@ -34,7 +44,15 @@ export default function TransactionsPage() {
   const [toastId, setToastId] = useState<Id>('');
   const [value, setValue] = useState<number>(0);
 
-  const { data, isFetching } = useGetTransactionsQuery();
+  const param = {
+    orderTypeId: 0,
+    transactionStatus: 'ALL',
+  };
+
+  const [params, setParams] = useState<TransactionParams>(param);
+
+  const { data: fruits, isLoading: isLoadingFruits } = useGetFruitsQuery();
+  const { data, isFetching } = useGetTransactionsQuery(params);
   const [deleteTransaction, { data: deleteTransactionData, error }] =
     useDeleteTransactionMutation();
 
@@ -43,7 +61,6 @@ export default function TransactionsPage() {
   };
 
   const handleDelete = async (id: number) => {
-    console.log(id);
     const isConfirmed = await getConfirmation({
       title: 'Jesi li siguran da želiš da obrišeš ovu transakciju?',
       contentSubtitle: 'Posle nema nazad (ima)!',
@@ -86,7 +103,61 @@ export default function TransactionsPage() {
           </IconButton>
         }
       />
-      <Stack>
+      <Stack gap={4}>
+        <Stack>
+          {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
+          {!isLoadingFruits && (
+            <Stack direction='row' gap={2}>
+              <FormControl fullWidth>
+                <InputLabel>Vrsta džema</InputLabel>
+                <Select
+                  value={params.orderTypeId}
+                  label='Vrsta džema'
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      orderTypeId: Number(e.target.value),
+                    })
+                  }
+                >
+                  <MenuItem value={0}>Prikaži sve</MenuItem>
+                  {fruits?.map((fruit) => (
+                    <MenuItem key={fruit.id} value={fruit.id}>
+                      {fruit.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel>Vrsta transakcije</InputLabel>
+                <Select
+                  value={params.transactionStatus}
+                  label='Vrsta transakcije'
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      transactionStatus: e.target.value,
+                    })
+                  }
+                >
+                  <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
+                  <MenuItem value={TransactionStatusStrings.SOLD}>
+                    {getStatusTranslation(TransactionStatusStrings.SOLD)}
+                  </MenuItem>
+                  <MenuItem value={TransactionStatusStrings.CONSUMED}>
+                    {getStatusTranslation(TransactionStatusStrings.CONSUMED)}
+                  </MenuItem>
+                  <MenuItem value={TransactionStatusStrings.GIVEN_AWAY}>
+                    {getStatusTranslation(TransactionStatusStrings.GIVEN_AWAY)}
+                  </MenuItem>
+                  <MenuItem value={TransactionStatusStrings.OTHER}>
+                    {getStatusTranslation(TransactionStatusStrings.OTHER)}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
+          )}
+        </Stack>
         <TabContext value={value}>
           <TabList
             onChange={(e, newValue) => setValue(newValue)}

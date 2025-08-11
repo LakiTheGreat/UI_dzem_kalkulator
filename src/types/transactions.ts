@@ -24,16 +24,14 @@ export type UpdateTransactionReq = {
   cupData: CupData[];
 };
 
-export enum TransactionStatusEnum {
-  CONSUMED = 1,
-  SOLD,
-  GIVEN_AWAY,
-  OTHER,
-}
-
 export enum TransactionStatusStrings {
   SOLD = 'SOLD',
   CONSUMED = 'CONSUMED',
   GIVEN_AWAY = 'GIVEN_AWAY',
   OTHER = 'OTHER',
 }
+
+export type TransactionParams = {
+  orderTypeId: number;
+  transactionStatus: string | null;
+};

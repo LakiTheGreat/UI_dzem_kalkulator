@@ -1,6 +1,7 @@
 import { api } from '.';
 import {
   Transaction,
+  TransactionParams,
   UnsavedTransaction,
   UpdateTransactionReq,
 } from '../types/transactions';
@@ -9,10 +10,22 @@ const transactionsApiUrl = '/transactions';
 
 const transactionsApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    getTransactions: build.query<Transaction[], void>({
-      query: () => ({
-        url: `${transactionsApiUrl}`,
-      }),
+    getTransactions: build.query<Transaction[], TransactionParams>({
+      query: ({ orderTypeId, transactionStatus }) => {
+        const params = new URLSearchParams();
+
+        if (orderTypeId && orderTypeId > 0) {
+          params.set('orderTypeId', String(orderTypeId));
+        }
+
+        if (transactionStatus && transactionStatus !== 'ALL') {
+          params.set('transactionStatus', String(transactionStatus));
+        }
+        return {
+          url: `${transactionsApiUrl}?${params.toString()}`,
+        };
+      },
+
       providesTags: ['Inventory', 'Transactions'],
     }),
     getTransactionById: build.query<Transaction, string>({
