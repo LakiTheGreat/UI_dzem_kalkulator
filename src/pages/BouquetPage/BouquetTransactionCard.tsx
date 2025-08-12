@@ -57,12 +57,12 @@ export default function BouquetTransactionCard({
             <Divider sx={{ my: 1 }} />
 
             <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>Prihod:</Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>Cena buketa:</Typography>
               <FormattedPrice price={transaction.income} />
             </Stack>
             <Stack direction='row' color='primary.main'>
               <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-                Rashod:
+                Ukupni troškovi:
               </Typography>
               <Stack sx={{ ml: -1.4 }}>
                 <FormattedPrice

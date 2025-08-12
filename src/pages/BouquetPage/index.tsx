@@ -27,6 +27,7 @@ import useConfirmDialog from '../../hooks/useConfirmDialog';
 import { BouquetTransaction } from '../../types/bouguets';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import BouquetTransactionCard from './BouquetTransactionCard';
+import BouquetTable from './table/BouquetTable';
 
 export default function BouquetPage() {
   const navigate = useNavigate();
@@ -203,7 +204,13 @@ export default function BouquetPage() {
               </Grid>
             </TabPanel>
 
-            <TabPanel value={1}>TABELA</TabPanel>
+            <TabPanel value={1}>
+              <BouquetTable
+                data={data}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            </TabPanel>
           </Stack>
         </TabContext>
       </Stack>

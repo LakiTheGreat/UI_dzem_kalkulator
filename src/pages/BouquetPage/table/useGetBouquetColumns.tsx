@@ -1,42 +1,29 @@
-import CheckIcon from '@mui/icons-material/Check';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
-import { Order } from '../../../types/orders';
+import { BouquetTransaction } from '../../../types/bouguets';
 import { formatDate } from '../../../utils/formatDate';
 import FormattedPrice from '../../../utils/FormattedPrice';
 import DataGridRowActions from '../../../components/DataGridRowActions';
 
 type Props = {
-  data: Order[];
-  handleDelete: (id: number) => void;
+  data: BouquetTransaction[];
+  handleDelete: (transaction: BouquetTransaction) => void;
   handleEdit: (id: number) => void;
 };
 
-export default function useGetOrderColumns({
+export default function useGetBouquetColumns({
   data,
   handleEdit,
   handleDelete,
 }: Props) {
-  const uniqueCups = new Set<string>();
-  data.forEach((order) =>
-    order.cups?.forEach((cup) => uniqueCups.add(cup.label.trim()))
-  );
-
   const columns: GridColDef[] = [
     {
-      field: 'orderName',
+      field: 'note',
       headerName: 'Napomena',
       flex: 1,
       minWidth: 170,
     },
-    {
-      field: 'orderTypeName',
-      headerName: 'Vrsta džema',
-      flex: 1,
-      minWidth: 150,
-    },
-
     {
       field: 'createdAt',
       headerName: 'Vreme unosa',
@@ -47,21 +34,21 @@ export default function useGetOrderColumns({
       },
     },
     {
-      field: 'orderValue',
-      headerName: 'Prihod',
+      field: 'income',
+      headerName: 'Cena buketa',
       flex: 1,
       minWidth: 150,
       renderCell: ({ row }) => {
         return (
           <Stack justifyContent='center' sx={{ height: '100%' }}>
-            <FormattedPrice price={row.orderValue} isBold />
+            <FormattedPrice price={row.income} isBold />
           </Stack>
         );
       },
     },
     {
-      field: 'orderExpenses',
-      headerName: 'Rashod',
+      field: 'totalExpense',
+      headerName: 'Ukupni troškovi',
       flex: 1,
       minWidth: 150,
       renderCell: ({ row }) => {
@@ -71,13 +58,13 @@ export default function useGetOrderColumns({
             justifyContent='center'
             sx={{ height: '100%' }}
           >
-            <FormattedPrice price={row.orderExpense} isExpense isBold />
+            <FormattedPrice price={row.totalExpense} isExpense isBold />
           </Stack>
         );
       },
     },
     {
-      field: 'orderProfit',
+      field: 'profit',
       headerName: 'Profit',
       flex: 1,
       minWidth: 150,
@@ -88,57 +75,45 @@ export default function useGetOrderColumns({
             sx={{ height: '100%' }}
             color='success.dark'
           >
-            <FormattedPrice price={row.orderProfit} isBold />
+            <FormattedPrice price={row.profit} isBold />
+          </Stack>
+        );
+      },
+    },
+    {
+      field: 'profitMargin',
+      headerName: 'Profitna marža',
+      flex: 1,
+      minWidth: 150,
+      renderCell: ({ row }) => {
+        return (
+          <Stack justifyContent='center' sx={{ height: '100%' }}>
+            <Typography>{row.profitMargin}%</Typography>
           </Stack>
         );
       },
     },
   ];
 
-  // ✅ Dynamic cup columns
-  uniqueCups.forEach((label) => {
-    columns.push({
-      field: `cup_${label}`,
-      headerName: `${label}`,
-      flex: 1,
-      minWidth: 100,
-    });
-  });
+  columns.push({
+    field: '',
+    headerName: '',
+    flex: 1,
+    minWidth: 60,
+    maxWidth: 70,
+    resizable: false,
+    sortable: false,
+    disableColumnMenu: true,
 
-  columns.push(
-    {
-      field: 'baseFruitIsFree',
-      headerName: 'Besplatna osnova',
-      flex: 1,
-      minWidth: 170,
-      renderCell: ({ row }) => {
-        return (
-          <Stack justifyContent='center' sx={{ height: '100%' }}>
-            {row.baseFruitIsFree ? <CheckIcon color='success' /> : ''}
-          </Stack>
-        );
-      },
+    renderCell: ({ row }) => {
+      return (
+        <DataGridRowActions
+          onEdit={() => handleEdit(row.id)}
+          onDelete={() => handleDelete(row)}
+        />
+      );
     },
-    {
-      field: '',
-      headerName: '',
-      flex: 1,
-      minWidth: 60,
-      maxWidth: 70,
-      resizable: false,
-      sortable: false,
-      disableColumnMenu: true,
-
-      renderCell: ({ row }) => {
-        return (
-          <DataGridRowActions
-            onEdit={() => handleEdit(row.id)}
-            onDelete={() => handleDelete(row.id)}
-          />
-        );
-      },
-    }
-  );
+  });
 
   return columns;
 }

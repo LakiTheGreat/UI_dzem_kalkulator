@@ -7,7 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import { MouseEvent, ReactNode, useState } from 'react';
-import MenuPopover from '../../../components/MenuPopover';
+import MenuPopover from './MenuPopover';
 
 type Props = {
   onEdit: (value: any) => void;

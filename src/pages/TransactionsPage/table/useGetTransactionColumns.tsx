@@ -4,7 +4,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import { Transaction } from '../../../types/transactions';
 import { formatDate } from '../../../utils/formatDate';
 import getStatusTranslation from '../../../utils/getStatusTranslation';
-import DataGridRowActions from '../../OrdersPage/table/DataGridRowActions';
+import DataGridRowActions from '../../../components/DataGridRowActions';
 
 type Props = {
   data: Transaction[];
