@@ -99,7 +99,7 @@ export default function MobileNav() {
             </List>
           </Stack>
           <Stack sx={{ mb: 6 }} gap={1}>
-            <Typography textAlign='center'>
+            <Typography textAlign='center' sx={{ fontWeight: 'bold' }}>
               {userId === 1 ? 'Testni korisnik' : 'Dušan Pantelić'}
             </Typography>
             <Button

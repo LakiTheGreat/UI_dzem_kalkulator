@@ -161,7 +161,7 @@ export default function DesktopNav() {
               Account popover
             </Stack> */}
             <Stack gap={2} direction='row' alignItems='center'>
-              <Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>
                 {userId === 1 ? 'Testni korisnik' : 'Dušan Pantelić'}
               </Typography>
               <Button
