@@ -54,14 +54,14 @@ export default function EditTransaction() {
         quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
       })),
     };
-    console.log(transformed);
+
     updateTransaction(transformed);
     setToastId(setToastIsLoading(`Sačekaj....`));
   };
 
   useApiSuccessNotification({
     data,
-    message: 'Transakcija uspešno kreirana',
+    message: 'Transakcija uspešno izmenjena',
     toastId,
     navigateToAfter: `/${routes.transactions}`,
   });

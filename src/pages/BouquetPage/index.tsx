@@ -15,13 +15,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Id } from 'react-toastify';
 
-import { useGetAllBouquetsTransactionsQuery } from '../../api/bouquetsApi';
-import { useDeleteTransactionMutation } from '../../api/transactionsApi';
+import {
+  useGetAllBouquetsTransactionsQuery,
+  useUpdateBouquetTransactionMutation,
+} from '../../api/bouquetsApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
+import { BouquetTransaction } from '../../types/bouguets';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import BouquetTransactionCard from './BouquetTransactionCard';
 
@@ -35,21 +38,26 @@ export default function BouquetPage() {
   const { data, isFetching } = useGetAllBouquetsTransactionsQuery();
 
   const [deleteTransaction, { data: deleteTransactionData, error }] =
-    useDeleteTransactionMutation();
+    useUpdateBouquetTransactionMutation();
 
   const handleEdit = (id: number) => {
-    navigate(`/${routes.transactions}/${id}`);
+    navigate(`/${routes.bouquets}/${id}`);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (bouquet: BouquetTransaction) => {
     const isConfirmed = await getConfirmation({
       title: 'Jesi li siguran da želiš da obrišeš ovu transakciju?',
       contentSubtitle: 'Posle nema nazad (ima)!',
       confirmLabel: 'Da',
     });
 
+    const req = {
+      ...bouquet,
+      isDeleted: true,
+    };
+
     if (isConfirmed) {
-      deleteTransaction(id);
+      deleteTransaction(req);
       setToastId(setToastIsLoading(`Sačekaj....`));
     }
   };
@@ -78,7 +86,7 @@ export default function BouquetPage() {
         action={
           <IconButton
             color='primary'
-            onClick={() => navigate(`/${routes.transactions}/${routes.new}`)}
+            onClick={() => navigate(`/${routes.bouquets}/${routes.new}`)}
           >
             <AddCircleOutlineIcon fontSize='large' />
           </IconButton>

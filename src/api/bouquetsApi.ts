@@ -1,4 +1,5 @@
 import { api } from '.';
+import { BouquetFormData } from '../pages/BouquetPage/form';
 import { BouquetTransaction } from '../types/bouguets';
 
 const bouquetsApiUrl = '/bouquets';
@@ -24,41 +25,42 @@ const bouquetsApiEndpoints = api.injectEndpoints({
 
       providesTags: ['Bouquet'],
     }),
-    // getTransactionById: build.query<Transaction, string>({
-    //   query: (id) => ({
-    //     url: `${transactionsApiUrl}/${id}`,
-    //   }),
-    //   providesTags: ['Inventory', 'Transactions'],
-    // }),
-    // createTransaction: build.mutation<UnsavedTransaction, UnsavedTransaction>({
-    //   query: (body) => ({
-    //     url: `${transactionsApiUrl}`,
-    //     method: 'POST',
-    //     body,
-    //   }),
-    //   invalidatesTags: ['Inventory', 'Transactions'],
-    // }),
-    // updateTransaction: build.mutation<UnsavedTransaction, UpdateTransactionReq>(
-    //   {
-    //     query: (body) => ({
-    //       url: `${transactionsApiUrl}/${body.id}`,
-    //       method: 'PUT',
-    //       body,
-    //     }),
-    //     invalidatesTags: ['Inventory', 'Transactions'],
-    //   }
-    // ),
-    // deleteTransaction: build.mutation<UnsavedTransaction, number>({
-    //   query: (id) => ({
-    //     url: `${transactionsApiUrl}/${id}`,
-    //     method: 'DELETE',
-    //     body: { isDeleted: true },
-    //   }),
-    //   invalidatesTags: ['Inventory', 'Transactions'],
-    // }),
+    getBouquetTransactionById: build.query<BouquetTransaction, string>({
+      query: (id) => ({
+        url: `${bouquetsApiUrl}/${id}`,
+      }),
+      providesTags: ['Bouquet'],
+    }),
+    createBouquetTransaction: build.mutation<
+      BouquetTransaction,
+      BouquetFormData
+    >({
+      query: (body) => ({
+        url: `${bouquetsApiUrl}`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Bouquet'],
+    }),
+    updateBouquetTransaction: build.mutation<
+      BouquetTransaction,
+      BouquetTransaction
+    >({
+      query: (body) => ({
+        url: `${bouquetsApiUrl}/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Bouquet'],
+    }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useGetAllBouquetsTransactionsQuery } = bouquetsApiEndpoints;
+export const {
+  useGetAllBouquetsTransactionsQuery,
+  useGetBouquetTransactionByIdQuery,
+  useCreateBouquetTransactionMutation,
+  useUpdateBouquetTransactionMutation,
+} = bouquetsApiEndpoints;

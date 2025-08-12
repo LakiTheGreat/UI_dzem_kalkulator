@@ -5,6 +5,8 @@ import AuthGuard from './components/guards/AuthGuard';
 import GuestGuard from './components/guards/GuestGuard';
 import { routes } from './constants/routes';
 import BouquetPage from './pages/BouquetPage';
+import CreateBouquetTransaction from './pages/BouquetPage/form/CreateBouquetTransaction';
+import EditBouquetTransaction from './pages/BouquetPage/form/EditBouquetTransaction';
 import CalculatorPage from './pages/CalculatorPage';
 import InventoryPage from './pages/InventoryPage';
 import LoginPage from './pages/LoginPage';
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
           {
             path: routes.bouquets,
             element: <BouquetPage />,
+          },
+          {
+            path: `${routes.bouquets}/${routes.new}`,
+            element: <CreateBouquetTransaction />,
+          },
+          {
+            path: `${routes.bouquets}/:id`,
+            element: <EditBouquetTransaction />,
           },
           {
             path: routes.orders,

@@ -42,7 +42,7 @@ export default function CreateTransaction() {
         quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
       })),
     };
-    console.log(transformed);
+
     createTransaction(transformed);
     setToastId(setToastIsLoading(`Sačekaj....`));
   };

@@ -18,7 +18,7 @@ import FormattedPrice from '../../utils/FormattedPrice';
 
 type Props = {
   transaction: BouquetTransaction;
-  handleDelete: (id: number) => void;
+  handleDelete: (bouquet: BouquetTransaction) => void;
   handleEdit: (id: number) => void;
 };
 
@@ -113,7 +113,7 @@ export default function BouquetTransactionCard({
               <EditIcon />
             </IconButton>
 
-            <IconButton onClick={() => handleDelete(transaction.id)}>
+            <IconButton onClick={() => handleDelete(transaction)}>
               <DeleteIcon />
             </IconButton>
           </Stack>
