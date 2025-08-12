@@ -36,6 +36,7 @@ import {
 import getStatusTranslation from '../../utils/getStatusTranslation';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
+import TransactionTable from './table/TransactionTable';
 
 export default function TransactionsPage() {
   const navigate = useNavigate();
@@ -214,7 +215,13 @@ export default function TransactionsPage() {
               </Grid>
             </TabPanel>
 
-            <TabPanel value={1}>TABELA</TabPanel>
+            <TabPanel value={1}>
+              <TransactionTable
+                data={data}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            </TabPanel>
           </Stack>
         </TabContext>
       </Stack>
