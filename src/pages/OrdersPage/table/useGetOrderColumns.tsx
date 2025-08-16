@@ -1,5 +1,5 @@
 import CheckIcon from '@mui/icons-material/Check';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
 import { Order } from '../../../types/orders';
@@ -89,6 +89,20 @@ export default function useGetOrderColumns({
             color='success.dark'
           >
             <FormattedPrice price={row.orderProfit} isBold />
+          </Stack>
+        );
+      },
+    },
+    {
+      field: 'profitMargin',
+      headerName: 'Profitna marža',
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (value) => Number(String(value).replace('%', '')),
+      renderCell: ({ row }) => {
+        return (
+          <Stack alignItems='center' sx={{ height: '100%' }} direction='row'>
+            <Typography>{row.profitMargin}</Typography>
           </Stack>
         );
       },
