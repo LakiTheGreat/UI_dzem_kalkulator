@@ -25,9 +25,12 @@ import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import CreateFruit from './form/CreateFruit';
 import EditFruit from './form/EditFruit';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
+import { useAppSelector } from '../../../hooks/reduxStoreHooks';
+import filterFruits from '../../../utils/filterFruits';
 
 export default function FruitsSettings() {
   const [getConfirmation, Confirmation] = useConfirmDialog();
+  const userId = useAppSelector((state) => state.auth.userId);
 
   const [toastId, setToastId] = useState<Id>('');
   const [openCreate, setOpenCreate] = useState<boolean>(false);
@@ -36,7 +39,10 @@ export default function FruitsSettings() {
   const [selectedId, setSelectedId] = useState<string>('');
 
   const { data, isLoading } = useGetFruitsQuery();
-  const mappedData = mapFruitToMenuItems(data);
+
+  const filteredFruits = userId === 1 ? data : filterFruits(data);
+
+  const mappedData = mapFruitToMenuItems(filteredFruits);
 
   const [deleteFruit, { data: deleteFruitData, error }] =
     useDeleteFruitMutation();
