@@ -26,6 +26,7 @@ import {
 } from '../../api/transactionsApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
+import { useAppSelector } from '../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
@@ -33,6 +34,7 @@ import {
   TransactionParams,
   TransactionStatusStrings,
 } from '../../types/transactions';
+import filterFruits from '../../utils/filterFruits';
 import getStatusTranslation from '../../utils/getStatusTranslation';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
@@ -40,6 +42,7 @@ import TransactionTable from './table/TransactionTable';
 
 export default function TransactionsPage() {
   const navigate = useNavigate();
+  const userId = useAppSelector((state) => state.auth.userId);
 
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [toastId, setToastId] = useState<Id>('');
@@ -56,6 +59,8 @@ export default function TransactionsPage() {
   const { data, isFetching } = useGetTransactionsQuery(params);
   const [deleteTransaction, { data: deleteTransactionData, error }] =
     useDeleteTransactionMutation();
+
+  const filteredFruits = userId === 1 ? fruits : filterFruits(fruits);
 
   const handleEdit = (id: number) => {
     navigate(`/${routes.transactions}/${id}`);
@@ -123,7 +128,7 @@ export default function TransactionsPage() {
                     }
                   >
                     <MenuItem value={0}>Prikaži sve</MenuItem>
-                    {fruits?.map((fruit) => (
+                    {filteredFruits?.map((fruit) => (
                       <MenuItem key={fruit.id} value={fruit.id}>
                         {fruit.label}
                       </MenuItem>

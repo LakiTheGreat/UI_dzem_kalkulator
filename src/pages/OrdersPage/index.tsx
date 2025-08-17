@@ -28,10 +28,12 @@ import {
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { ORDER_WIDTH } from '../../constants';
 import { routes } from '../../constants/routes';
+import { useAppSelector } from '../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
 import { OrderParams, PRICE_STATUS } from '../../types/orders';
+import filterFruits from '../../utils/filterFruits';
 import FormattedPrice from '../../utils/FormattedPrice';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import OrderCard from './OrderCard';
@@ -40,6 +42,7 @@ import OrdersTable from './table/OrdersTable';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
+  const userId = useAppSelector((state) => state.auth.userId);
 
   const [value, setValue] = useState<number>(0);
 
@@ -59,6 +62,8 @@ export default function OrdersPage() {
 
   const [deleteOrder, { data: deletedOrderData, error }] =
     useDeleteOrderMutation();
+
+  const filteredFruits = userId === 1 ? fruits : filterFruits(fruits);
 
   const handleDelete = async (id: number) => {
     const isConfirmed = await getConfirmation({
@@ -127,7 +132,7 @@ export default function OrdersPage() {
                     }
                   >
                     <MenuItem value={0}>Prikaži sve</MenuItem>
-                    {fruits?.map((fruit) => (
+                    {filteredFruits?.map((fruit) => (
                       <MenuItem key={fruit.id} value={fruit.id}>
                         {fruit.label}
                       </MenuItem>
