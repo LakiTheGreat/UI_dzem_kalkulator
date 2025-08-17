@@ -20,11 +20,13 @@ import {
   useUpdateBouquetTransactionMutation,
 } from '../../api/bouquetsApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+import { ORDER_WIDTH } from '../../constants';
 import { routes } from '../../constants/routes';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
 import { BouquetTransaction } from '../../types/bouguets';
+import FormattedPrice from '../../utils/FormattedPrice';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import BouquetTransactionCard from './BouquetTransactionCard';
 import BouquetTable from './table/BouquetTable';
@@ -40,6 +42,10 @@ export default function BouquetPage() {
 
   const [deleteTransaction, { data: deleteTransactionData, error }] =
     useUpdateBouquetTransactionMutation();
+
+  const totalExpense = data?.reduce((sum, item) => sum + item.totalExpense, 0);
+  const totalIncome = data?.reduce((sum, item) => sum + item.income, 0);
+  const totalProfit = data?.reduce((sum, item) => sum + item.profit, 0);
 
   const handleEdit = (id: number) => {
     navigate(`/${routes.bouquets}/${id}`);
@@ -152,6 +158,33 @@ export default function BouquetPage() {
             )}
           </Stack>
         </Container> */}
+        <Container maxWidth='sm'>
+          {isFetching && <Skeleton variant='rounded' height={96} />}
+          {!isFetching && (
+            <Stack>
+              <Stack direction='row' gap={1}>
+                <Typography sx={{ width: ORDER_WIDTH }}>
+                  Ukupni prihod:
+                </Typography>
+                <FormattedPrice price={totalIncome || 0} />
+              </Stack>
+              <Stack direction='row' color='primary.main' gap={1}>
+                <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
+                  Ukupni rashod:
+                </Typography>
+                <Stack sx={{ ml: -1.3 }}>
+                  <FormattedPrice price={totalExpense ?? 0} isBold isExpense />
+                </Stack>
+              </Stack>
+              <Stack direction='row' color='success.dark' gap={1}>
+                <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
+                  Ukupni profit:
+                </Typography>
+                <FormattedPrice price={totalProfit || 0} isBold />
+              </Stack>
+            </Stack>
+          )}
+        </Container>
         <TabContext value={value}>
           <TabList
             onChange={(e, newValue) => setValue(newValue)}
@@ -166,6 +199,7 @@ export default function BouquetPage() {
           <Stack gap={3}>
             {isFetching && (
               <Stack>
+                <Skeleton variant='rounded' height={24} width={200} />
                 <Skeleton
                   variant='rounded'
                   height={274}
@@ -182,6 +216,10 @@ export default function BouquetPage() {
                   sx={{ mt: 3, mx: 3 }}
                 />
               </Stack>
+            )}
+
+            {!isFetching && (
+              <Typography>Broj proizvedenih buketa: {data?.length}</Typography>
             )}
 
             <TabPanel value={0}>
