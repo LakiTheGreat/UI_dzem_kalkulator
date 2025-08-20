@@ -28,6 +28,7 @@ export enum TransactionStatusStrings {
   SOLD = 'SOLD',
   CONSUMED = 'CONSUMED',
   GIVEN_AWAY = 'GIVEN_AWAY',
+  PROMOTION = 'PROMOTION',
   OTHER = 'OTHER',
 }
 

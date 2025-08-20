@@ -10,7 +10,11 @@ export default function getStatusTranslation(status: TransactionStatusStrings) {
   }
 
   if (status === TransactionStatusStrings.GIVEN_AWAY) {
-    return 'Poklonjeno';
+    return 'Poklon';
+  }
+
+  if (status === TransactionStatusStrings.PROMOTION) {
+    return 'Promocija';
   }
 
   if (status === TransactionStatusStrings.OTHER) {

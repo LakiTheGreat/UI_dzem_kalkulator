@@ -30,12 +30,10 @@ import { useAppSelector } from '../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
-import {
-  TransactionParams,
-  TransactionStatusStrings,
-} from '../../types/transactions';
+import { TransactionParams } from '../../types/transactions';
 import filterFruits from '../../utils/filterFruits';
 import getStatusTranslation from '../../utils/getStatusTranslation';
+import { mapAllTransactionStatusesToMenuItems } from '../../utils/mapToMenuItems';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
@@ -61,6 +59,7 @@ export default function TransactionsPage() {
     useDeleteTransactionMutation();
 
   const filteredFruits = userId === 1 ? fruits : filterFruits(fruits);
+  const mappedStatus = mapAllTransactionStatusesToMenuItems();
 
   const handleEdit = (id: number) => {
     navigate(`/${routes.transactions}/${id}`);
@@ -148,20 +147,11 @@ export default function TransactionsPage() {
                     }
                   >
                     <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
-                    <MenuItem value={TransactionStatusStrings.SOLD}>
-                      {getStatusTranslation(TransactionStatusStrings.SOLD)}
-                    </MenuItem>
-                    <MenuItem value={TransactionStatusStrings.CONSUMED}>
-                      {getStatusTranslation(TransactionStatusStrings.CONSUMED)}
-                    </MenuItem>
-                    <MenuItem value={TransactionStatusStrings.GIVEN_AWAY}>
-                      {getStatusTranslation(
-                        TransactionStatusStrings.GIVEN_AWAY
-                      )}
-                    </MenuItem>
-                    <MenuItem value={TransactionStatusStrings.OTHER}>
-                      {getStatusTranslation(TransactionStatusStrings.OTHER)}
-                    </MenuItem>
+                    {mappedStatus?.map((status) => (
+                      <MenuItem key={status.value} value={status.value}>
+                        {getStatusTranslation(status.value)}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Stack>
