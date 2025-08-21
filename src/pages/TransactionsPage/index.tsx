@@ -37,6 +37,7 @@ import { mapAllTransactionStatusesToMenuItems } from '../../utils/mapToMenuItems
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
+import { ORDER_WIDTH } from '../../constants';
 
 export default function TransactionsPage() {
   const navigate = useNavigate();
@@ -53,10 +54,29 @@ export default function TransactionsPage() {
 
   const [params, setParams] = useState<TransactionParams>(param);
 
-  const { data: fruits, isLoading: isLoadingFruits } = useGetFruitsQuery();
+  const { data: fruits, isFetching: isLoadingFruits } = useGetFruitsQuery();
   const { data, isFetching } = useGetTransactionsQuery(params);
   const [deleteTransaction, { data: deleteTransactionData, error }] =
     useDeleteTransactionMutation();
+
+  const getCupsTotals = () => {
+    if (!data) return [];
+
+    const totals = data.reduce<Record<string, number>>((acc, transaction) => {
+      transaction.cups.forEach((cup) => {
+        if (!cup.label) return;
+        acc[cup.label] = (acc[cup.label] ?? 0) + cup.quantity;
+      });
+      return acc;
+    }, {});
+
+    return Object.entries(totals).map(([label, quantity]) => ({
+      label,
+      quantity,
+    }));
+  };
+
+  const sumData = getCupsTotals();
 
   const filteredFruits = userId === 1 ? fruits : filterFruits(fruits);
   const mappedStatus = mapAllTransactionStatusesToMenuItems();
@@ -113,47 +133,59 @@ export default function TransactionsPage() {
           <Stack>
             {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
             {!isLoadingFruits && (
-              <Stack direction='row' gap={2}>
-                <FormControl fullWidth>
-                  <InputLabel>Vrsta džema</InputLabel>
-                  <Select
-                    value={params.orderTypeId}
-                    label='Vrsta džema'
-                    onChange={(e) =>
-                      setParams({
-                        ...params,
-                        orderTypeId: Number(e.target.value),
-                      })
-                    }
-                  >
-                    <MenuItem value={0}>Prikaži sve</MenuItem>
-                    {filteredFruits?.map((fruit) => (
-                      <MenuItem key={fruit.id} value={fruit.id}>
-                        {fruit.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel>Vrsta transakcije</InputLabel>
-                  <Select
-                    value={params.transactionStatus}
-                    label='Vrsta transakcije'
-                    onChange={(e) =>
-                      setParams({
-                        ...params,
-                        transactionStatus: e.target.value,
-                      })
-                    }
-                  >
-                    <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
-                    {mappedStatus?.map((status) => (
-                      <MenuItem key={status.value} value={status.value}>
-                        {getStatusTranslation(status.value)}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+              <Stack gap={2}>
+                <Stack direction='row' gap={2}>
+                  <FormControl fullWidth>
+                    <InputLabel>Vrsta džema</InputLabel>
+                    <Select
+                      value={params.orderTypeId}
+                      label='Vrsta džema'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          orderTypeId: Number(e.target.value),
+                        })
+                      }
+                    >
+                      <MenuItem value={0}>Prikaži sve</MenuItem>
+                      {filteredFruits?.map((fruit) => (
+                        <MenuItem key={fruit.id} value={fruit.id}>
+                          {fruit.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel>Vrsta transakcije</InputLabel>
+                    <Select
+                      value={params.transactionStatus}
+                      label='Vrsta transakcije'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          transactionStatus: e.target.value,
+                        })
+                      }
+                    >
+                      <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
+                      {mappedStatus?.map((status) => (
+                        <MenuItem key={status.value} value={status.value}>
+                          {getStatusTranslation(status.value)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Stack>
+                <Stack gap={1}>
+                  {sumData.map((cup) => (
+                    <Stack direction='row' key={cup.label} gap={1}>
+                      <Typography sx={{ width: ORDER_WIDTH }}>
+                        Br. teglica od: {cup.label}
+                      </Typography>
+                      <Typography>{cup.quantity}</Typography>
+                    </Stack>
+                  ))}
+                </Stack>
               </Stack>
             )}
           </Stack>
