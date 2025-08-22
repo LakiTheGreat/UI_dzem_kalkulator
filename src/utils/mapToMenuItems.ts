@@ -1,4 +1,5 @@
 import { MenuItemType } from '../components/RHFSelectInput';
+import { BouquetTransactionEnum } from '../types/bouguets';
 import { Cup, CupWithPriceData } from '../types/cups';
 import { Fruit } from '../types/fruits';
 import { TransactionStatusStrings } from '../types/transactions';
@@ -46,6 +47,14 @@ export const mapCupsWithDataToMenuItems = (
 
 export const mapAllTransactionStatusesToMenuItems = (): MenuItemType[] => {
   return Object.values(TransactionStatusStrings).map((status) => ({
+    id: status,
+    value: status,
+    menuItemLabel: getStatusTranslation(status),
+  }));
+};
+
+export const mapBouquetTransactionStatusesToMenuItems = (): MenuItemType[] => {
+  return Object.values(BouquetTransactionEnum).map((status) => ({
     id: status,
     value: status,
     menuItemLabel: getStatusTranslation(status),

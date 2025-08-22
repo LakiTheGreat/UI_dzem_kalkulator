@@ -7,4 +7,12 @@ export type BouquetTransaction = {
   profitMargin: number;
   createdAt: Date;
   isDeleted: boolean;
+  status: BouquetTransactionEnum;
 };
+
+export enum BouquetTransactionEnum {
+  SOLD = 'SOLD',
+  GIVEN_AWAY = 'GIVEN_AWAY',
+  PROMOTION = 'PROMOTION',
+  OTHER = 'OTHER',
+}

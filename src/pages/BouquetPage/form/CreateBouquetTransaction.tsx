@@ -9,12 +9,15 @@ import { routes } from '../../../constants/routes';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
+import { mapBouquetTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
 
 export default function CreateBouquetTransaction() {
   const [toastId, setToastId] = useState<Id>('');
 
   const [createTransaction, { data, error, isLoading: createIsLoading }] =
     useCreateBouquetTransactionMutation();
+
+  const mappedStatus = mapBouquetTransactionStatusesToMenuItems();
 
   const handleSubmit = (data: BouquetFormData) => {
     createTransaction(data);
@@ -49,7 +52,11 @@ export default function CreateBouquetTransaction() {
         ]}
       />
 
-      <BouquetForm isLoading={createIsLoading} onSubmit={handleSubmit} />
+      <BouquetForm
+        isLoading={createIsLoading}
+        onSubmit={handleSubmit}
+        mappedStatus={mappedStatus}
+      />
     </Container>
   );
 }

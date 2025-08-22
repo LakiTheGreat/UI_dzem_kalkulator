@@ -12,9 +12,13 @@ import {
 } from '@mui/material';
 
 import { ORDER_WIDTH } from '../../constants';
-import { BouquetTransaction } from '../../types/bouguets';
+import {
+  BouquetTransaction,
+  BouquetTransactionEnum,
+} from '../../types/bouguets';
 import { formatLocalDateTime } from '../../utils/formatLocalDateTime';
 import FormattedPrice from '../../utils/FormattedPrice';
+import getStatusTranslation from '../../utils/getStatusTranslation';
 
 type Props = {
   transaction: BouquetTransaction;
@@ -34,7 +38,11 @@ export default function BouquetTransactionCard({
       variant='outlined'
       sx={{
         height: '100%',
-        bgcolor: ` ${`${palette.secondary.lighter}`}`,
+        bgcolor: ` ${
+          transaction.status === BouquetTransactionEnum.SOLD
+            ? `${palette.secondary.lighter}`
+            : `${palette.error.lighter}`
+        }`,
         border: `1px solid ${`${palette.primary.main}`}`,
       }}
     >
@@ -51,6 +59,12 @@ export default function BouquetTransactionCard({
               <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
               <Typography>
                 {formatLocalDateTime(transaction.createdAt)}
+              </Typography>
+            </Stack>
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>Transakcija:</Typography>
+              <Typography>
+                {getStatusTranslation(transaction.status)}
               </Typography>
             </Stack>
 

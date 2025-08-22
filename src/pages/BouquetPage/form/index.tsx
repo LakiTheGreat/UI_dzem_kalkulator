@@ -5,6 +5,10 @@ import { useForm } from 'react-hook-form';
 import FormProvider from '../../../components/FormProvider';
 import RHFTextInput from '../../../components/RHFTextInput';
 import FormattedPrice from '../../../utils/FormattedPrice';
+import { BouquetTransactionEnum } from '../../../types/bouguets';
+import RHFSelectInput, {
+  MenuItemType,
+} from '../../../components/RHFSelectInput';
 
 export type BouquetFormData = {
   note: string;
@@ -12,18 +16,20 @@ export type BouquetFormData = {
   income: number;
   profit: number;
   profitMargin: number;
+  status: BouquetTransactionEnum;
 };
 
 type Props = {
   onSubmit: (data: BouquetFormData) => void;
   values?: BouquetFormData;
   isLoading: boolean;
+  mappedStatus: MenuItemType[];
 };
 
 export default function BouquetForm({
   onSubmit,
   values,
-
+  mappedStatus,
   isLoading,
 }: Props) {
   const methods = useForm<BouquetFormData>({
@@ -33,6 +39,7 @@ export default function BouquetForm({
       income: values?.income || 0,
       profit: values?.profit || 0,
       profitMargin: values?.profitMargin || 0,
+      status: values?.status || BouquetTransactionEnum.SOLD,
     },
   });
 
@@ -63,6 +70,11 @@ export default function BouquetForm({
           type='number'
         />
         <RHFTextInput name='income' label='Cena buketa' type='number' />
+        <RHFSelectInput
+          name='status'
+          label='Transakcija'
+          menuItems={mappedStatus}
+        />
         <Stack direction='row' gap={1} color='success.dark'>
           <Typography sx={{ fontWeight: 'bold' }}>Profit: </Typography>
           <FormattedPrice price={profit} isBold />

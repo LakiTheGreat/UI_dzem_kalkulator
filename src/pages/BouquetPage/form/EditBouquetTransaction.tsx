@@ -15,6 +15,7 @@ import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification'
 import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
 import { BouquetTransaction } from '../../../types/bouguets';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
+import { mapBouquetTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
 
 export default function EditBouquetTransaction() {
   const { id } = useParams();
@@ -28,8 +29,9 @@ export default function EditBouquetTransaction() {
   const [updateTransaction, { data, error, isLoading: updateIsLoading }] =
     useUpdateBouquetTransactionMutation();
 
+  const mappedStatus = mapBouquetTransactionStatusesToMenuItems();
+
   const handleSubmit = (data: BouquetFormData) => {
-    console.log(data);
     if (transaction) {
       const req: BouquetTransaction = {
         ...data,
@@ -79,9 +81,11 @@ export default function EditBouquetTransaction() {
             income: transaction.income,
             profit: transaction.profit,
             profitMargin: transaction.profitMargin,
+            status: transaction.status,
           }}
           isLoading={updateIsLoading}
           onSubmit={handleSubmit}
+          mappedStatus={mappedStatus}
         />
       )}
     </Container>

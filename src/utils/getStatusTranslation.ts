@@ -1,6 +1,9 @@
+import { BouquetTransactionEnum } from '../types/bouguets';
 import { TransactionStatusStrings } from '../types/transactions';
 
-export default function getStatusTranslation(status: TransactionStatusStrings) {
+export default function getStatusTranslation(
+  status: TransactionStatusStrings | BouquetTransactionEnum
+) {
   if (status === TransactionStatusStrings.CONSUMED) {
     return 'Potrošeno';
   }
