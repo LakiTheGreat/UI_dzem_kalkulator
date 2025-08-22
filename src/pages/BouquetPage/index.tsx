@@ -93,7 +93,7 @@ export default function BouquetPage() {
     error,
     toastId,
   });
-  console.log(params);
+
   return (
     <Container>
       <HeaderBreadcrumbs
@@ -115,7 +115,7 @@ export default function BouquetPage() {
       />
       <Stack gap={4}>
         <Container maxWidth='sm'>
-          {isFetching && <Skeleton variant='rounded' height={96} />}
+          {isFetching && <Skeleton variant='rounded' height={150} />}
           {!isFetching && (
             <Stack gap={2}>
               <Stack direction='row' gap={2}>
