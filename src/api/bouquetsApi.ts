@@ -1,25 +1,28 @@
 import { api } from '.';
 import { BouquetFormData } from '../pages/BouquetPage/form';
-import { BouquetTransaction } from '../types/bouguets';
+import { BouquetParams, BouquetTransaction } from '../types/bouguets';
 
 const bouquetsApiUrl = '/bouquets';
 
 const bouquetsApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    getAllBouquetsTransactions: build.query<BouquetTransaction[], void>({
-      query: () => {
-        // const params = new URLSearchParams();
+    getAllBouquetsTransactions: build.query<
+      BouquetTransaction[],
+      BouquetParams
+    >({
+      query: ({ transactionStatus }) => {
+        const params = new URLSearchParams();
 
         // if (orderTypeId && orderTypeId > 0) {
         //   params.set('orderTypeId', String(orderTypeId));
         // }
 
-        // if (transactionStatus && transactionStatus !== 'ALL') {
-        //   params.set('transactionStatus', String(transactionStatus));
-        // }
+        if (transactionStatus && transactionStatus !== 'ALL') {
+          params.set('transactionStatus', String(transactionStatus));
+        }
         return {
-          url: `${bouquetsApiUrl}`,
-          // url: `${bouquetsApiUrl}?${params.toString()}`,
+          // url: `${bouquetsApiUrl}`,
+          url: `${bouquetsApiUrl}?${params.toString()}`,
         };
       },
 

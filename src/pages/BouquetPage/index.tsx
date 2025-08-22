@@ -4,8 +4,12 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
   Container,
+  FormControl,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Skeleton,
   Stack,
   Tab,
@@ -25,8 +29,10 @@ import { routes } from '../../constants/routes';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
-import { BouquetTransaction } from '../../types/bouguets';
+import { BouquetParams, BouquetTransaction } from '../../types/bouguets';
 import FormattedPrice from '../../utils/FormattedPrice';
+import getStatusTranslation from '../../utils/getStatusTranslation';
+import { mapBouquetTransactionStatusesToMenuItems } from '../../utils/mapToMenuItems';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import BouquetTransactionCard from './BouquetTransactionCard';
 import BouquetTable from './table/BouquetTable';
@@ -34,11 +40,19 @@ import BouquetTable from './table/BouquetTable';
 export default function BouquetPage() {
   const navigate = useNavigate();
 
+  const param = {
+    transactionStatus: 'ALL',
+  };
+
+  const [params, setParams] = useState<BouquetParams>(param);
+
+  const mappedStatus = mapBouquetTransactionStatusesToMenuItems();
+
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [toastId, setToastId] = useState<Id>('');
   const [value, setValue] = useState<number>(0);
 
-  const { data, isFetching } = useGetAllBouquetsTransactionsQuery();
+  const { data, isFetching } = useGetAllBouquetsTransactionsQuery(params);
 
   const [deleteTransaction, { data: deleteTransactionData, error }] =
     useUpdateBouquetTransactionMutation();
@@ -79,7 +93,7 @@ export default function BouquetPage() {
     error,
     toastId,
   });
-
+  console.log(params);
   return (
     <Container>
       <HeaderBreadcrumbs
@@ -100,31 +114,11 @@ export default function BouquetPage() {
         }
       />
       <Stack gap={4}>
-        {/* <Container maxWidth='sm'>
-          <Stack>
-            {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
-            {!isLoadingFruits && (
+        <Container maxWidth='sm'>
+          {isFetching && <Skeleton variant='rounded' height={96} />}
+          {!isFetching && (
+            <Stack gap={2}>
               <Stack direction='row' gap={2}>
-                <FormControl fullWidth>
-                  <InputLabel>Vrsta džema</InputLabel>
-                  <Select
-                    value={params.orderTypeId}
-                    label='Vrsta džema'
-                    onChange={(e) =>
-                      setParams({
-                        ...params,
-                        orderTypeId: Number(e.target.value),
-                      })
-                    }
-                  >
-                    <MenuItem value={0}>Prikaži sve</MenuItem>
-                    {fruits?.map((fruit) => (
-                      <MenuItem key={fruit.id} value={fruit.id}>
-                        {fruit.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
                 <FormControl fullWidth>
                   <InputLabel>Vrsta transakcije</InputLabel>
                   <Select
@@ -138,49 +132,39 @@ export default function BouquetPage() {
                     }
                   >
                     <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
-                    <MenuItem value={TransactionStatusStrings.SOLD}>
-                      {getStatusTranslation(TransactionStatusStrings.SOLD)}
-                    </MenuItem>
-                    <MenuItem value={TransactionStatusStrings.CONSUMED}>
-                      {getStatusTranslation(TransactionStatusStrings.CONSUMED)}
-                    </MenuItem>
-                    <MenuItem value={TransactionStatusStrings.GIVEN_AWAY}>
-                      {getStatusTranslation(
-                        TransactionStatusStrings.GIVEN_AWAY
-                      )}
-                    </MenuItem>
-                    <MenuItem value={TransactionStatusStrings.OTHER}>
-                      {getStatusTranslation(TransactionStatusStrings.OTHER)}
-                    </MenuItem>
+                    {mappedStatus?.map((status) => (
+                      <MenuItem key={status.value} value={status.value}>
+                        {getStatusTranslation(status.value)}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Stack>
-            )}
-          </Stack>
-        </Container> */}
-        <Container maxWidth='sm'>
-          {isFetching && <Skeleton variant='rounded' height={96} />}
-          {!isFetching && (
-            <Stack>
-              <Stack direction='row' gap={1}>
-                <Typography sx={{ width: ORDER_WIDTH }}>
-                  Ukupni prihod:
-                </Typography>
-                <FormattedPrice price={totalIncome || 0} />
-              </Stack>
-              <Stack direction='row' color='primary.main' gap={1}>
-                <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
-                  Ukupni rashod:
-                </Typography>
-                <Stack sx={{ ml: -1.3 }}>
-                  <FormattedPrice price={totalExpense ?? 0} isBold isExpense />
+              <Stack>
+                <Stack direction='row' gap={1}>
+                  <Typography sx={{ width: ORDER_WIDTH }}>
+                    Ukupni prihod:
+                  </Typography>
+                  <FormattedPrice price={totalIncome || 0} />
                 </Stack>
-              </Stack>
-              <Stack direction='row' color='success.dark' gap={1}>
-                <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
-                  Ukupni profit:
-                </Typography>
-                <FormattedPrice price={totalProfit || 0} isBold />
+                <Stack direction='row' color='primary.main' gap={1}>
+                  <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
+                    Ukupni rashod:
+                  </Typography>
+                  <Stack sx={{ ml: -1.3 }}>
+                    <FormattedPrice
+                      price={totalExpense ?? 0}
+                      isBold
+                      isExpense
+                    />
+                  </Stack>
+                </Stack>
+                <Stack direction='row' color='success.dark' gap={1}>
+                  <Typography sx={{ fontWeight: 'bold', width: ORDER_WIDTH }}>
+                    Ukupni profit:
+                  </Typography>
+                  <FormattedPrice price={totalProfit || 0} isBold />
+                </Stack>
               </Stack>
             </Stack>
           )}

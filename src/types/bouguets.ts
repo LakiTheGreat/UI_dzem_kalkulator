@@ -16,3 +16,7 @@ export enum BouquetTransactionEnum {
   PROMOTION = 'PROMOTION',
   OTHER = 'OTHER',
 }
+
+export type BouquetParams = {
+  transactionStatus: string | null;
+};
