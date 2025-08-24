@@ -54,16 +54,6 @@ export default function OrderCard({
         <CardContent>
           <Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
-              <Typography sx={{ width: ORDER_WIDTH }}>
-                {order.orderName || '/'}
-              </Typography>
-            </Stack>
-            <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
-              <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
-            </Stack>
-            <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH }}>Džem:</Typography>
               <Typography
                 sx={{
@@ -77,6 +67,17 @@ export default function OrderCard({
                 {order.orderTypeName}
               </Typography>
             </Stack>
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>Napomena:</Typography>
+              <Typography sx={{ width: ORDER_WIDTH }}>
+                {order.orderName || '/'}
+              </Typography>
+            </Stack>
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
+              <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
+            </Stack>
+
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH }}>
                 Besplatna osnova:
