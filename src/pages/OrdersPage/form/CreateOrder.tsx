@@ -15,7 +15,6 @@ import { NewOrder } from '../../../types/orders';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
-import filterFruits from '../../../utils/filterFruits';
 
 export default function CreateOrder() {
   const [toastId, setToastId] = useState<Id>('');
@@ -31,9 +30,7 @@ export default function CreateOrder() {
   const [createNewOrder, { data, error, isLoading: createIsLoading }] =
     useCreateNewOrderMutation();
 
-  const filteredFruits = userId === 1 ? fruitData : filterFruits(fruitData);
-
-  const mappedFruits = mapFruitToMenuItems(filteredFruits);
+  const mappedFruits = mapFruitToMenuItems(fruitData);
 
   const isLoading =
     cupsWithDataIsLoading || fruitLoading || otherExpansesMarginLoading;
