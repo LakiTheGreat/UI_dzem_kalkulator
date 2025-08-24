@@ -26,18 +26,17 @@ export default function useGetOrderColumns({
 
   const columns: GridColDef[] = [
     {
-      field: 'orderName',
-      headerName: 'Napomena',
-      flex: 1,
-      minWidth: 170,
-    },
-    {
       field: 'orderTypeName',
       headerName: 'Vrsta džema',
       flex: 1,
       minWidth: 150,
     },
-
+    {
+      field: 'orderName',
+      headerName: 'Napomena',
+      flex: 1,
+      minWidth: 170,
+    },
     {
       field: 'createdAt',
       headerName: 'Vreme unosa',
