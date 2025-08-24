@@ -1,11 +1,12 @@
 import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import { Stack, Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
+import DataGridRowActions from '../../../components/DataGridRowActions';
 import { Order } from '../../../types/orders';
 import { formatDate } from '../../../utils/formatDate';
 import FormattedPrice from '../../../utils/FormattedPrice';
-import DataGridRowActions from '../../../components/DataGridRowActions';
 
 type Props = {
   data: Order[];
@@ -128,7 +129,11 @@ export default function useGetOrderColumns({
       renderCell: ({ row }) => {
         return (
           <Stack justifyContent='center' sx={{ height: '100%' }}>
-            {row.baseFruitIsFree ? <CheckIcon color='success' /> : ''}
+            {row.baseFruitIsFree ? (
+              <CheckIcon color='success' />
+            ) : (
+              <CloseIcon color='error' />
+            )}
           </Stack>
         );
       },

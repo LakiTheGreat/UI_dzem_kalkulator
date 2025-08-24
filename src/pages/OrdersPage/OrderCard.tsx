@@ -1,6 +1,7 @@
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-// import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {
   Card,
   CardActions,
@@ -80,7 +81,12 @@ export default function OrderCard({
               <Typography sx={{ width: ORDER_WIDTH }}>
                 Besplatna osnova:
               </Typography>
-              <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography>
+              {/* <Typography> {order.baseFruitIsFree ? 'DA' : 'NE'}</Typography> */}
+              {order.baseFruitIsFree ? (
+                <CheckIcon color='success' />
+              ) : (
+                <CloseIcon color='error' />
+              )}
             </Stack>
 
             {order.cups
