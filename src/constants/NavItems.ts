@@ -25,6 +25,7 @@ export const NavItems: NavItem[] = [
     label: 'Transakcije',
     icon: PointOfSaleIcon,
     to: routes.transactions,
+    addDividerAfter: true,
     groupTitle: 'Džemovi',
   },
   {
@@ -39,11 +40,14 @@ export const NavItems: NavItem[] = [
     icon: CalculateIcon,
     to: routes.general_calculator,
     addDividerAfter: true,
+    groupTitle: 'Kalkulator cene',
   },
   {
     label: 'Podešavanja',
     icon: SettingsIcon,
     to: routes.settings,
+    groupTitle: 'Ostalo',
+    addDividerAfter: true,
   },
 ];
 
