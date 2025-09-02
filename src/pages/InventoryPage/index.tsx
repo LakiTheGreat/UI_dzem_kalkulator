@@ -1,7 +1,9 @@
 import SettingsIcon from '@mui/icons-material/Settings';
 import {
+  Checkbox,
   Container,
   Divider,
+  FormControlLabel,
   IconButton,
   Skeleton,
   Stack,
@@ -19,6 +21,7 @@ import InventoryConfigForm from './InventoryConfigForm';
 
 export default function InventoryPage() {
   const { data, isFetching } = useGetTotalInventoryQuery();
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   const { data: groupedInventory, isFetching: groupedInventoryIsFetching } =
     useGetInventoryQuery();
@@ -89,37 +92,67 @@ export default function InventoryPage() {
                 <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                   Stanje po voćkama:
                 </Typography>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={showAll}
+                      onClick={() => setShowAll(!showAll)}
+                    />
+                  }
+                  label='Prikaži i voćke kojih nema na stanju'
+                />
                 <Stack>
                   {/* <Divider /> */}
-                  {groupedInventory?.map((item) => (
-                    <Stack key={item.label} gap={1}>
-                      <Stack direction='row' sx={{ pt: 1 }} alignItems='center'>
-                        <Typography
-                          sx={{
-                            width: 120,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                          }}
-                        >{`${item.label}`}</Typography>
+                  {groupedInventory?.map((item) => {
+                    const hasNonZeroCup = item.cups.some(
+                      (cup) => cup.numberOf !== 0
+                    );
 
-                        <Stack direction='row' gap={4}>
-                          {item.cups.map((cup) => (
-                            <Stack key={cup.label}>
-                              <Typography
-                                sx={{ width: 60 }}
-                                textAlign='center'
-                              >{`${cup.label}:`}</Typography>
-                              <Typography
-                                sx={{ width: 60 }}
-                                textAlign='center'
-                              >{`${cup.numberOf}`}</Typography>
-                            </Stack>
-                          ))}
+                    if (!hasNonZeroCup && !showAll) return null;
+
+                    return (
+                      <Stack key={item.label} gap={1}>
+                        <Stack
+                          direction='row'
+                          sx={{
+                            pt: 1,
+                            color: !hasNonZeroCup ? 'text.disabled' : 'default',
+                          }}
+                          alignItems='center'
+                        >
+                          <Typography
+                            sx={{
+                              width: 120,
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
+                          >
+                            {item.label}
+                          </Typography>
+
+                          <Stack direction='row' gap={4}>
+                            {item.cups.map((cup) => (
+                              <Stack key={cup.label}>
+                                <Typography
+                                  sx={{ width: 60 }}
+                                  textAlign='center'
+                                >
+                                  {cup.label}:
+                                </Typography>
+                                <Typography
+                                  sx={{ width: 60 }}
+                                  textAlign='center'
+                                >
+                                  {cup.numberOf}
+                                </Typography>
+                              </Stack>
+                            ))}
+                          </Stack>
                         </Stack>
+                        <Divider />
                       </Stack>
-                      <Divider />
-                    </Stack>
-                  ))}
+                    );
+                  })}
                 </Stack>
               </>
             )}
