@@ -1,4 +1,4 @@
-import { Container, Skeleton } from '@mui/material';
+import { Container, Divider, Skeleton, Stack } from '@mui/material';
 import { useState } from 'react';
 import { Id } from 'react-toastify';
 
@@ -15,6 +15,7 @@ import { NewOrder } from '../../../types/orders';
 import { mapFruitToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
+import CupValuesSettings from '../../SettingsPage/cupValues/CupValuesSettings';
 
 export default function CreateOrder() {
   const [toastId, setToastId] = useState<Id>('');
@@ -88,17 +89,21 @@ export default function CreateOrder() {
           },
         ]}
       />
-      {isLoading && <Skeleton height={'70vh'} variant='rounded' />}
-      {!isLoading && (
-        <OrderForm
-          isLoading={createIsLoading}
-          onSubmit={handleSubmit}
-          data={data}
-          cupsWithData={cupsWithData}
-          mappedFruits={mappedFruits}
-          otherExpansesMargin={otherExpansesMargin}
-        />
-      )}
+      <Stack gap={4}>
+        <CupValuesSettings />
+        <Divider />
+        {isLoading && <Skeleton height={'70vh'} variant='rounded' />}
+        {!isLoading && (
+          <OrderForm
+            isLoading={createIsLoading}
+            onSubmit={handleSubmit}
+            data={data}
+            cupsWithData={cupsWithData}
+            mappedFruits={mappedFruits}
+            otherExpansesMargin={otherExpansesMargin}
+          />
+        )}
+      </Stack>
     </Container>
   );
 }

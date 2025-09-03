@@ -109,7 +109,6 @@ export default function OrderForm({
       ? Math.round((profit / Number(totalExpenses)) * 100)
       : 0;
 
-  // Number(totalExpense) * ((profitMargin?.value || 1) / 100)
   useEffect(() => {
     if (cupsWithData && !values) {
       const defaultCups = cupsWithData.map((cup) => ({
