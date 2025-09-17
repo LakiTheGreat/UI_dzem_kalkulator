@@ -9,6 +9,7 @@ import { Fruit } from '../../../../types/fruits';
 
 export type FruitsFormData = {
   label: string;
+  password: string;
 };
 
 type Props = {
@@ -31,10 +32,11 @@ export function FruitForm({
   const methods = useForm<FruitsFormData>({
     defaultValues: {
       label: values?.label || '',
+      password: '',
     },
   });
 
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, watch } = methods;
 
   const closeDialog = useCallback(() => {
     handleClose();
@@ -48,6 +50,8 @@ export function FruitForm({
       closeDialog();
     }
   }, [data, closeDialog]);
+
+  const { password } = watch();
 
   return (
     <GeneralDialog
@@ -85,6 +89,7 @@ export function FruitForm({
             </>
           )}
           <RHFTextInput name='label' label='Naziv' />
+          {values && <RHFTextInput name='password' label='Lozinka' />}
           <Button
             type='submit'
             variant='contained'
@@ -92,6 +97,7 @@ export function FruitForm({
             loading={isLoading}
             fullWidth
             size='large'
+            disabled={password !== '1234' && !!values}
           >
             Sačuvaj
           </Button>
