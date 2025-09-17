@@ -1,4 +1,4 @@
-import { Button, Stack } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -58,6 +58,32 @@ export function FruitForm({
     >
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={3} sx={{ mt: 0.5 }}>
+          {values && (
+            <>
+              <Typography
+                variant='subtitle1'
+                textAlign='center'
+                sx={{ fontWeight: 'bold' }}
+              >
+                OVO NIJE KREIRANJE NOVE VOĆKE!
+              </Typography>
+              <Typography
+                variant='subtitle1'
+                textAlign='center'
+                sx={{ fontWeight: 'bold' }}
+              >
+                PROMENIĆEŠ NAZIV POSTOJEĆE VOĆKE NA SVIM MESTIMA U APLIKACIJI!
+              </Typography>
+              <Typography
+                variant='subtitle1'
+                textAlign='center'
+                sx={{ fontWeight: 'bold' }}
+              >
+                DA LI SI SIGURAN DA TO ŽELIŠ?
+              </Typography>
+              <Divider />
+            </>
+          )}
           <RHFTextInput name='label' label='Naziv' />
           <Button
             type='submit'
