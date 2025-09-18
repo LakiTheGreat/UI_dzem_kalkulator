@@ -130,7 +130,7 @@ export default function TransactionsPage() {
       />
       <Stack gap={4}>
         <Container maxWidth='sm'>
-          <Stack>
+          <Stack gap={2}>
             {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
             {!isLoadingFruits && (
               <Stack gap={2}>
@@ -176,25 +176,25 @@ export default function TransactionsPage() {
                     </Select>
                   </FormControl>
                 </Stack>
-                <Stack gap={1}>
-                  {isFetching && (
-                    <Stack gap={1}>
-                      <Skeleton variant='rounded' height={24} />
-                      <Skeleton variant='rounded' height={24} />
-                    </Stack>
-                  )}
-                  {!isFetching &&
-                    sumData.map((cup) => (
-                      <Stack direction='row' key={cup.label} gap={1}>
-                        <Typography sx={{ width: ORDER_WIDTH }}>
-                          Br. teglica od: {cup.label}
-                        </Typography>
-                        <Typography>{cup.quantity}</Typography>
-                      </Stack>
-                    ))}
-                </Stack>
               </Stack>
             )}
+            <Stack gap={1}>
+              {isFetching && (
+                <Stack gap={1}>
+                  <Skeleton variant='rounded' height={24} />
+                  <Skeleton variant='rounded' height={24} />
+                </Stack>
+              )}
+              {!isFetching &&
+                sumData.map((cup) => (
+                  <Stack direction='row' key={cup.label} gap={1}>
+                    <Typography sx={{ width: ORDER_WIDTH }}>
+                      Br. teglica od: {cup.label}
+                    </Typography>
+                    <Typography>{cup.quantity}</Typography>
+                  </Stack>
+                ))}
+            </Stack>
           </Stack>
         </Container>
         <TabContext value={value}>
