@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
 
 import LogoImage1 from '../assets/logo1.png';
-import SVG_Tegla from '../assets/SVG_Tegla.png';
-import SVG_Naradnza from '../assets/SVG_Naradnza.png';
-import SVG_Smokva from '../assets/SVG_Smokva.png';
-import SVG_Jagoda_1 from '../assets/SVG_Jagoda_1.png';
+// import SVG_Tegla from '../assets/SVG_Tegla.svg';
+import SVG_Naradnza from '../assets/SVG_Naradnza.svg';
+import SVG_Smokva from '../assets/SVG_Smokva.svg';
+// import SVG_Jagoda_1 from '../assets/SVG_Jagoda_1.svg';
 import Logo from './Logo';
 
 export default function Background() {
@@ -16,7 +16,7 @@ export default function Background() {
 
   return (
     <Box>
-      <Box
+      {/* <Box
         sx={{
           ...generalStyle,
           top: '5%',
@@ -37,7 +37,7 @@ export default function Background() {
         }}
       >
         <Logo logoImage={SVG_Jagoda_1} height={200} width={250} />
-      </Box>
+      </Box> */}
       <Box
         sx={{
           ...generalStyle,
@@ -53,9 +53,9 @@ export default function Background() {
         sx={{
           ...generalStyle,
           bottom: '10%',
-          right: '-75%',
+          right: '-80%',
           opacity: 0.1,
-          transform: 'translate(-75%, -10%)',
+          transform: 'translate(-80%, -10%)',
         }}
       >
         <Logo logoImage={SVG_Naradnza} height={200} width={250} />
