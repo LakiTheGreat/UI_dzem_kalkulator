@@ -8,6 +8,7 @@ interface Props extends BoxProps {
   width?: number;
   height?: number;
   isSmall?: boolean;
+  logoImage?: string;
 }
 
 export default function Logo({
@@ -16,6 +17,7 @@ export default function Logo({
   height = 90,
   width = 90,
   sx,
+  logoImage = LogoImage,
 }: Props) {
   const logo = !isSmall ? (
     <Box
@@ -30,7 +32,7 @@ export default function Logo({
         },
         ...sx,
       }}
-      src={LogoImage}
+      src={logoImage}
       alt='companyLogo'
     />
   ) : (
@@ -46,7 +48,7 @@ export default function Logo({
         },
         ...sx,
       }}
-      src={LogoImage}
+      src={logoImage}
       alt='companyLogo'
     />
   );
