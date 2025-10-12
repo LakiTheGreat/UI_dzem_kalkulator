@@ -4,6 +4,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
   Container,
+  Divider,
   FormControl,
   Grid,
   IconButton,
@@ -30,7 +31,10 @@ import { useAppSelector } from '../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
-import { TransactionParams } from '../../types/transactions';
+import {
+  TransactionParams,
+  TransactionStatusStrings,
+} from '../../types/transactions';
 import filterFruits from '../../utils/filterFruits';
 import getStatusTranslation from '../../utils/getStatusTranslation';
 import { mapAllTransactionStatusesToMenuItems } from '../../utils/mapToMenuItems';
@@ -38,8 +42,11 @@ import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
 import { ORDER_WIDTH } from '../../constants';
+import FormattedPrice from '../../utils/FormattedPrice';
+import useResponsive from '../../hooks/useResponsive';
 
 export default function TransactionsPage() {
+  const isSm = useResponsive('down', 'sm');
   const navigate = useNavigate();
   const userId = useAppSelector((state) => state.auth.userId);
 
@@ -181,19 +188,62 @@ export default function TransactionsPage() {
             <Stack gap={1}>
               {isFetching && (
                 <Stack gap={1}>
-                  <Skeleton variant='rounded' height={24} />
-                  <Skeleton variant='rounded' height={24} />
+                  <Skeleton variant='rounded' height={30} />
+                  <Skeleton variant='rounded' height={30} />
+                  <Skeleton variant='rounded' height={30} />
                 </Stack>
               )}
-              {!isFetching &&
-                sumData.map((cup) => (
-                  <Stack direction='row' key={cup.label} gap={1}>
-                    <Typography sx={{ width: ORDER_WIDTH }}>
-                      Br. teglica od: {cup.label}
-                    </Typography>
-                    <Typography>{cup.quantity}</Typography>
+              {!isFetching && (
+                <>
+                  {sumData.map((cup, index) => (
+                    <Stack
+                      direction={isSm ? 'column' : 'row'}
+                      key={cup.label}
+                      gap={1}
+                    >
+                      <Stack direction='row'>
+                        <Typography sx={{ width: ORDER_WIDTH }}>
+                          Br. teglica od: {cup.label}
+                        </Typography>
+                        <Stack
+                          direction='row'
+                          gap={1}
+                          sx={{ width: ORDER_WIDTH }}
+                          justifyContent='space-between'
+                        >
+                          <Typography>{cup.quantity}</Typography>
+
+                          <Stack
+                            direction='row'
+                            color={getColor(params.transactionStatus || 'ALL')}
+                            gap={1}
+                          >
+                            ≈
+                            <FormattedPrice
+                              price={calculatePrice(cup.quantity, cup.label)}
+                            />
+                          </Stack>
+                        </Stack>
+                      </Stack>
+
+                      <Divider />
+                    </Stack>
+                  ))}
+                  <Stack
+                    direction='row'
+                    color={getColor(params.transactionStatus || 'ALL')}
+                    sx={{ fontWeight: 'bold' }}
+                    gap={1}
+                    justifyContent='flex-end'
+                  >
+                    ≈
+                    <FormattedPrice
+                      isBold
+                      price={calculateTotalPrice(sumData)}
+                    />
                   </Stack>
-                ))}
+                </>
+              )}
             </Stack>
           </Stack>
         </Container>
@@ -263,3 +313,43 @@ export default function TransactionsPage() {
     </Container>
   );
 }
+
+const calculatePrice = (quantity: number, label: string) => {
+  switch (label) {
+    case '212ml':
+      return quantity * 500;
+    case '370ml':
+      return quantity * 600;
+    default:
+      return 0;
+  }
+};
+
+const calculateTotalPrice = (
+  cupData: { quantity: number; label?: string }[]
+) => {
+  let total = 0;
+  cupData.forEach((cup) => {
+    total += calculatePrice(cup.quantity, cup.label || '');
+  });
+  return total;
+};
+
+const getColor = (status: string) => {
+  switch (status) {
+    case TransactionStatusStrings.CONSUMED:
+      return 'error.main';
+    case TransactionStatusStrings.PROMOTION:
+      return 'error.main';
+    case TransactionStatusStrings.GIVEN_AWAY:
+      return 'error.main';
+    case TransactionStatusStrings.OTHER:
+      return 'error.main';
+    case TransactionStatusStrings.SOLD:
+      return 'success.dark';
+    case 'ALL':
+      return '';
+    default:
+      return '';
+  }
+};
