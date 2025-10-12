@@ -203,7 +203,7 @@ export default function TransactionsPage() {
                     >
                       <Stack direction='row'>
                         <Typography sx={{ width: ORDER_WIDTH }}>
-                          Br. teglica od: {cup.label}
+                          Br. teglica od {cup.label}:
                         </Typography>
                         <Stack
                           direction='row'
