@@ -35,4 +35,6 @@ export enum TransactionStatusStrings {
 export type TransactionParams = {
   orderTypeId: number;
   transactionStatus: string | null;
+  year: number;
+  month: number;
 };

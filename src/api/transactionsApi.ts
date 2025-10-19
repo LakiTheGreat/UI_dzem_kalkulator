@@ -11,7 +11,7 @@ const transactionsApiUrl = '/transactions';
 const transactionsApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
     getTransactions: build.query<Transaction[], TransactionParams>({
-      query: ({ orderTypeId, transactionStatus }) => {
+      query: ({ orderTypeId, transactionStatus, year, month }) => {
         const params = new URLSearchParams();
 
         if (orderTypeId && orderTypeId > 0) {
@@ -21,8 +21,19 @@ const transactionsApiEndpoints = api.injectEndpoints({
         if (transactionStatus && transactionStatus !== 'ALL') {
           params.set('transactionStatus', String(transactionStatus));
         }
+
+        if (year && year > 0) {
+          params.set('year', String(year));
+        }
+
+        if (month && month > 0) {
+          params.set('month', String(month));
+        }
+
+        const query = params?.toString();
+
         return {
-          url: `${transactionsApiUrl}?${params.toString()}`,
+          url: `${transactionsApiUrl}${query ? `?${query}` : ''}`,
         };
       },
 

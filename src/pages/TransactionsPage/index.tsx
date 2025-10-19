@@ -41,7 +41,7 @@ import { mapAllTransactionStatusesToMenuItems } from '../../utils/mapToMenuItems
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
-import { ORDER_WIDTH } from '../../constants';
+import { MONTHS, ORDER_WIDTH, YEARS } from '../../constants';
 import FormattedPrice from '../../utils/FormattedPrice';
 import useResponsive from '../../hooks/useResponsive';
 
@@ -57,6 +57,8 @@ export default function TransactionsPage() {
   const param = {
     orderTypeId: 0,
     transactionStatus: 'ALL',
+    year: 0,
+    month: 0,
   };
 
   const [params, setParams] = useState<TransactionParams>(param);
@@ -138,7 +140,12 @@ export default function TransactionsPage() {
       <Stack gap={4}>
         <Container maxWidth='sm'>
           <Stack gap={2}>
-            {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
+            {isLoadingFruits && (
+              <Stack gap={2}>
+                <Skeleton variant='rounded' height={56} />
+                <Skeleton variant='rounded' height={56} />
+              </Stack>
+            )}
             {!isLoadingFruits && (
               <Stack gap={2}>
                 <Stack direction='row' gap={2}>
@@ -178,6 +185,48 @@ export default function TransactionsPage() {
                       {mappedStatus?.map((status) => (
                         <MenuItem key={status.value} value={status.value}>
                           {getStatusTranslation(status.value)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Stack>
+                <Stack direction='row' gap={2}>
+                  <FormControl fullWidth>
+                    <InputLabel>Godina</InputLabel>
+                    <Select
+                      value={params.year}
+                      label='Godina'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          year: Number(e.target.value),
+                        })
+                      }
+                    >
+                      <MenuItem value={0}>Prikaži sve</MenuItem>
+                      {YEARS?.map((year) => (
+                        <MenuItem key={year.id} value={year.value}>
+                          {year.menuItemLabel}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel>Mesec</InputLabel>
+                    <Select
+                      value={params.month}
+                      label='Mesec'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          month: Number(e.target.value),
+                        })
+                      }
+                    >
+                      <MenuItem value={0}>Prikaži sve</MenuItem>
+                      {MONTHS?.map((month) => (
+                        <MenuItem key={month.id} value={month.value}>
+                          {month.menuItemLabel}
                         </MenuItem>
                       ))}
                     </Select>

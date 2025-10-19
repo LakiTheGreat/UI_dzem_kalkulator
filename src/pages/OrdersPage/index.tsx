@@ -117,7 +117,12 @@ export default function OrdersPage() {
       <Stack gap={3}>
         <Container maxWidth='sm'>
           <Stack gap={3}>
-            {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
+            {isLoadingFruits && (
+              <Stack gap={2}>
+                <Skeleton variant='rounded' height={56} />
+                <Skeleton variant='rounded' height={56} />
+              </Stack>
+            )}
 
             {!isLoadingFruits && (
               <Stack gap={2}>
