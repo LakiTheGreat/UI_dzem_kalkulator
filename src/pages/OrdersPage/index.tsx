@@ -1,8 +1,10 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
+  Button,
   Container,
   Divider,
   FormControl,
@@ -50,11 +52,15 @@ export default function OrdersPage() {
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const param = {
+  const defaultParams = {
     orderTypeId: 0,
     priceStatus: PRICE_STATUS.ALL,
     year: 0,
     month: 0,
+  };
+
+  const param = {
+    ...defaultParams,
   };
 
   const [params, setParams] = useState<OrderParams>(param);
@@ -121,6 +127,7 @@ export default function OrdersPage() {
               <Stack gap={2}>
                 <Skeleton variant='rounded' height={56} />
                 <Skeleton variant='rounded' height={56} />
+                <Skeleton variant='rounded' height={41} />
               </Stack>
             )}
 
@@ -211,6 +218,14 @@ export default function OrdersPage() {
                     </Select>
                   </FormControl>
                 </Stack>
+                <Button
+                  variant='outlined'
+                  startIcon={<RefreshIcon />}
+                  onClick={() => setParams(defaultParams)}
+                  size='large'
+                >
+                  Resetuj filtere
+                </Button>
               </Stack>
             )}
 

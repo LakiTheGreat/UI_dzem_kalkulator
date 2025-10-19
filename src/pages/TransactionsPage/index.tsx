@@ -1,8 +1,10 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
+  Button,
   Container,
   Divider,
   FormControl,
@@ -26,24 +28,24 @@ import {
   useGetTransactionsQuery,
 } from '../../api/transactionsApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+import { MONTHS, ORDER_WIDTH, YEARS } from '../../constants';
 import { routes } from '../../constants/routes';
 import { useAppSelector } from '../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
+import useResponsive from '../../hooks/useResponsive';
 import {
   TransactionParams,
   TransactionStatusStrings,
 } from '../../types/transactions';
+import FormattedPrice from '../../utils/FormattedPrice';
 import filterFruits from '../../utils/filterFruits';
 import getStatusTranslation from '../../utils/getStatusTranslation';
 import { mapAllTransactionStatusesToMenuItems } from '../../utils/mapToMenuItems';
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
-import { MONTHS, ORDER_WIDTH, YEARS } from '../../constants';
-import FormattedPrice from '../../utils/FormattedPrice';
-import useResponsive from '../../hooks/useResponsive';
 
 export default function TransactionsPage() {
   const isSm = useResponsive('down', 'sm');
@@ -54,11 +56,15 @@ export default function TransactionsPage() {
   const [toastId, setToastId] = useState<Id>('');
   const [value, setValue] = useState<number>(0);
 
-  const param = {
+  const defaultParams = {
     orderTypeId: 0,
     transactionStatus: 'ALL',
     year: 0,
     month: 0,
+  };
+
+  const param = {
+    ...defaultParams,
   };
 
   const [params, setParams] = useState<TransactionParams>(param);
@@ -144,6 +150,7 @@ export default function TransactionsPage() {
               <Stack gap={2}>
                 <Skeleton variant='rounded' height={56} />
                 <Skeleton variant='rounded' height={56} />
+                <Skeleton variant='rounded' height={41} />
               </Stack>
             )}
             {!isLoadingFruits && (
@@ -232,6 +239,14 @@ export default function TransactionsPage() {
                     </Select>
                   </FormControl>
                 </Stack>
+                <Button
+                  variant='outlined'
+                  startIcon={<RefreshIcon />}
+                  onClick={() => setParams(defaultParams)}
+                  size='large'
+                >
+                  Resetuj filtere
+                </Button>
               </Stack>
             )}
             <Stack gap={1}>
