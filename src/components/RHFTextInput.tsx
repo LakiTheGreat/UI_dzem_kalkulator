@@ -110,6 +110,7 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
                     }
                   }}
                   sx={{
+                    bgcolor: 'white',
                     '& input[type=number]': {
                       '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button':
                         {

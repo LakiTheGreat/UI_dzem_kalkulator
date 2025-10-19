@@ -49,6 +49,7 @@ export default function CupValuesSettings() {
             <FormControl fullWidth sx={{ minWidth: 120 }}>
               <InputLabel>Izaberi teglicu</InputLabel>
               <Select
+                sx={{ bgcolor: 'white' }}
                 value={selectedId}
                 label='Izaberi teglicu'
                 onChange={(e) => setSelectedId(e.target.value)}

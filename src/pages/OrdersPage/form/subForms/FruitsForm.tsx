@@ -137,6 +137,8 @@ export default function FruitsForm({ mappedData }: Props) {
       ))}
 
       <Button
+        sx={{ bgcolor: 'white' }}
+        size='large'
         variant='outlined'
         startIcon={<AddIcon />}
         onClick={() => append({ fruitId: '', grams: '', price: '', total: '' })}

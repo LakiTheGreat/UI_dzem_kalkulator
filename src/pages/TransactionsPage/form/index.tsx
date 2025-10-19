@@ -91,6 +91,7 @@ export default function TransactionsForm({
           </Stack>
         ))}
         <Button
+          size='large'
           type='submit'
           variant='contained'
           loading={isLoading}

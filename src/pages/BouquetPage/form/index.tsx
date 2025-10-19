@@ -85,6 +85,7 @@ export default function BouquetForm({
         </Stack>
 
         <Button
+          size='large'
           type='submit'
           variant='contained'
           loading={isLoading}

@@ -60,6 +60,7 @@ export function ConstantForm({
         <Stack gap={3} sx={{ mt: 0.5 }}>
           <RHFTextInput name='value' label='Vrednost' />
           <Button
+            sx={{ bgcolor: 'white' }}
             type='submit'
             variant='contained'
             color='primary'

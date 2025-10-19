@@ -93,6 +93,7 @@ export default function FruitsSettings() {
             <FormControl fullWidth>
               <InputLabel>Izaberi voće</InputLabel>
               <Select
+                sx={{ bgcolor: 'white' }}
                 value={selectedId}
                 label='Izaberi voće'
                 onChange={(e) => setSelectedId(e.target.value)}

@@ -44,7 +44,7 @@ const RHFSelectInput = forwardRef<HTMLDivElement, RHFSelectInputProps>(
               }
               inputRef={ref}
               disabled={disabled}
-              sx={{ fontSize: isBigInput ? 20 : 'auto' }}
+              sx={{ fontSize: isBigInput ? 20 : 'auto', bgcolor: 'white' }}
             >
               {menuItems.map((item) =>
                 item.value === 'divider' ? (
