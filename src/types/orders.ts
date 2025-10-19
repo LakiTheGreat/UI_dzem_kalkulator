@@ -49,6 +49,8 @@ export type OrderPatchRequest = NewOrder & { id: number };
 export type OrderParams = {
   orderTypeId: number;
   priceStatus: PRICE_STATUS;
+  year: number;
+  month: number;
 };
 
 export type OrderResponse = {

@@ -26,7 +26,7 @@ import {
   useGetAllOrdersQuery,
 } from '../../api/ordersApi';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import { ORDER_WIDTH } from '../../constants';
+import { MONTHS, ORDER_WIDTH, YEARS } from '../../constants';
 import { routes } from '../../constants/routes';
 import { useAppSelector } from '../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
@@ -53,6 +53,8 @@ export default function OrdersPage() {
   const param = {
     orderTypeId: 0,
     priceStatus: PRICE_STATUS.ALL,
+    year: 0,
+    month: 0,
   };
 
   const [params, setParams] = useState<OrderParams>(param);
@@ -118,48 +120,92 @@ export default function OrdersPage() {
             {isLoadingFruits && <Skeleton variant='rounded' height={56} />}
 
             {!isLoadingFruits && (
-              <Stack direction='row' gap={2}>
-                <FormControl fullWidth>
-                  <InputLabel>Vrsta džema</InputLabel>
-                  <Select
-                    value={params.orderTypeId}
-                    label='Vrsta džema'
-                    onChange={(e) =>
-                      setParams({
-                        ...params,
-                        orderTypeId: Number(e.target.value),
-                      })
-                    }
-                  >
-                    <MenuItem value={0}>Prikaži sve</MenuItem>
-                    {filteredFruits?.map((fruit) => (
-                      <MenuItem key={fruit.id} value={fruit.id}>
-                        {fruit.label}
+              <Stack gap={2}>
+                <Stack direction='row' gap={2}>
+                  <FormControl fullWidth>
+                    <InputLabel>Vrsta džema</InputLabel>
+                    <Select
+                      value={params.orderTypeId}
+                      label='Vrsta džema'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          orderTypeId: Number(e.target.value),
+                        })
+                      }
+                    >
+                      <MenuItem value={0}>Prikaži sve</MenuItem>
+                      {filteredFruits?.map((fruit) => (
+                        <MenuItem key={fruit.id} value={fruit.id}>
+                          {fruit.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel>Besplatna osnova</InputLabel>
+                    <Select
+                      value={params.priceStatus}
+                      label='Besplatna osnova'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          priceStatus: Number(e.target.value),
+                        })
+                      }
+                    >
+                      <MenuItem value={PRICE_STATUS.ALL}>Prikaži sve</MenuItem>
+                      <MenuItem value={PRICE_STATUS.ONLY_FREE}>
+                        Besplatna osnova
                       </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel>Besplatna osnova</InputLabel>
-                  <Select
-                    value={params.priceStatus}
-                    label='Besplatna osnova'
-                    onChange={(e) =>
-                      setParams({
-                        ...params,
-                        priceStatus: Number(e.target.value),
-                      })
-                    }
-                  >
-                    <MenuItem value={PRICE_STATUS.ALL}>Prikaži sve</MenuItem>
-                    <MenuItem value={PRICE_STATUS.ONLY_FREE}>
-                      Besplatna osnova
-                    </MenuItem>
-                    <MenuItem value={PRICE_STATUS.ONLY_PAID}>
-                      Plaćena osnova
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+                      <MenuItem value={PRICE_STATUS.ONLY_PAID}>
+                        Plaćena osnova
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Stack>
+                <Stack direction='row' gap={2}>
+                  <FormControl fullWidth>
+                    <InputLabel>Godina</InputLabel>
+                    <Select
+                      value={params.year}
+                      label='Godina'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          year: Number(e.target.value),
+                        })
+                      }
+                    >
+                      <MenuItem value={0}>Prikaži sve</MenuItem>
+                      {YEARS?.map((year) => (
+                        <MenuItem key={year.id} value={year.value}>
+                          {year.menuItemLabel}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel>Mesec</InputLabel>
+                    <Select
+                      value={params.month}
+                      label='Mesec'
+                      onChange={(e) =>
+                        setParams({
+                          ...params,
+                          month: Number(e.target.value),
+                        })
+                      }
+                    >
+                      <MenuItem value={0}>Prikaži sve</MenuItem>
+                      {MONTHS?.map((month) => (
+                        <MenuItem key={month.id} value={month.value}>
+                          {month.menuItemLabel}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Stack>
               </Stack>
             )}
 
