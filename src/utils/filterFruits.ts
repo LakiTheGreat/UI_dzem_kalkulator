@@ -1,6 +1,6 @@
 import { Fruit } from '../types/fruits';
 
-const EXCLUDED_LABELS = [
+export const EXCLUDED_LABELS = [
   'Limun',
   'Urme',
   'Lešnik',

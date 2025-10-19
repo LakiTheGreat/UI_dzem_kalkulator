@@ -9,6 +9,7 @@ import RHFSelectInput, {
   MenuItemType,
 } from '../../../../components/RHFSelectInput';
 import RHFTextInput from '../../../../components/RHFTextInput';
+import { EXCLUDED_LABELS } from '../../../../utils/filterFruits';
 import FormattedPrice from '../../../../utils/FormattedPrice';
 import { FruitItem } from '../index';
 
@@ -20,6 +21,30 @@ export default function FruitsForm({ mappedData }: Props) {
   const { control, register, setValue } = useFormContext<{
     fruits: FruitItem[];
   }>();
+
+  const included = mappedData.filter(
+    (item) => !EXCLUDED_LABELS.includes(String(item.menuItemLabel))
+  );
+
+  const excluded = mappedData
+    .filter((item) => EXCLUDED_LABELS.includes(String(item.menuItemLabel)))
+    .sort((a, b) =>
+      String(a.menuItemLabel).localeCompare(String(b.menuItemLabel))
+    );
+
+  // Create sorted array with a divider
+  const sortedDataWithDivider =
+    excluded.length > 0
+      ? [
+          ...included,
+          {
+            id: 'divider',
+            value: 'divider',
+            menuItemLabel: 'DIVIDER',
+          },
+          ...excluded,
+        ]
+      : included;
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -66,7 +91,9 @@ export default function FruitsForm({ mappedData }: Props) {
             <Stack sx={{ width: '100%' }}></Stack>
             <Stack sx={{ width: '100%' }}>
               <RHFSelectInput
-                menuItems={mappedData}
+                menuItems={sortedDataWithDivider.map((item) =>
+                  item.value === 'divider' ? { ...item, disabled: true } : item
+                )}
                 label='Voće'
                 name={`fruits.${index}.fruitId`}
               />

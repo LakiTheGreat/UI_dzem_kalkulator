@@ -1,4 +1,5 @@
 import {
+  Divider,
   FormControl,
   InputLabel,
   MenuItem,
@@ -45,13 +46,17 @@ const RHFSelectInput = forwardRef<HTMLDivElement, RHFSelectInputProps>(
               disabled={disabled}
               sx={{ fontSize: isBigInput ? 20 : 'auto' }}
             >
-              {menuItems.map((item) => (
-                <MenuItem key={item.id} value={item.value}>
-                  <Typography sx={{ fontSize: isBigInput ? 20 : 'inherit' }}>
-                    {item.menuItemLabel}
-                  </Typography>
-                </MenuItem>
-              ))}
+              {menuItems.map((item) =>
+                item.value === 'divider' ? (
+                  <Divider key={item.id} sx={{ my: 0.5 }} />
+                ) : (
+                  <MenuItem key={item.id} value={item.value}>
+                    <Typography sx={{ fontSize: isBigInput ? 20 : 'inherit' }}>
+                      {item.menuItemLabel}
+                    </Typography>
+                  </MenuItem>
+                )
+              )}
             </Select>
           </FormControl>
         )}
