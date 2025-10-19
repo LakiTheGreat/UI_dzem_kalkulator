@@ -44,6 +44,7 @@ type Props = {
   values?: FormData;
   cupsWithData: CupWithPriceData[] | undefined;
   mappedFruits: MenuItemType[] | undefined;
+  mappedFilteredFruits: MenuItemType[] | undefined;
   otherExpansesMargin: Constant | undefined;
   isLoading: boolean;
 };
@@ -54,6 +55,7 @@ export default function OrderForm({
   values,
   cupsWithData,
   mappedFruits,
+  mappedFilteredFruits,
   otherExpansesMargin,
   isLoading,
 }: Props) {
@@ -137,7 +139,7 @@ export default function OrderForm({
           <RHFSelectInput
             name='orderTypeId'
             label='Vrsta džema'
-            menuItems={mappedFruits || []}
+            menuItems={mappedFilteredFruits || []}
           />
         </Stack>
 
