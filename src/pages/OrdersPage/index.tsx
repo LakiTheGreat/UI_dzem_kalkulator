@@ -240,7 +240,7 @@ export default function OrdersPage() {
                 {data?.totalCups.map((cup) => (
                   <Stack direction='row' key={cup.label} gap={1}>
                     <Typography sx={{ width: ORDER_WIDTH }}>
-                      Br. teglica od: {cup.label}
+                      Br. teglica od {cup.label}:
                     </Typography>
                     <Typography>{cup.numberOf}</Typography>
                   </Stack>
