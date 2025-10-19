@@ -137,6 +137,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Vrsta džema</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.orderTypeId}
                       label='Vrsta džema'
                       onChange={(e) =>
@@ -157,6 +158,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Besplatna osnova</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.priceStatus}
                       label='Besplatna osnova'
                       onChange={(e) =>
@@ -180,6 +182,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Godina</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.year}
                       label='Godina'
                       onChange={(e) =>
@@ -200,6 +203,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Mesec</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.month}
                       label='Mesec'
                       onChange={(e) =>
@@ -223,6 +227,7 @@ export default function OrdersPage() {
                   startIcon={<RefreshIcon />}
                   onClick={() => setParams(defaultParams)}
                   size='large'
+                  sx={{ bgcolor: 'white' }}
                 >
                   Resetuj filtere
                 </Button>

@@ -159,6 +159,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Vrsta džema</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.orderTypeId}
                       label='Vrsta džema'
                       onChange={(e) =>
@@ -179,6 +180,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Vrsta transakcije</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.transactionStatus}
                       label='Vrsta transakcije'
                       onChange={(e) =>
@@ -201,6 +203,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Godina</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.year}
                       label='Godina'
                       onChange={(e) =>
@@ -221,6 +224,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Mesec</InputLabel>
                     <Select
+                      sx={{ bgcolor: 'white' }}
                       value={params.month}
                       label='Mesec'
                       onChange={(e) =>
@@ -240,6 +244,7 @@ export default function TransactionsPage() {
                   </FormControl>
                 </Stack>
                 <Button
+                  sx={{ bgcolor: 'white' }}
                   variant='outlined'
                   startIcon={<RefreshIcon />}
                   onClick={() => setParams(defaultParams)}
