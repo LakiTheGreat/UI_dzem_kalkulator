@@ -187,3 +187,5 @@ const palette = {
 } as const;
 
 export default palette;
+
+export const BG_COLOR_INPUT = palette.light.background.default;

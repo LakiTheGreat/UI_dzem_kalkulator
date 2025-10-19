@@ -36,6 +36,7 @@ import { mapBouquetTransactionStatusesToMenuItems } from '../../utils/mapToMenuI
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import BouquetTransactionCard from './BouquetTransactionCard';
 import BouquetTable from './table/BouquetTable';
+import { BG_COLOR_INPUT } from '../../theme/palette';
 
 export default function BouquetPage() {
   const navigate = useNavigate();
@@ -122,6 +123,7 @@ export default function BouquetPage() {
                 <FormControl fullWidth>
                   <InputLabel>Vrsta transakcije</InputLabel>
                   <Select
+                    sx={{ bgcolor: BG_COLOR_INPUT }}
                     value={params.transactionStatus}
                     label='Vrsta transakcije'
                     onChange={(e) =>

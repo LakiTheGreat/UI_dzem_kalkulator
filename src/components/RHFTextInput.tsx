@@ -11,6 +11,8 @@ import {
 import { forwardRef, HTMLInputTypeAttribute, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
+import { BG_COLOR_INPUT } from '../theme/palette';
+
 type RHFTextInputProps = TextFieldProps & {
   name: string;
   label: string;
@@ -110,7 +112,7 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
                     }
                   }}
                   sx={{
-                    bgcolor: 'white',
+                    bgcolor: BG_COLOR_INPUT,
                     '& input[type=number]': {
                       '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button':
                         {

@@ -10,6 +10,8 @@ import {
 import { forwardRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
+import { BG_COLOR_INPUT } from '../theme/palette';
+
 export type MenuItemType = {
   id: string | number;
   value: any;
@@ -44,7 +46,10 @@ const RHFSelectInput = forwardRef<HTMLDivElement, RHFSelectInputProps>(
               }
               inputRef={ref}
               disabled={disabled}
-              sx={{ fontSize: isBigInput ? 20 : 'auto', bgcolor: 'white' }}
+              sx={{
+                fontSize: isBigInput ? 20 : 'auto',
+                bgcolor: BG_COLOR_INPUT,
+              }}
             >
               {menuItems.map((item) =>
                 item.value === 'divider' ? (

@@ -12,6 +12,7 @@ import RHFTextInput from '../../../../components/RHFTextInput';
 import { EXCLUDED_LABELS } from '../../../../utils/filterFruits';
 import FormattedPrice from '../../../../utils/FormattedPrice';
 import { FruitItem } from '../index';
+import { BG_COLOR_INPUT } from '../../../../theme/palette';
 
 type Props = {
   mappedData: MenuItemType[];
@@ -137,7 +138,7 @@ export default function FruitsForm({ mappedData }: Props) {
       ))}
 
       <Button
-        sx={{ bgcolor: 'white' }}
+        sx={{ bgcolor: BG_COLOR_INPUT }}
         size='large'
         variant='outlined'
         startIcon={<AddIcon />}

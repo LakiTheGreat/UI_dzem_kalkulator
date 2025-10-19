@@ -16,6 +16,7 @@ import useResponsive from '../../../hooks/useResponsive';
 import FormattedPrice from '../../../utils/FormattedPrice';
 import { mapCupsToMenuItems } from '../../../utils/mapToMenuItems';
 import EditCupValue from './form/EditCupValue';
+import { BG_COLOR_INPUT } from '../../../theme/palette';
 
 export default function CupValuesSettings() {
   const isMdDown = useResponsive('down', 'md');
@@ -49,7 +50,7 @@ export default function CupValuesSettings() {
             <FormControl fullWidth sx={{ minWidth: 120 }}>
               <InputLabel>Izaberi teglicu</InputLabel>
               <Select
-                sx={{ bgcolor: 'white' }}
+                sx={{ bgcolor: BG_COLOR_INPUT }}
                 value={selectedId}
                 label='Izaberi teglicu'
                 onChange={(e) => setSelectedId(e.target.value)}

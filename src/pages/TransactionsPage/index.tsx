@@ -46,6 +46,7 @@ import { mapAllTransactionStatusesToMenuItems } from '../../utils/mapToMenuItems
 import setToastIsLoading from '../../utils/toastify/setToastIsLoading';
 import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
+import { BG_COLOR_INPUT } from '../../theme/palette';
 
 export default function TransactionsPage() {
   const isSm = useResponsive('down', 'sm');
@@ -159,7 +160,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Vrsta džema</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.orderTypeId}
                       label='Vrsta džema'
                       onChange={(e) =>
@@ -180,7 +181,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Vrsta transakcije</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.transactionStatus}
                       label='Vrsta transakcije'
                       onChange={(e) =>
@@ -203,7 +204,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Godina</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.year}
                       label='Godina'
                       onChange={(e) =>
@@ -224,7 +225,7 @@ export default function TransactionsPage() {
                   <FormControl fullWidth>
                     <InputLabel>Mesec</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.month}
                       label='Mesec'
                       onChange={(e) =>
@@ -244,11 +245,12 @@ export default function TransactionsPage() {
                   </FormControl>
                 </Stack>
                 <Button
-                  sx={{ bgcolor: 'white' }}
+                  sx={{ bgcolor: BG_COLOR_INPUT }}
                   variant='outlined'
                   startIcon={<RefreshIcon />}
                   onClick={() => setParams(defaultParams)}
                   size='large'
+                  loading={isFetching}
                 >
                   Resetuj filtere
                 </Button>

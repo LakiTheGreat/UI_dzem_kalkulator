@@ -34,6 +34,7 @@ import { useAppSelector } from '../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
+import { BG_COLOR_INPUT } from '../../theme/palette';
 import { OrderParams, PRICE_STATUS } from '../../types/orders';
 import filterFruits from '../../utils/filterFruits';
 import FormattedPrice from '../../utils/FormattedPrice';
@@ -137,7 +138,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Vrsta džema</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.orderTypeId}
                       label='Vrsta džema'
                       onChange={(e) =>
@@ -158,7 +159,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Besplatna osnova</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.priceStatus}
                       label='Besplatna osnova'
                       onChange={(e) =>
@@ -182,7 +183,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Godina</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.year}
                       label='Godina'
                       onChange={(e) =>
@@ -203,7 +204,7 @@ export default function OrdersPage() {
                   <FormControl fullWidth>
                     <InputLabel>Mesec</InputLabel>
                     <Select
-                      sx={{ bgcolor: 'white' }}
+                      sx={{ bgcolor: BG_COLOR_INPUT }}
                       value={params.month}
                       label='Mesec'
                       onChange={(e) =>
@@ -227,7 +228,8 @@ export default function OrdersPage() {
                   startIcon={<RefreshIcon />}
                   onClick={() => setParams(defaultParams)}
                   size='large'
-                  sx={{ bgcolor: 'white' }}
+                  sx={{ bgcolor: BG_COLOR_INPUT }}
+                  loading={isFetching}
                 >
                   Resetuj filtere
                 </Button>

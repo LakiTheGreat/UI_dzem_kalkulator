@@ -160,6 +160,7 @@ export default function InventoryConfigForm({ open, handleClose }: Props) {
             />
 
             <Button
+              size='large'
               type='submit'
               variant='contained'
               loading={isLoading}

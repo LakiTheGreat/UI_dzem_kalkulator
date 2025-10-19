@@ -27,6 +27,7 @@ import EditFruit from './form/EditFruit';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 import filterFruits from '../../../utils/filterFruits';
+import { BG_COLOR_INPUT } from '../../../theme/palette';
 
 export default function FruitsSettings() {
   const [getConfirmation, Confirmation] = useConfirmDialog();
@@ -93,7 +94,7 @@ export default function FruitsSettings() {
             <FormControl fullWidth>
               <InputLabel>Izaberi voće</InputLabel>
               <Select
-                sx={{ bgcolor: 'white' }}
+                sx={{ bgcolor: BG_COLOR_INPUT }}
                 value={selectedId}
                 label='Izaberi voće'
                 onChange={(e) => setSelectedId(e.target.value)}
