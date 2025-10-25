@@ -29,49 +29,46 @@ export default function TomatoesInventoryPage() {
           },
         ]}
       />
-      <Stack gap={3}>
-        <Divider />
 
-        <Stack gap={4}>
-          <Stack gap={1}>
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-between'
-            >
-              <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-                Ukupno stanje:
-              </Typography>
-            </Stack>
-            {somethingIsLoading && <Skeleton variant='rounded' height={56} />}
-            {!somethingIsLoading && data && (
-              <Stack direction='row' gap={4} sx={{ width: '100%' }}>
-                {data.map((item) => (
-                  <Stack key={item.cupTypeId} sx={{ width: '100%' }} gap={1}>
-                    <Stack direction='row' sx={{ width: '100%' }}>
-                      <Stack
-                        gap={1}
-                        sx={{ width: ORDER_WIDTH }}
-                        alignItems='center'
-                      >
-                        <Typography>{item.label}:</Typography>
-                        <Typography>{item.totalCups} kom. </Typography>
-                      </Stack>
-                      <Stack sx={{ width: ORDER_WIDTH }} alignItems='center'>
-                        <Typography textAlign='center' sx={{ flex: 1 }}>
-                          Približna vrednost:
-                        </Typography>
-                        <FormattedPrice
-                          price={item.totalCups * (tomatoPrice?.value || 1)}
-                        />
-                      </Stack>
-                    </Stack>
-                    <Divider />
-                  </Stack>
-                ))}
-              </Stack>
-            )}
+      <Stack gap={4}>
+        <Stack gap={1}>
+          <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='space-between'
+          >
+            <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+              Ukupno stanje:
+            </Typography>
           </Stack>
+          {somethingIsLoading && <Skeleton variant='rounded' height={56} />}
+          {!somethingIsLoading && data && (
+            <Stack direction='row' gap={4} sx={{ width: '100%' }}>
+              {data.map((item) => (
+                <Stack key={item.cupTypeId} sx={{ width: '100%' }} gap={1}>
+                  <Stack direction='row' sx={{ width: '100%' }}>
+                    <Stack
+                      gap={1}
+                      sx={{ width: ORDER_WIDTH }}
+                      alignItems='center'
+                    >
+                      <Typography>{item.label}:</Typography>
+                      <Typography>{item.totalCups} kom. </Typography>
+                    </Stack>
+                    <Stack sx={{ width: ORDER_WIDTH }} alignItems='center'>
+                      <Typography textAlign='center' sx={{ flex: 1 }}>
+                        Približna vrednost:
+                      </Typography>
+                      <FormattedPrice
+                        price={item.totalCups * (tomatoPrice?.value || 1)}
+                      />
+                    </Stack>
+                  </Stack>
+                  <Divider />
+                </Stack>
+              ))}
+            </Stack>
+          )}
         </Stack>
       </Stack>
     </Container>
