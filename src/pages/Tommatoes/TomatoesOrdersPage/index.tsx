@@ -11,6 +11,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routesTomatoes } from '../../../constants/routes';
 import CreateTomatoOrder from './form/CreateTomatoOrder';
 import TomatoTransactionCard from './TomatoOrderCard';
+import { Skeleton } from '@mui/material';
 
 export default function TomatoesOrdersPage() {
   const [value, setValue] = useState<number>(0);
@@ -54,6 +55,19 @@ export default function TomatoesOrdersPage() {
         </TabList>
         <TabPanel value={0}>
           <Grid container spacing={3}>
+            {isFetching && (
+              <>
+                <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+                  <Skeleton variant='rounded' height={200} />
+                </Grid>
+                <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+                  <Skeleton variant='rounded' height={200} />
+                </Grid>
+                <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+                  <Skeleton variant='rounded' height={200} />
+                </Grid>
+              </>
+            )}
             {!isFetching &&
               data?.map((transaction) => (
                 <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
@@ -69,7 +83,7 @@ export default function TomatoesOrdersPage() {
         <TabPanel value={1}>Ce bude tabela</TabPanel>
       </TabContext>
 
-      {!data?.length && 'Još nema serija'}
+      {!data?.length && !isFetching && 'Još nema serija'}
 
       <GeneralDialog
         open={open}
