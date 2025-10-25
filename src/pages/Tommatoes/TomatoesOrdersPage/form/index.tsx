@@ -1,20 +1,18 @@
 import { Button, Skeleton, Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Divider } from '@mui/material';
 
 import FormProvider from '../../../../components/FormProvider';
 import RHFTextInput from '../../../../components/RHFTextInput';
 import RHFSelectInput, {
   MenuItemType,
 } from '../../../../components/RHFSelectInput';
-import { useEffect } from 'react';
-import { TransactionStatusStrings } from '../../../../types/transactions';
-import { Divider } from '@mui/material';
 
 export type FormData = {
   cupTypeId: number;
   totalExpenses: number;
   numOfCups: number;
-  status: TransactionStatusStrings;
 };
 
 type Props = {
@@ -22,7 +20,6 @@ type Props = {
   values?: FormData;
   isLoading: boolean;
   mappedTomatoCups: MenuItemType[];
-  mappedStatus: MenuItemType[];
   submitIsLoading: boolean;
 };
 
@@ -31,7 +28,6 @@ export default function TomatoesOrderForm({
   isLoading,
   values,
   mappedTomatoCups,
-  mappedStatus,
   submitIsLoading,
 }: Props) {
   const methods = useForm<FormData>({
@@ -39,7 +35,6 @@ export default function TomatoesOrderForm({
       cupTypeId: values?.cupTypeId || 0,
       totalExpenses: values?.totalExpenses || 200,
       numOfCups: values?.numOfCups || 0,
-      status: values?.status || TransactionStatusStrings.SOLD,
     },
   });
 
@@ -58,11 +53,6 @@ export default function TomatoesOrderForm({
       {!isLoading && (
         <Stack gap={3}>
           <Stack gap={2}>
-            <RHFSelectInput
-              name='status'
-              label='Transakcija'
-              menuItems={mappedStatus}
-            />
             <RHFSelectInput
               name='cupTypeId'
               label='Veličina teglice'

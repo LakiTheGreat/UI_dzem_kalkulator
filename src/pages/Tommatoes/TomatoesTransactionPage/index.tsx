@@ -5,6 +5,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routesTomatoes } from '../../../constants/routes';
 import { TomatoParams } from '../../../types/tomatos';
 import { useState } from 'react';
+import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
 
 export default function TomatoesTransactionPage() {
   const defaultParams: TomatoParams = {
@@ -15,7 +16,10 @@ export default function TomatoesTransactionPage() {
     ...defaultParams,
   };
 
+  const mappedStatus = mapAllTransactionStatusesToMenuItems();
+
   const [params, setParams] = useState<TomatoParams>(param);
+
   return (
     <Container maxWidth='sm'>
       <HeaderBreadcrumbs

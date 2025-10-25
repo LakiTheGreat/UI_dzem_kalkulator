@@ -10,10 +10,7 @@ import {
 import { useApiErrorNotification } from '../../../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../../../hooks/useApiSuccessNotification';
 import { UnsavedTomatoOrder } from '../../../../types/tomatos';
-import {
-  mapAllTransactionStatusesToMenuItems,
-  mapTomatoCupsToMenuItems,
-} from '../../../../utils/mapToMenuItems';
+import { mapTomatoCupsToMenuItems } from '../../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../../utils/toastify/setToastIsLoading';
 
 type Props = {
@@ -30,7 +27,6 @@ export default function CreateTomatoOrder({ setOpen }: Props) {
     useCreateTomatoOrderMutation();
 
   const mappedTomatoCups = mapTomatoCupsToMenuItems(tomatoCups);
-  const mappedStatus = mapAllTransactionStatusesToMenuItems();
 
   const isLoading = tomatoCupsIsLoading;
 
@@ -67,7 +63,6 @@ export default function CreateTomatoOrder({ setOpen }: Props) {
           onSubmit={handleSubmit}
           isLoading={isLoading}
           mappedTomatoCups={mappedTomatoCups}
-          mappedStatus={mappedStatus}
           submitIsLoading={createIsLoading}
         />
       </Stack>
