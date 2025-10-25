@@ -9,7 +9,6 @@ import { Id } from 'react-toastify';
 import {
   useDeleteTomatoOrderMutation,
   useGetAllTomatoOrderQuery,
-  useUpdateTomatoOrderMutation,
 } from '../../../api/tomatoesApi';
 import GeneralDialog from '../../../components/GeneralDialog';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
@@ -20,6 +19,7 @@ import useConfirmDialog from '../../../hooks/useConfirmDialog';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import CreateTomatoOrder from './form/CreateTomatoOrder';
 import EditTomatoOrder from './form/EditTomatoOrder';
+import TomatoOrdersTable from './table/TomatoOrdersTable';
 import TomatoTransactionCard from './TomatoOrderCard';
 
 export default function TomatoesOrdersPage() {
@@ -121,7 +121,9 @@ export default function TomatoesOrdersPage() {
               ))}
           </Grid>
         </TabPanel>
-        <TabPanel value={1}>Ce bude tabela</TabPanel>
+        <TabPanel value={1}>
+          <TomatoOrdersTable />
+        </TabPanel>
       </TabContext>
 
       {!data?.length && !isFetching && 'Još nema serija'}

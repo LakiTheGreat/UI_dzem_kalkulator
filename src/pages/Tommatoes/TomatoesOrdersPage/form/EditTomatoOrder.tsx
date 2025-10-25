@@ -1,19 +1,19 @@
 import { Container, Skeleton, Stack } from '@mui/material';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Id } from 'react-toastify';
 
 import TomatoesOrderForm, { FormData } from '.';
 import {
-  useCreateTomatoOrderMutation,
   useGetTomatoCupsQuery,
   useGetTomatoOrderByIdQuery,
+  useUpdateTomatoOrderMutation,
 } from '../../../../api/tomatoesApi';
 import { useApiErrorNotification } from '../../../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../../../hooks/useApiSuccessNotification';
 import { TomatoOrder } from '../../../../types/tomatos';
 import { mapTomatoCupsToMenuItems } from '../../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../../utils/toastify/setToastIsLoading';
-import { skipToken } from '@reduxjs/toolkit/query';
 
 type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -31,7 +31,7 @@ export default function EditTomatoOrder({ setOpen, orderId }: Props) {
     useGetTomatoCupsQuery();
 
   const [updateTomatoOrder, { data, error, isLoading: updateOrderIsLoading }] =
-    useCreateTomatoOrderMutation();
+    useUpdateTomatoOrderMutation();
 
   const mappedTomatoCups = mapTomatoCupsToMenuItems(tomatoCups);
 

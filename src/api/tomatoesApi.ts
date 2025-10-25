@@ -1,5 +1,10 @@
 import { api } from '.';
-import { TomatoCup, TomatoOrder, UnsavedTomatoOrder } from '../types/tomatos';
+import {
+  TomatoCup,
+  TomatoOrder,
+  TomatoTotal,
+  UnsavedTomatoOrder,
+} from '../types/tomatos';
 
 const tomatoApiUrl = '/tomatoes';
 
@@ -41,6 +46,16 @@ const tomatoesApiEndpoints = api.injectEndpoints({
 
       providesTags: ['TomatoCups'],
     }),
+
+    getTomatoTotals: build.query<TomatoTotal[], void>({
+      query: () => {
+        return {
+          url: `${tomatoApiUrl}/totals`,
+        };
+      },
+
+      providesTags: ['TomatoOrder'],
+    }),
     createTomatoOrder: build.mutation<TomatoOrder, UnsavedTomatoOrder>({
       query: (body) => ({
         url: `${tomatoApiUrl}`,
@@ -51,7 +66,7 @@ const tomatoesApiEndpoints = api.injectEndpoints({
     }),
     updateTomatoOrder: build.mutation<TomatoOrder, TomatoOrder>({
       query: (body) => ({
-        url: `${tomatoApiUrl}`,
+        url: `${tomatoApiUrl}/${body.id}`,
         method: 'PUT',
         body,
       }),
@@ -71,6 +86,7 @@ const tomatoesApiEndpoints = api.injectEndpoints({
 });
 
 export const {
+  useGetTomatoTotalsQuery,
   useDeleteTomatoOrderMutation,
   useGetTomatoOrderByIdQuery,
   useGetTomatoCupsQuery,

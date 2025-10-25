@@ -3,6 +3,12 @@ export type TomatoCup = {
   label: string;
 };
 
+export type TomatoTotal = {
+  cupTypeId: number;
+  label: string;
+  totalCups: number;
+};
+
 export type UnsavedTomatoOrder = {
   cupTypeId: number;
   numOfCups: number;
