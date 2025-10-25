@@ -49,7 +49,7 @@ export default function TomatoesOrderForm({
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      {isLoading && <Skeleton height={390} variant='rounded' />}
+      {isLoading && <Skeleton height={294} variant='rounded' />}
       {!isLoading && (
         <Stack gap={3}>
           <Stack gap={2}>
