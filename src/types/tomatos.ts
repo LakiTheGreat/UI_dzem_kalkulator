@@ -11,8 +11,9 @@ export type UnsavedTomatoOrder = {
 
 export type TomatoOrder = UnsavedTomatoOrder & {
   id: number;
-  label: string;
-  createdAt: string;
+  label?: string;
+  createdAt?: string;
+  isDeleted?: boolean;
 };
 
 export type TomatoParams = {

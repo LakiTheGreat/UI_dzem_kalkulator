@@ -2,30 +2,68 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { Container, Grid, IconButton, Tab } from '@mui/material';
+import { Container, Grid, IconButton, Skeleton, Tab } from '@mui/material';
 import { useState } from 'react';
+import { Id } from 'react-toastify';
 
-import { useGetAllTomatoOrderQuery } from '../../../api/tomatoesApi';
+import {
+  useDeleteTomatoOrderMutation,
+  useGetAllTomatoOrderQuery,
+  useUpdateTomatoOrderMutation,
+} from '../../../api/tomatoesApi';
 import GeneralDialog from '../../../components/GeneralDialog';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routesTomatoes } from '../../../constants/routes';
+import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
+import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
+import useConfirmDialog from '../../../hooks/useConfirmDialog';
+import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import CreateTomatoOrder from './form/CreateTomatoOrder';
+import EditTomatoOrder from './form/EditTomatoOrder';
 import TomatoTransactionCard from './TomatoOrderCard';
-import { Skeleton } from '@mui/material';
 
 export default function TomatoesOrdersPage() {
+  const [toastId, setToastId] = useState<Id>('');
+  const [orderId, setOrderId] = useState<number | null>(null);
+  const [getConfirmation, Confirmation] = useConfirmDialog();
+
   const [value, setValue] = useState<number>(0);
-  const [open, setOpen] = useState<boolean>(false);
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
 
   const { data, isFetching } = useGetAllTomatoOrderQuery();
+  const [deleteTomatoOrder, { data: deleteData, error: deleteError }] =
+    useDeleteTomatoOrderMutation();
 
-  const handleDelete = (id: number) => {
-    console.log(id);
+  const handleDelete = async (id: number) => {
+    const isConfirmed = await getConfirmation({
+      title: 'Jesi li siguran da želiš da obrišeš ovu transakciju?',
+      contentSubtitle: 'Posle nema nazad (ima)!',
+      confirmLabel: 'Da',
+    });
+
+    const req = {
+      isDeleted: true,
+      id,
+    };
+
+    if (isConfirmed) {
+      deleteTomatoOrder(req);
+      setToastId(setToastIsLoading(`Sačekaj....`));
+    }
   };
 
-  const handleEdit = (id: number) => {
-    console.log(id);
-  };
+  useApiSuccessNotification({
+    data: deleteData,
+    message: 'Serija uspešno obrisana',
+    toastId,
+  });
+
+  useApiErrorNotification({
+    error: deleteError,
+    toastId,
+  });
+
   return (
     <Container>
       <HeaderBreadcrumbs
@@ -37,7 +75,7 @@ export default function TomatoesOrdersPage() {
           },
         ]}
         action={
-          <IconButton color='primary' onClick={() => setOpen(true)}>
+          <IconButton color='primary' onClick={() => setOpenCreate(true)}>
             <AddCircleOutlineIcon fontSize='large' />
           </IconButton>
         }
@@ -74,7 +112,10 @@ export default function TomatoesOrdersPage() {
                   <TomatoTransactionCard
                     order={transaction}
                     handleDelete={handleDelete}
-                    handleEdit={handleEdit}
+                    handleEdit={(id) => {
+                      setOrderId(id);
+                      setOpenEdit(true);
+                    }}
                   />
                 </Grid>
               ))}
@@ -86,13 +127,25 @@ export default function TomatoesOrdersPage() {
       {!data?.length && !isFetching && 'Još nema serija'}
 
       <GeneralDialog
-        open={open}
-        handleClose={() => setOpen(false)}
+        open={openCreate}
+        handleClose={() => setOpenCreate(false)}
         maxWidth='xs'
         title={'Napravi turu čeri paradajza'}
       >
-        <CreateTomatoOrder setOpen={setOpen} />
+        <CreateTomatoOrder setOpen={setOpenCreate} />
       </GeneralDialog>
+      <GeneralDialog
+        open={openEdit}
+        handleClose={() => {
+          setOpenEdit(false);
+          setOrderId(null);
+        }}
+        maxWidth='xs'
+        title={'Izmeni turu čeri paradajza'}
+      >
+        <EditTomatoOrder setOpen={setOpenEdit} orderId={orderId} />
+      </GeneralDialog>
+      <Confirmation />
     </Container>
   );
 }
