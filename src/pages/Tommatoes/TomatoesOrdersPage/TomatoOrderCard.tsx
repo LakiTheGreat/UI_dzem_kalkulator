@@ -4,14 +4,16 @@ import {
   Card,
   CardActions,
   CardContent,
+  Divider,
   IconButton,
   Stack,
   Typography,
 } from '@mui/material';
 
-import { ORDER_WIDTH } from '../../../constants';
+import { ORDER_WIDTH_55 } from '../../../constants';
 import { formatLocalDateTime } from '../../../utils/formatLocalDateTime';
 import { TomatoOrder } from '../../../types/tomatos';
+import FormattedPrice from '../../../utils/FormattedPrice';
 
 type Props = {
   order: TomatoOrder;
@@ -37,14 +39,17 @@ export default function TomatoOrderCard({
         <CardContent>
           <Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>Vreme unosa:</Typography>
+              <Typography sx={{ width: ORDER_WIDTH_55 }}>
+                Vreme unosa:
+              </Typography>
               <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: ORDER_WIDTH }}>Broj teglica:</Typography>
+              <Typography sx={{ width: ORDER_WIDTH_55 }}>
+                Broj teglica:
+              </Typography>
               <Typography
                 sx={{
-                  width: ORDER_WIDTH,
                   fontWeight: 'bold',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
@@ -53,6 +58,22 @@ export default function TomatoOrderCard({
               >
                 {order.numOfCups}
               </Typography>
+            </Stack>
+
+            <Divider sx={{ my: 1 }} />
+
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH_55 }}>
+                Troškovi po teglici:
+              </Typography>
+              <FormattedPrice price={order.totalExpenses} />
+            </Stack>
+
+            <Stack direction='row'>
+              <Typography sx={{ width: ORDER_WIDTH_55 }}>
+                Ukupni troškovi:
+              </Typography>
+              <FormattedPrice price={order.numOfCups * order.totalExpenses} />
             </Stack>
           </Stack>
         </CardContent>

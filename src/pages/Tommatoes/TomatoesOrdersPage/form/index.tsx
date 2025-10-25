@@ -69,7 +69,7 @@ export default function TomatoesOrderForm({
           <RHFTextInput name='numOfCups' label='Broj teglica' type='number' />
           <RHFTextInput
             name='totalExpenses'
-            label='Ukupni troškovi'
+            label='Troškovi po teglici'
             type='number'
           />
           <Button

@@ -31,6 +31,8 @@ export const AppName = 'Džemulator';
 export const TOASTIFY_AUTO_CLOSE_TIME = 3000;
 
 export const ORDER_WIDTH = '50%';
+export const ORDER_WIDTH_55 = '55%';
+export const ORDER_WIDTH_60 = '60%';
 
 export const YEARS = [
   {
