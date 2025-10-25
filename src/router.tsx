@@ -86,6 +86,7 @@ const router = createBrowserRouter([
             path: routesTomatoes.orders,
             element: <TomatoesOrdersPage />,
           },
+
           {
             path: routesTomatoes.inventory,
             element: <TomatoesInventoryPage />,

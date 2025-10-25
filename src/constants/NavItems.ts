@@ -17,18 +17,21 @@ import {
 
 export const NavItems: NavItem[] = [
   {
+    id: 1,
     label: 'Proizvodne serije',
     icon: FolderCopyIcon,
     to: routesJam.orders,
     groupTitle: 'Džemovi',
   },
   {
+    id: 2,
     label: 'Inventar',
     icon: InventoryIcon,
     to: routesJam.inventory,
     groupTitle: 'Džemovi',
   },
   {
+    id: 3,
     label: 'Transakcije',
     icon: JarIcon,
     to: routesJam.transactions,
@@ -38,18 +41,21 @@ export const NavItems: NavItem[] = [
 
   /////////////////////////////////////////////
   {
-    label: 'Transakcije',
+    id: 4,
+    label: 'Proizvodne serije',
     icon: FolderCopyIcon,
     to: routesTomatoes.orders,
     groupTitle: 'Čeri paradajz',
   },
   {
+    id: 5,
     label: 'Inventar',
     icon: InventoryIcon,
     to: routesTomatoes.inventory,
     groupTitle: 'Čeri paradajz',
   },
   {
+    id: 6,
     label: 'Transakcije',
     icon: TomatoIcon,
     to: routesTomatoes.transactions,
@@ -58,6 +64,7 @@ export const NavItems: NavItem[] = [
   },
   /////////////////////////////////////////////
   {
+    id: 7,
     label: 'Transakcije',
     icon: LocalFloristIcon,
     to: routesBouquets.root,
@@ -66,6 +73,7 @@ export const NavItems: NavItem[] = [
   },
   /////////////////////////////////////////////
   {
+    id: 8,
     label: 'Kalkulator',
     icon: CalculateIcon,
     to: routesGeneralCalculator.root,
@@ -74,6 +82,7 @@ export const NavItems: NavItem[] = [
   },
   /////////////////////////////////////////////
   {
+    id: 9,
     label: 'Podešavanja',
     icon: SettingsIcon,
     to: routesSettings.root,

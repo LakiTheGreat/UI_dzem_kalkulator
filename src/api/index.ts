@@ -29,6 +29,8 @@ export const api = createApi({
     'Inventory',
     'Transactions',
     'Bouquet',
+    'TomatoCups',
+    'TomatoOrder',
   ],
   endpoints: (build) => ({}),
 });

@@ -2,6 +2,7 @@ import { MenuItemType } from '../components/RHFSelectInput';
 import { BouquetTransactionEnum } from '../types/bouguets';
 import { Cup, CupWithPriceData } from '../types/cups';
 import { Fruit } from '../types/fruits';
+import { TomatoCup } from '../types/tomatos';
 import { TransactionStatusStrings } from '../types/transactions';
 import getStatusTranslation from './getStatusTranslation';
 
@@ -59,4 +60,17 @@ export const mapBouquetTransactionStatusesToMenuItems = (): MenuItemType[] => {
     value: status,
     menuItemLabel: getStatusTranslation(status),
   }));
+};
+
+export const mapTomatoCupsToMenuItems = (
+  cups: TomatoCup[] | undefined
+): MenuItemType[] => {
+  if (!cups) return [];
+  return cups.map(
+    (cup: TomatoCup): MenuItemType => ({
+      id: cup.id,
+      value: cup.id,
+      menuItemLabel: cup.label,
+    })
+  );
 };

@@ -1,0 +1,53 @@
+import { api } from '.';
+import { TomatoCup, TomatoOrder, UnsavedTomatoOrder } from '../types/tomatos';
+
+const tomatoApiUrl = '/tomatoes';
+
+const tomatoesApiEndpoints = api.injectEndpoints({
+  endpoints: (build) => ({
+    getAllTomatoOrder: build.query<TomatoOrder[], void>({
+      query: () => {
+        // const params = new URLSearchParams();
+
+        // if (orderTypeId && orderTypeId > 0) {
+        //   params.set('orderTypeId', String(orderTypeId));
+        // }
+
+        // if (transactionStatus && transactionStatus !== 'ALL') {
+        //   params.set('transactionStatus', String(transactionStatus));
+        // }
+        return {
+          // url: `${bouquetsApiUrl}`,
+          url: `${tomatoApiUrl}`,
+        };
+      },
+
+      providesTags: ['TomatoOrder'],
+    }),
+    getTomatoCups: build.query<TomatoCup[], void>({
+      query: () => {
+        return {
+          url: `${tomatoApiUrl}/cups`,
+        };
+      },
+
+      providesTags: ['TomatoCups'],
+    }),
+    createTomatoOrder: build.mutation<TomatoOrder, UnsavedTomatoOrder>({
+      query: (body) => ({
+        url: `${tomatoApiUrl}`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['TomatoOrder'],
+    }),
+  }),
+
+  overrideExisting: false,
+});
+
+export const {
+  useGetTomatoCupsQuery,
+  useCreateTomatoOrderMutation,
+  useGetAllTomatoOrderQuery,
+} = tomatoesApiEndpoints;

@@ -75,7 +75,7 @@ export default function MobileNav() {
           <Stack alignItems='center' sx={{ pt: 1 }}>
             <List sx={{ px: 1 }}>
               {Object.entries(GroupedNavItems).map(([groupTitle, items]) => (
-                <Stack key={groupTitle}>
+                <Stack key={items[0].id}>
                   {groupTitle !== '__ungrouped' && (
                     <Typography
                       variant='subtitle2'
@@ -85,7 +85,7 @@ export default function MobileNav() {
                     </Typography>
                   )}
                   {items.map((navItem) => (
-                    <Stack key={navItem.label}>
+                    <Stack key={navItem.id}>
                       <NavItemButton
                         navItem={navItem}
                         open={open}

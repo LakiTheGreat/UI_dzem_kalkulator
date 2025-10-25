@@ -192,7 +192,7 @@ export default function DesktopNav() {
         <Divider />
         <List sx={{ px: 1, mt: 1 }}>
           {Object.entries(GroupedNavItems).map(([groupTitle, items]) => (
-            <Stack key={groupTitle}>
+            <Stack key={items[0].id}>
               {groupTitle !== '__ungrouped' && open && (
                 <Typography
                   variant='subtitle2'
@@ -218,7 +218,7 @@ export default function DesktopNav() {
                 </Typography>
               )}
               {items.map((navItem) => (
-                <Stack key={navItem.label}>
+                <Stack key={navItem.id}>
                   <Tooltip
                     arrow
                     title={navItem.label}

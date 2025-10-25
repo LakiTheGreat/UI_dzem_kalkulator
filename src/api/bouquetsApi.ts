@@ -1,5 +1,6 @@
 import { api } from '.';
-import { BouquetFormData } from '../pages/BouquetPage/form';
+import { BouquetFormData } from '../pages/Bouquets/BouquetPage/form';
+
 import { BouquetParams, BouquetTransaction } from '../types/bouguets';
 
 const bouquetsApiUrl = '/bouquets';
