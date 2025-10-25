@@ -30,13 +30,9 @@ export default function ConstantsSettings() {
           <Typography variant='h6'>Konstante</Typography>
 
           <Stack>
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-around'
-            >
+            <Stack direction='row' alignItems='center' gap={1}>
               <Stack direction='row' gap={1}>
-                <Typography>Ostali troškovi: </Typography>
+                <Typography sx={{ width: 125 }}>Ostali troškovi: </Typography>
                 <Typography sx={{ fontWeight: 'bold' }}>
                   {otherExpansesMargin?.label}
                 </Typography>
@@ -51,13 +47,9 @@ export default function ConstantsSettings() {
                 <EditIcon />
               </IconButton>
             </Stack>
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-around'
-            >
+            <Stack direction='row' alignItems='center' gap={1}>
               <Stack direction='row' gap={1}>
-                <Typography>Profitna marža: </Typography>
+                <Typography sx={{ width: 125 }}>Profitna marža: </Typography>
                 <Typography sx={{ fontWeight: 'bold' }}>
                   {profitMargin?.label}
                 </Typography>

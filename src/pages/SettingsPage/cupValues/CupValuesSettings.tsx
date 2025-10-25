@@ -62,12 +62,7 @@ export default function CupValuesSettings() {
                 ))}
               </Select>
             </FormControl>
-            <Stack
-              direction='row'
-              gap={2}
-              alignItems='center'
-              justifyContent='space-around'
-            >
+            <Stack direction='row' gap={2} alignItems='center'>
               <Stack
                 direction={isMdDown ? 'column' : 'row'}
                 gap={1}
