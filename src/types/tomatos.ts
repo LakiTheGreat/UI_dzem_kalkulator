@@ -1,3 +1,5 @@
+import { TransactionStatusStrings } from './transactions';
+
 export type TomatoCup = {
   id: number;
   label: string;
@@ -7,6 +9,8 @@ export type TomatoTotal = {
   cupTypeId: number;
   label: string;
   totalCups: number;
+  totalOrdered: number;
+  totalUsedInTransactions: number;
 };
 
 export type UnsavedTomatoOrder = {
@@ -24,4 +28,19 @@ export type TomatoOrder = UnsavedTomatoOrder & {
 
 export type TomatoParams = {
   transactionStatus: string | null;
+};
+
+export type UnsavedTomatoTransaction = {
+  note: string;
+  status: TransactionStatusStrings;
+  cupTypeId: number;
+  numOfCups: number;
+  pricePerCup: number;
+};
+
+export type TomatoTransaction = UnsavedTomatoTransaction & {
+  id: number;
+  createdAt: string;
+  isDeleted?: boolean;
+  label: string;
 };

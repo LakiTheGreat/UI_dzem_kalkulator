@@ -1,11 +1,14 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Container, IconButton } from '@mui/material';
+import { Container, Grid, IconButton, Typography } from '@mui/material';
+import { useState } from 'react';
 
+import { useGetAllTomatoTransactionQuery } from '../../../api/tomatoesApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routesTomatoes } from '../../../constants/routes';
 import { TomatoParams } from '../../../types/tomatos';
-import { useState } from 'react';
 import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
+
+import TomatoTransactionCard from './TomatoTransactionCard';
 
 export default function TomatoesTransactionPage() {
   const defaultParams: TomatoParams = {
@@ -16,9 +19,19 @@ export default function TomatoesTransactionPage() {
     ...defaultParams,
   };
 
+  const [params, setParams] = useState<TomatoParams>(param);
+
+  const { data, isFetching } = useGetAllTomatoTransactionQuery(params);
+
   const mappedStatus = mapAllTransactionStatusesToMenuItems();
 
-  const [params, setParams] = useState<TomatoParams>(param);
+  const handleEdit = (id: number) => {
+    console.log(id);
+  };
+
+  const handleDelete = (id: number) => {
+    console.log(id);
+  };
 
   return (
     <Container maxWidth='sm'>
@@ -36,7 +49,24 @@ export default function TomatoesTransactionPage() {
           </IconButton>
         }
       />
-      TRANSACKIJE YA ČERI PARADAJZ
+      <Grid container spacing={3}>
+        {!isFetching &&
+          data &&
+          data.map((transaction) => (
+            <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
+              <TomatoTransactionCard
+                transaction={transaction}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            </Grid>
+          ))}
+        {data?.length === 0 && (
+          <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
+            Nema još ništa.
+          </Typography>
+        )}
+      </Grid>
     </Container>
   );
 }
