@@ -82,9 +82,13 @@ export default function FruitsSettings() {
     <>
       {isLoading && <Skeleton variant='rounded' height={131} />}
       {!isLoading && data && (
-        <Stack gap={3}>
-          <Stack direction='row' justifyContent='space-between'>
-            <Typography variant='h5'>Voće</Typography>
+        <Stack gap={1}>
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            <Typography variant='h6'>Voće</Typography>
 
             <IconButton color='primary' onClick={() => setOpenCreate(true)}>
               <AddCircleOutlineIcon fontSize='large' />

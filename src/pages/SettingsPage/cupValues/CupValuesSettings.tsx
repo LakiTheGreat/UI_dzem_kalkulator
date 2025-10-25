@@ -39,14 +39,14 @@ export default function CupValuesSettings() {
         <Skeleton variant='rounded' height={isMdDown ? 128 : 112} />
       )}
       {!isLoading && data && (
-        <Stack gap={3}>
+        <Stack gap={2}>
           <Stack direction='row' justifyContent='space-between'>
-            <Typography variant='h5'>Prodajna cena džema po teglici</Typography>
+            <Typography variant='h6'>Prodajna cena džema po teglici</Typography>
             {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
               <AddCircleOutlineIcon fontSize='large' />
             </IconButton> */}
           </Stack>
-          <Stack gap={4} direction='row'>
+          <Stack gap={4}>
             <FormControl fullWidth sx={{ minWidth: 120 }}>
               <InputLabel>Izaberi teglicu</InputLabel>
               <Select
@@ -66,7 +66,7 @@ export default function CupValuesSettings() {
               direction='row'
               gap={2}
               alignItems='center'
-              justifyContent='space-between'
+              justifyContent='space-around'
             >
               <Stack
                 direction={isMdDown ? 'column' : 'row'}

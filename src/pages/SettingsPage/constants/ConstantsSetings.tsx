@@ -26,14 +26,14 @@ export default function ConstantsSettings() {
     <>
       {isLoading && <Skeleton variant='rounded' height={131} />}
       {!isLoading && profitMargin && otherExpansesMargin && (
-        <Stack gap={2}>
-          <Typography variant='h5'>Konstante</Typography>
+        <Stack gap={1}>
+          <Typography variant='h6'>Konstante</Typography>
 
           <Stack>
             <Stack
               direction='row'
               alignItems='center'
-              justifyContent='space-between'
+              justifyContent='space-around'
             >
               <Stack direction='row' gap={1}>
                 <Typography>Ostali troškovi: </Typography>
@@ -54,7 +54,7 @@ export default function ConstantsSettings() {
             <Stack
               direction='row'
               alignItems='center'
-              justifyContent='space-between'
+              justifyContent='space-around'
             >
               <Stack direction='row' gap={1}>
                 <Typography>Profitna marža: </Typography>

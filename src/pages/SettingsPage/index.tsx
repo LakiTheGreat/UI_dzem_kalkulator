@@ -1,4 +1,13 @@
-import { Container, Divider, Stack } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Container,
+  Divider,
+  Stack,
+  Typography,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { routes } from '../../constants/routes';
@@ -19,24 +28,53 @@ export default function Settings() {
           },
         ]}
       />
-      <Stack gap={3}>
-        <Divider />
 
-        <FruitsSettings />
+      <Stack>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography
+              variant='subtitle1'
+              sx={{ fontWeight: 'bold', fontSize: 20 }}
+            >
+              Džemići
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Stack gap={3}>
+              <Divider />
 
-        <Divider />
+              <FruitsSettings />
 
-        <CupCostsSettings />
+              <Divider />
 
-        <Divider />
+              <CupCostsSettings />
 
-        <CupValuesSettings />
+              <Divider />
 
-        <Divider />
+              <CupValuesSettings />
 
-        <ConstantsSettings />
+              <Divider />
 
-        <Divider />
+              <ConstantsSettings />
+            </Stack>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography
+              variant='subtitle1'
+              sx={{ fontWeight: 'bold', fontSize: 20 }}
+            >
+              Čeri paradajz
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Stack gap={3} sx={{ width: '100%' }}>
+              <Divider />
+              PLACEHOLDER
+            </Stack>
+          </AccordionDetails>
+        </Accordion>
       </Stack>
     </Container>
   );

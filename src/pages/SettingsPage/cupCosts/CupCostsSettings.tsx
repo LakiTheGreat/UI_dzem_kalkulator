@@ -40,14 +40,14 @@ export default function CupCostsSettings() {
         <Skeleton variant='rounded' height={isMdDown ? 128 : 112} />
       )}
       {!isLoading && data && (
-        <Stack gap={3}>
+        <Stack gap={2}>
           <Stack direction='row' justifyContent='space-between'>
-            <Typography variant='h5'>Nabavna cena teglica</Typography>
+            <Typography variant='h6'>Nabavna cena teglica</Typography>
             {/* <IconButton color='primary' onClick={() => setOpenCreate(true)}>
                 <AddCircleOutlineIcon fontSize='large' />
               </IconButton> */}
           </Stack>
-          <Stack gap={4} direction='row'>
+          <Stack gap={4}>
             <FormControl fullWidth sx={{ minWidth: 120 }}>
               <InputLabel>Izaberi teglicu</InputLabel>
               <Select
@@ -67,20 +67,14 @@ export default function CupCostsSettings() {
               direction='row'
               gap={2}
               alignItems='center'
-              justifyContent='space-between'
+              justifyContent='space-around'
             >
               <Stack
                 direction={isMdDown ? 'column' : 'row'}
                 gap={1}
                 alignItems='center'
               >
-                <Typography
-                  sx={{
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Nabavna cena teglice:
-                </Typography>
+                <Typography>Nabavna cena teglice:</Typography>
                 <FormattedPrice
                   price={
                     data.find((c) => c.id === Number(selectedId))?.value || 0
