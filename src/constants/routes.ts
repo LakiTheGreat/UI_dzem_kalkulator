@@ -35,6 +35,7 @@ export const routesGeneralCalculator = {
 
 export const routesTomatoes = {
   root: `${tomatoes}`,
+  orders: `${tomatoes}/orders`,
   inventory: `${tomatoes}/inventory`,
   transactions: `${tomatoes}/transactions`,
 };

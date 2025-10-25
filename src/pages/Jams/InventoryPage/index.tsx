@@ -34,7 +34,7 @@ export default function InventoryPage() {
         heading={'Inventar'}
         links={[
           {
-            name: 'Pregled',
+            name: 'Džemovi',
             href: routesJam.inventory,
           },
         ]}

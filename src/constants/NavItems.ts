@@ -38,6 +38,12 @@ export const NavItems: NavItem[] = [
 
   /////////////////////////////////////////////
   {
+    label: 'Transakcije',
+    icon: FolderCopyIcon,
+    to: routesTomatoes.orders,
+    groupTitle: 'Čeri paradajz',
+  },
+  {
     label: 'Inventar',
     icon: InventoryIcon,
     to: routesTomatoes.inventory,

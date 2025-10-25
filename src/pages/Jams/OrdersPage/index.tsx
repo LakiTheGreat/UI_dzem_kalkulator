@@ -108,7 +108,7 @@ export default function OrdersPage() {
         heading={'Proizvodne serije'}
         links={[
           {
-            name: 'Pregled',
+            name: 'Džemovi',
             href: routesJam.orders,
           },
         ]}

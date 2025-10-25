@@ -26,6 +26,7 @@ import LoginPage from './pages/Other/LoginPage';
 import SettingsPage from './pages/Other/SettingsPage';
 import TomatoesInventoryPage from './pages/Tommatoes/TomatoesInventoryPage';
 import TomatoesTransactionPage from './pages/Tommatoes/TomatoesTransactionPage';
+import TomatoesOrdersPage from './pages/Tommatoes/TomatoesOrdersPage';
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             element: <EditOrder />,
           },
           ///   TOMATOES   ////////////////////////////////////////////////////////////////////
+          {
+            path: routesTomatoes.orders,
+            element: <TomatoesOrdersPage />,
+          },
           {
             path: routesTomatoes.inventory,
             element: <TomatoesInventoryPage />,

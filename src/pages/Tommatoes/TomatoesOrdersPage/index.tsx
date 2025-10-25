@@ -1,14 +1,14 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Container, IconButton } from '@mui/material';
+import { Container, IconButton, Stack } from '@mui/material';
 
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routesTomatoes } from '../../../constants/routes';
 
-export default function TomatoesTransactionPage() {
+export default function TomatoesOrdersPage() {
   return (
-    <Container maxWidth='sm'>
+    <Container>
       <HeaderBreadcrumbs
-        heading={'Transakcije'}
+        heading={'Proizvodne serije'}
         links={[
           {
             name: 'Čeri paradajz',
@@ -21,7 +21,9 @@ export default function TomatoesTransactionPage() {
           </IconButton>
         }
       />
-      TRANSACKIJE YA ČERI PARADAJZ
+      <Stack gap={3}>
+        <Container maxWidth='sm'>ORDERS</Container>
+      </Stack>
     </Container>
   );
 }
