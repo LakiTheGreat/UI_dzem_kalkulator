@@ -1,10 +1,11 @@
 import CalculateIcon from '@mui/icons-material/Calculate';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
+import SettingsIcon from '@mui/icons-material/Settings';
 
+import JarIcon from '../components/customIcons/JarIcon';
+import TomatoIcon from '../components/customIcons/TomatoIcon';
 import { NavItem } from '../types/nav';
 import { routes } from './routes';
 
@@ -23,11 +24,27 @@ export const NavItems: NavItem[] = [
   },
   {
     label: 'Transakcije',
-    icon: PointOfSaleIcon,
+    icon: JarIcon,
     to: routes.transactions,
     addDividerAfter: true,
     groupTitle: 'Džemovi',
   },
+
+  /////////////////////////////////////////////
+  {
+    label: 'Inventar',
+    icon: InventoryIcon,
+    to: routes.general_calculator,
+    groupTitle: 'Čeri paradajz',
+  },
+  {
+    label: 'Transakcije',
+    icon: TomatoIcon,
+    to: routes.general_calculator,
+    addDividerAfter: true,
+    groupTitle: 'Čeri paradajz',
+  },
+  /////////////////////////////////////////////
   {
     label: 'Transakcije',
     icon: LocalFloristIcon,
@@ -35,6 +52,7 @@ export const NavItems: NavItem[] = [
     addDividerAfter: true,
     groupTitle: 'Buketi',
   },
+  /////////////////////////////////////////////
   {
     label: 'Kalkulator',
     icon: CalculateIcon,
@@ -42,6 +60,7 @@ export const NavItems: NavItem[] = [
     addDividerAfter: true,
     groupTitle: 'Kalkulator cene',
   },
+  /////////////////////////////////////////////
   {
     label: 'Podešavanja',
     icon: SettingsIcon,

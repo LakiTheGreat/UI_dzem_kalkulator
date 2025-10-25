@@ -64,7 +64,7 @@ export default function NavItemButton({
             },
           ]}
         >
-          {<navItem.icon />}
+          {<navItem.icon color='inherit' />}
         </ListItemIcon>
         <ListItemText
           primary={label}
