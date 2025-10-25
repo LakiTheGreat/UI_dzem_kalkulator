@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router';
 
 import { useAppSelector } from '../../hooks/reduxStoreHooks';
-import { routes } from '../../constants/routes';
+import { routesJam } from '../../constants/routes';
 
 export default function GuestGuard() {
   const location = useLocation();
@@ -9,7 +9,11 @@ export default function GuestGuard() {
 
   if (userId) {
     return (
-      <Navigate to={`/${routes.orders}`} state={{ from: location }} replace />
+      <Navigate
+        to={`/${routesJam.orders}`}
+        state={{ from: location }}
+        replace
+      />
     );
   }
 

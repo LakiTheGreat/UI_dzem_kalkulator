@@ -7,25 +7,31 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import JarIcon from '../components/customIcons/JarIcon';
 import TomatoIcon from '../components/customIcons/TomatoIcon';
 import { NavItem } from '../types/nav';
-import { routes } from './routes';
+import {
+  routesBouquets,
+  routesGeneralCalculator,
+  routesJam,
+  routesSettings,
+  routesTomatoes,
+} from './routes';
 
 export const NavItems: NavItem[] = [
   {
     label: 'Proizvodne serije',
     icon: FolderCopyIcon,
-    to: routes.orders,
+    to: routesJam.orders,
     groupTitle: 'Džemovi',
   },
   {
     label: 'Inventar',
     icon: InventoryIcon,
-    to: routes.inventory,
+    to: routesJam.inventory,
     groupTitle: 'Džemovi',
   },
   {
     label: 'Transakcije',
     icon: JarIcon,
-    to: routes.transactions,
+    to: routesJam.transactions,
     addDividerAfter: true,
     groupTitle: 'Džemovi',
   },
@@ -34,13 +40,13 @@ export const NavItems: NavItem[] = [
   {
     label: 'Inventar',
     icon: InventoryIcon,
-    to: routes.general_calculator,
+    to: routesTomatoes.inventory,
     groupTitle: 'Čeri paradajz',
   },
   {
     label: 'Transakcije',
     icon: TomatoIcon,
-    to: routes.general_calculator,
+    to: routesTomatoes.transactions,
     addDividerAfter: true,
     groupTitle: 'Čeri paradajz',
   },
@@ -48,7 +54,7 @@ export const NavItems: NavItem[] = [
   {
     label: 'Transakcije',
     icon: LocalFloristIcon,
-    to: routes.bouquets,
+    to: routesBouquets.root,
     addDividerAfter: true,
     groupTitle: 'Buketi',
   },
@@ -56,7 +62,7 @@ export const NavItems: NavItem[] = [
   {
     label: 'Kalkulator',
     icon: CalculateIcon,
-    to: routes.general_calculator,
+    to: routesGeneralCalculator.root,
     addDividerAfter: true,
     groupTitle: 'Kalkulator cene',
   },
@@ -64,7 +70,7 @@ export const NavItems: NavItem[] = [
   {
     label: 'Podešavanja',
     icon: SettingsIcon,
-    to: routes.settings,
+    to: routesSettings.root,
     groupTitle: 'Ostalo',
     addDividerAfter: true,
   },
