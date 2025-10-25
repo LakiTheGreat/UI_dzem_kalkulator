@@ -75,7 +75,7 @@ export default function TomatoesOrdersPage() {
         open={open}
         handleClose={() => setOpen(false)}
         maxWidth='xs'
-        title={'Kreiraj turu čeri paradajza'}
+        title={'Napravi turu čeri paradajza'}
       >
         <CreateTomatoOrder setOpen={setOpen} />
       </GeneralDialog>

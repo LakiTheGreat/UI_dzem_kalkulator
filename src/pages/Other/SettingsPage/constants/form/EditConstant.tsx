@@ -10,7 +10,7 @@ import { usePatchConstantMutation } from '../../../../../api/constantApi';
 
 type Props = {
   open: boolean;
-  constant?: Constant;
+  constant?: Constant | null;
   handleClose: () => void;
 };
 

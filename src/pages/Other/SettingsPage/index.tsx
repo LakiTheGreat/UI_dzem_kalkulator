@@ -1,13 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Container,
-  Divider,
-  Stack,
-  Typography,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Container, Divider, Stack } from '@mui/material';
 
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import CupCostsSettings from './cupCosts/CupCostsSettings';
@@ -29,52 +20,47 @@ export default function Settings() {
         ]}
       />
 
-      <Stack sx={{ pb: 1 }}>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography
-              variant='subtitle1'
-              sx={{ fontWeight: 'bold', fontSize: 20 }}
-            >
-              Džemići
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Stack gap={3}>
-              <Divider />
+      <Stack sx={{ p: 1 }}>
+        {/* <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}> */}
 
-              <FruitsSettings />
+        {/* </AccordionSummary> */}
+        {/* <AccordionDetails> */}
+        <Stack gap={3}>
+          <Divider />
 
-              <Divider />
+          <FruitsSettings />
 
-              <CupCostsSettings />
+          <Divider />
 
-              <Divider />
+          <CupCostsSettings />
 
-              <CupValuesSettings />
+          <Divider />
 
-              <Divider />
+          <CupValuesSettings />
 
-              <ConstantsSettings />
-            </Stack>
-          </AccordionDetails>
+          <Divider />
+
+          <ConstantsSettings />
+        </Stack>
+        {/* </AccordionDetails>
         </Accordion>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography
-              variant='subtitle1'
-              sx={{ fontWeight: 'bold', fontSize: 20 }}
-            >
-              Čeri paradajz
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Stack gap={3} sx={{ width: '100%' }}>
-              <Divider />
-              PLACEHOLDER
-            </Stack>
-          </AccordionDetails>
-        </Accordion>
+        <Accordion> */}
+        {/* <AccordionSummary expandIcon={<ExpandMoreIcon />}> */}
+        {/* <Typography
+          variant='subtitle1'
+          sx={{ fontWeight: 'bold', fontSize: 20 }}
+        >
+          Čeri paradajz
+        </Typography> */}
+        {/* </AccordionSummary> */}
+        {/* <AccordionDetails> */}
+        {/* <Stack gap={3} sx={{ width: '100%' }}>
+          <Divider />
+          PLACEHOLDER
+        </Stack> */}
+        {/* </AccordionDetails>
+        </Accordion> */}
       </Stack>
     </Container>
   );

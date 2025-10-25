@@ -47,7 +47,7 @@ export default function CupCostsSettings() {
                 <AddCircleOutlineIcon fontSize='large' />
               </IconButton> */}
           </Stack>
-          <Stack gap={4}>
+          <Stack gap={4} direction='row'>
             <FormControl fullWidth sx={{ minWidth: 120 }}>
               <InputLabel>Izaberi teglicu</InputLabel>
               <Select
@@ -69,7 +69,13 @@ export default function CupCostsSettings() {
                 gap={1}
                 alignItems='center'
               >
-                <Typography>Nabavna cena teglice:</Typography>
+                <Typography
+                  sx={{
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Nabavna cena teglice:
+                </Typography>
                 <FormattedPrice
                   price={
                     data.find((c) => c.id === Number(selectedId))?.value || 0

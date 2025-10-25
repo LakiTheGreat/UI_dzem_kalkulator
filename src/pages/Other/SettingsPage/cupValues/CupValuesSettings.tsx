@@ -46,7 +46,7 @@ export default function CupValuesSettings() {
               <AddCircleOutlineIcon fontSize='large' />
             </IconButton> */}
           </Stack>
-          <Stack gap={4}>
+          <Stack gap={4} direction='row'>
             <FormControl fullWidth sx={{ minWidth: 120 }}>
               <InputLabel>Izaberi teglicu</InputLabel>
               <Select

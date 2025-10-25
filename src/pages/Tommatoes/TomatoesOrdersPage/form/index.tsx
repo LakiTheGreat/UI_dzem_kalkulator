@@ -8,6 +8,7 @@ import RHFSelectInput, {
 } from '../../../../components/RHFSelectInput';
 import { useEffect } from 'react';
 import { TransactionStatusStrings } from '../../../../types/transactions';
+import { Divider } from '@mui/material';
 
 export type FormData = {
   cupTypeId: number;
@@ -55,28 +56,32 @@ export default function TomatoesOrderForm({
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       {isLoading && <Skeleton height={390} variant='rounded' />}
       {!isLoading && (
-        <Stack gap={4}>
-          <RHFSelectInput
-            name='status'
-            label='Transakcija'
-            menuItems={mappedStatus}
-          />
-          <RHFSelectInput
-            name='cupTypeId'
-            label='Veličina teglice'
-            menuItems={mappedTomatoCups}
-          />
-          <RHFTextInput name='numOfCups' label='Broj teglica' type='number' />
-          <RHFTextInput
-            name='totalExpenses'
-            label='Troškovi po teglici'
-            type='number'
-          />
+        <Stack gap={3}>
+          <Stack gap={2}>
+            <RHFSelectInput
+              name='status'
+              label='Transakcija'
+              menuItems={mappedStatus}
+            />
+            <RHFSelectInput
+              name='cupTypeId'
+              label='Veličina teglice'
+              menuItems={mappedTomatoCups}
+            />
+            <RHFTextInput name='numOfCups' label='Broj teglica' type='number' />
+            <RHFTextInput
+              name='totalExpenses'
+              label='Troškovi po teglici'
+              type='number'
+            />
+          </Stack>
+          <Divider />
           <Button
             type='submit'
             variant='contained'
             loading={submitIsLoading}
             disabled={numOfCups < 1 || totalExpenses < 1}
+            size='large'
           >
             Sačuvaj
           </Button>
