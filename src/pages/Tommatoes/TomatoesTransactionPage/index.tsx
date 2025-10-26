@@ -61,9 +61,33 @@ export default function TomatoesTransactionPage() {
       <Stack gap={4}>
         <Container maxWidth='sm'>
           <Stack gap={2}>
-            <Stack sx={{ height: 54, bgcolor: 'lightGrey', borderRadius: 1 }}>
-              Ovde ce ici filteri
+            <Stack gap={2} direction='row'>
+              <Stack
+                sx={{
+                  width: '100%',
+                  bgcolor: 'lightGray',
+                  height: 54,
+                  borderRadius: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Filter za godinu
+              </Stack>
+              <Stack
+                sx={{
+                  width: '100%',
+                  bgcolor: 'lightGray',
+                  height: 54,
+                  borderRadius: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Filter za mesec
+              </Stack>
             </Stack>
+
             <Button
               sx={{ bgcolor: BG_COLOR_INPUT }}
               variant='outlined'

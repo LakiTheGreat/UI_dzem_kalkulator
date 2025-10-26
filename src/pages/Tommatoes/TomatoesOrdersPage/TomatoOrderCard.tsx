@@ -15,6 +15,7 @@ import { Constant } from '../../../types/constants';
 import { TomatoOrder } from '../../../types/tomatos';
 import { formatLocalDateTime } from '../../../utils/formatLocalDateTime';
 import FormattedPrice from '../../../utils/FormattedPrice';
+import { calculateProfitMargin } from '../../../utils/calculateProfitMargin';
 
 type Props = {
   order: TomatoOrder;
@@ -31,10 +32,8 @@ export default function TomatoOrderCard({
 }: Props) {
   const totalIncome = order.numOfCups * (tomatoPrice?.value || 0);
   const totalExpenses = order.numOfCups * order.totalExpenses;
-  const profitMargin = (
-    ((totalIncome - totalExpenses) / totalExpenses) *
-    100
-  ).toFixed(0);
+
+  const profitMargin = calculateProfitMargin(totalIncome, totalExpenses);
 
   return (
     <Card
