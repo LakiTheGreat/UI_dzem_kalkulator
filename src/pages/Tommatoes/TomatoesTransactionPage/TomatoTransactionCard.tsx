@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 
 import { ORDER_WIDTH_55 } from '../../../constants';
+import { Constant } from '../../../types/constants';
 import { TomatoTransaction } from '../../../types/tomatos';
 import { TransactionStatusStrings } from '../../../types/transactions';
 import FormattedPrice from '../../../utils/FormattedPrice';
@@ -20,20 +21,22 @@ import getStatusTranslation from '../../../utils/getStatusTranslation';
 
 type Props = {
   transaction: TomatoTransaction;
-
+  tomatoExpence: Constant | undefined;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
 };
 
 export default function TomatoTransactionCard({
   transaction,
-
   handleDelete,
   handleEdit,
+  tomatoExpence,
 }: Props) {
   const { palette } = useTheme();
 
-  const isPositive = transaction.numOfCups * transaction.pricePerCup > 0;
+  const isPositive =
+    transaction.numOfCups * transaction.pricePerCup >
+    (tomatoExpence?.value || 0);
   const isSold = transaction.status === TransactionStatusStrings.SOLD;
 
   return (
@@ -45,9 +48,6 @@ export default function TomatoTransactionCard({
         bgcolor: ` ${
           isSold ? `${palette.secondary.lighter}` : `${palette.error.lighter}`
         }`,
-        // border: `1px solid ${
-        //   isSold ? `${palette.success.dark}` : 'transparent'
-        // }`,
       }}
     >
       <Stack sx={{ height: '100%', justifyContent: 'space-between' }}>
@@ -65,7 +65,7 @@ export default function TomatoTransactionCard({
                   Vreme unosa:
                 </Typography>
                 <Typography>
-                  {formatLocalDateTime(transaction.createdAt)}
+                  {formatLocalDateTime(transaction.createdAt || '')}
                 </Typography>
               </Stack>
               <Stack direction='row'>
@@ -77,7 +77,9 @@ export default function TomatoTransactionCard({
                 </Typography>
               </Stack>
             </Stack>
+
             <Divider />
+
             <Stack>
               <Stack direction='row'>
                 <Typography sx={{ width: ORDER_WIDTH_55 }}>
@@ -87,24 +89,57 @@ export default function TomatoTransactionCard({
               </Stack>
               <Stack direction='row'>
                 <Typography sx={{ width: ORDER_WIDTH_55 }}>
-                  Cena teglice :
+                  Teglica prodata za:
                 </Typography>
                 <FormattedPrice price={transaction.pricePerCup} />
               </Stack>
+
               <Stack
                 direction='row'
-                sx={{
-                  color: isPositive && isSold ? 'success.dark' : 'error.main',
-                }}
-              >
-                <Typography sx={{ width: ORDER_WIDTH_55, fontWeight: 'bold' }}>
-                  Vrednost transakcije:
-                </Typography>
+                // sx={{
+                //   color: isPositive && isSold ? 'success.dark' : 'error.main',
+                // }}
+              ></Stack>
+            </Stack>
 
+            <Divider />
+            <Stack>
+              <Stack direction='row'>
+                <Typography sx={{ width: ORDER_WIDTH_55 }}>Prihod:</Typography>
                 <FormattedPrice
-                  isBold
                   price={transaction.numOfCups * transaction.pricePerCup}
                 />
+              </Stack>
+
+              <Stack direction='row' sx={{ color: 'error.main' }}>
+                <Typography sx={{ width: ORDER_WIDTH_55, fontWeight: 'bold' }}>
+                  Procenjeni troškovi:
+                </Typography>
+                <Stack sx={{ ml: -1.3 }}>
+                  <FormattedPrice
+                    isBold
+                    isExpense
+                    price={transaction.numOfCups * (tomatoExpence?.value || 0)}
+                  />
+                </Stack>
+              </Stack>
+
+              <Stack
+                direction='row'
+                sx={{ color: isPositive ? 'success.dark' : 'error.main' }}
+              >
+                <Typography sx={{ width: ORDER_WIDTH_55, fontWeight: 'bold' }}>
+                  Procenjeni profit:
+                </Typography>
+                <Stack sx={{ ml: isPositive ? 0 : -1.3 }}>
+                  <FormattedPrice
+                    isBold
+                    price={
+                      transaction.numOfCups * transaction.pricePerCup -
+                      transaction.numOfCups * (tomatoExpence?.value || 0)
+                    }
+                  />
+                </Stack>
               </Stack>
             </Stack>
           </Stack>

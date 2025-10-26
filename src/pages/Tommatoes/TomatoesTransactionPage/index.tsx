@@ -16,20 +16,24 @@ import {
 import { useState } from 'react';
 import { Id } from 'react-toastify';
 
+import { useGetTomatoOneCupExpenseQuery } from '../../../api/constantApi';
 import {
   useDeleteTomatoTransactionMutation,
   useGetAllTomatoTransactionQuery,
+  useGetTomatoTotalsQuery,
 } from '../../../api/tomatoesApi';
 import GeneralDialog from '../../../components/GeneralDialog';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import { MONTHS, YEARS } from '../../../constants';
+import { MONTHS, ORDER_WIDTH, YEARS } from '../../../constants';
 import { routesTomatoes } from '../../../constants/routes';
+import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
 import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
 import useConfirmDialog from '../../../hooks/useConfirmDialog';
 import { BG_COLOR_INPUT } from '../../../theme/palette';
 import { TomatoTransactionParams } from '../../../types/tomatos';
 import { TransactionStatusStrings } from '../../../types/transactions';
+import FormattedPrice from '../../../utils/FormattedPrice';
 import getStatusTranslation from '../../../utils/getStatusTranslation';
 import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
@@ -38,6 +42,8 @@ import EditTomatoTransaction from './form/EditTomatoTransaction';
 import TomatoTransactionCard from './TomatoTransactionCard';
 
 export default function TomatoesTransactionPage() {
+  const userId = useAppSelector((state) => state.auth.userId);
+
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [toastId, setToastId] = useState<Id>('');
@@ -57,6 +63,11 @@ export default function TomatoesTransactionPage() {
   const [params, setParams] = useState<TomatoTransactionParams>(param);
 
   const { data, isFetching } = useGetAllTomatoTransactionQuery(params);
+
+  const { data: tomatoTotals, isLoading: tomatoTotalsIsLoading } =
+    useGetTomatoTotalsQuery();
+  const { data: tomatoExpence, isLoading: tomatoExpenceLoading } =
+    useGetTomatoOneCupExpenseQuery(userId || 0);
 
   const [deleteTransaction, { data: deleteData, error: deleteError }] =
     useDeleteTomatoTransactionMutation();
@@ -96,6 +107,9 @@ export default function TomatoesTransactionPage() {
     error: deleteError,
     toastId,
   });
+
+  const somethingIsLoading =
+    isFetching || tomatoTotalsIsLoading || tomatoExpenceLoading;
 
   return (
     <Container>
@@ -200,6 +214,79 @@ export default function TomatoesTransactionPage() {
             >
               Resetuj filtere
             </Button>
+            <Stack>
+              {!somethingIsLoading &&
+                tomatoTotals &&
+                tomatoTotals.map((tomatoTotal) => {
+                  // ✅ Count how many items share the same label
+                  const countLabels =
+                    data?.reduce((sum, item) => {
+                      if (item.label !== tomatoTotal.label) return sum;
+                      return sum + item.numOfCups;
+                    }, 0) ?? 0;
+
+                  // ✅ Calculate total expenses per label
+                  const estimatedTotalExpences =
+                    data?.reduce((sum, item) => {
+                      if (item.label !== tomatoTotal.label) return sum;
+                      return sum + item.numOfCups * (tomatoExpence?.value || 0);
+                    }, 0) ?? 0;
+
+                  // ✅ Calculate total income per label
+                  const calculatedTotalIncome =
+                    data?.reduce((sum, item) => {
+                      if (item.label !== tomatoTotal.label) return sum;
+                      return sum + item.numOfCups * item.pricePerCup;
+                    }, 0) ?? 0;
+
+                  // ✅ Profit (income - expenses)
+                  const profit = calculatedTotalIncome - estimatedTotalExpences;
+
+                  return (
+                    <Stack>
+                      <Stack direction='row' key={tomatoTotal.label}>
+                        <Typography sx={{ width: ORDER_WIDTH }}>
+                          Br. teglica od {tomatoTotal.label}:
+                        </Typography>
+                        <Typography>{countLabels}</Typography>
+                      </Stack>
+
+                      <Stack direction='row'>
+                        <Typography sx={{ width: ORDER_WIDTH }}>
+                          Procenjen prihod:
+                        </Typography>
+
+                        <FormattedPrice price={calculatedTotalIncome} />
+                      </Stack>
+
+                      <Stack direction='row' color='error.main'>
+                        <Typography
+                          sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
+                        >
+                          Ukupni rashod:
+                        </Typography>
+                        <Stack sx={{ ml: -1.3 }}>
+                          <FormattedPrice
+                            price={estimatedTotalExpences || 0}
+                            isExpense
+                            isBold
+                          />
+                        </Stack>
+                      </Stack>
+
+                      <Stack direction='row' color='success.dark'>
+                        <Typography
+                          sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
+                        >
+                          Procenjen prihod:
+                        </Typography>
+
+                        <FormattedPrice price={profit} isBold />
+                      </Stack>
+                    </Stack>
+                  );
+                })}
+            </Stack>
           </Stack>
         </Container>
         <Grid container spacing={3}>
@@ -224,6 +311,7 @@ export default function TomatoesTransactionPage() {
                   transaction={transaction}
                   handleDelete={handleDelete}
                   handleEdit={handleEdit}
+                  tomatoExpence={tomatoExpence}
                 />
               </Grid>
             ))}
