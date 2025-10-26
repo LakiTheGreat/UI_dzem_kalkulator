@@ -214,92 +214,93 @@ export default function TomatoesTransactionPage() {
             >
               Resetuj filtere
             </Button>
-            <Stack>
-              {!somethingIsLoading &&
-                tomatoTotals &&
-                tomatoTotals.map((tomatoTotal) => {
-                  // ✅ Count how many items share the same label
-                  const countLabels =
-                    data?.reduce((sum, item) => {
-                      if (item.label !== tomatoTotal.label) return sum;
-                      return sum + item.numOfCups;
-                    }, 0) ?? 0;
 
-                  // ✅ Calculate total expenses per label
-                  const estimatedTotalExpences =
-                    data?.reduce((sum, item) => {
-                      if (item.label !== tomatoTotal.label) return sum;
-                      return sum + item.numOfCups * (tomatoExpence?.value || 0);
-                    }, 0) ?? 0;
+            {somethingIsLoading && <Skeleton height={96} variant='rounded' />}
+            {!somethingIsLoading &&
+              tomatoTotals &&
+              tomatoTotals.map((tomatoTotal) => {
+                // ✅ Count how many items share the same label
+                const countLabels =
+                  data?.reduce((sum, item) => {
+                    if (item.label !== tomatoTotal.label) return sum;
+                    return sum + item.numOfCups;
+                  }, 0) ?? 0;
 
-                  // ✅ Calculate total income per label
-                  const calculatedTotalIncome =
-                    data?.reduce((sum, item) => {
-                      if (item.label !== tomatoTotal.label) return sum;
-                      return sum + item.numOfCups * item.pricePerCup;
-                    }, 0) ?? 0;
+                // ✅ Calculate total expenses per label
+                const estimatedTotalExpences =
+                  data?.reduce((sum, item) => {
+                    if (item.label !== tomatoTotal.label) return sum;
+                    return sum + item.numOfCups * (tomatoExpence?.value || 0);
+                  }, 0) ?? 0;
 
-                  // ✅ Profit (income - expenses)
-                  const profit = calculatedTotalIncome - estimatedTotalExpences;
+                // ✅ Calculate total income per label
+                const calculatedTotalIncome =
+                  data?.reduce((sum, item) => {
+                    if (item.label !== tomatoTotal.label) return sum;
+                    return sum + item.numOfCups * item.pricePerCup;
+                  }, 0) ?? 0;
 
-                  return (
-                    <Stack>
-                      <Stack direction='row' key={tomatoTotal.label}>
-                        <Typography sx={{ width: ORDER_WIDTH }}>
-                          Br. teglica od {tomatoTotal.label}:
-                        </Typography>
-                        <Typography>{countLabels}</Typography>
-                      </Stack>
+                // ✅ Profit (income - expenses)
+                const profit = calculatedTotalIncome - estimatedTotalExpences;
 
-                      <Stack direction='row'>
-                        <Typography sx={{ width: ORDER_WIDTH }}>
-                          Procenjen prihod:
-                        </Typography>
+                return (
+                  <Stack>
+                    <Stack direction='row' key={tomatoTotal.label}>
+                      <Typography sx={{ width: ORDER_WIDTH }}>
+                        Br. teglica od {tomatoTotal.label}:
+                      </Typography>
+                      <Typography>{countLabels}</Typography>
+                    </Stack>
 
-                        <FormattedPrice price={calculatedTotalIncome} />
-                      </Stack>
+                    <Stack direction='row'>
+                      <Typography sx={{ width: ORDER_WIDTH }}>
+                        Procenjen prihod:
+                      </Typography>
 
-                      <Stack direction='row' color='error.main'>
-                        <Typography
-                          sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
-                        >
-                          Ukupni rashod:
-                        </Typography>
-                        <Stack sx={{ ml: -1.3 }}>
-                          <FormattedPrice
-                            price={estimatedTotalExpences || 0}
-                            isExpense
-                            isBold
-                          />
-                        </Stack>
-                      </Stack>
+                      <FormattedPrice price={calculatedTotalIncome} />
+                    </Stack>
 
-                      <Stack direction='row' color='success.dark'>
-                        <Typography
-                          sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
-                        >
-                          Procenjen prihod:
-                        </Typography>
-
-                        <FormattedPrice price={profit} isBold />
+                    <Stack direction='row' color='error.main'>
+                      <Typography
+                        sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
+                      >
+                        Ukupni rashod:
+                      </Typography>
+                      <Stack sx={{ ml: -1.3 }}>
+                        <FormattedPrice
+                          price={estimatedTotalExpences || 0}
+                          isExpense
+                          isBold
+                        />
                       </Stack>
                     </Stack>
-                  );
-                })}
-            </Stack>
+
+                    <Stack direction='row' color='success.dark'>
+                      <Typography
+                        sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
+                      >
+                        Procenjen prihod:
+                      </Typography>
+
+                      <FormattedPrice price={profit} isBold />
+                    </Stack>
+                  </Stack>
+                );
+              })}
+            {/* </Stack> */}
           </Stack>
         </Container>
         <Grid container spacing={3}>
           {isFetching && (
             <>
               <Grid size={{ xs: 12, md: 6, lg: 4 }}>
-                <Skeleton variant='rounded' height={265} />
+                <Skeleton variant='rounded' height={375} />
               </Grid>
               <Grid size={{ xs: 12, md: 6, lg: 4 }}>
-                <Skeleton variant='rounded' height={265} />
+                <Skeleton variant='rounded' height={375} />
               </Grid>
               <Grid size={{ xs: 12, md: 6, lg: 4 }}>
-                <Skeleton variant='rounded' height={265} />
+                <Skeleton variant='rounded' height={375} />
               </Grid>
             </>
           )}
