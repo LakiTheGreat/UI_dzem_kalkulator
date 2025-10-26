@@ -24,5 +24,9 @@ export default function getStatusTranslation(
     return 'Ostalo';
   }
 
+  if (status === TransactionStatusStrings.ALL) {
+    return 'Prikaži sve';
+  }
+
   return 'Ostalo - nema statusa';
 }

@@ -32,6 +32,7 @@ export const api = createApi({
     'TomatoCups',
     'TomatoOrder',
     'TomatoInventory',
+    'TomatoTransaction',
   ],
   endpoints: (build) => ({}),
 });

@@ -25,6 +25,7 @@ export type UpdateTransactionReq = {
 };
 
 export enum TransactionStatusStrings {
+  ALL = 'ALL',
   SOLD = 'SOLD',
   CONSUMED = 'CONSUMED',
   GIVEN_AWAY = 'GIVEN_AWAY',

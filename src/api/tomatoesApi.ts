@@ -9,6 +9,7 @@ import {
   UnsavedTomatoOrder,
   UnsavedTomatoTransaction,
 } from '../types/tomatos';
+import { TransactionStatusStrings } from '../types/transactions';
 
 const tomatoApiUrl = '/tomatoes';
 
@@ -64,7 +65,10 @@ const tomatoesApiEndpoints = api.injectEndpoints({
         //   params.set('orderTypeId', String(orderTypeId));
         // }
 
-        if (transactionStatus && transactionStatus !== 'ALL') {
+        if (
+          transactionStatus &&
+          transactionStatus !== TransactionStatusStrings.ALL
+        ) {
           params.set('transactionStatus', String(transactionStatus));
         }
 
@@ -75,18 +79,19 @@ const tomatoesApiEndpoints = api.injectEndpoints({
         };
       },
 
-      providesTags: ['TomatoOrder'],
+      providesTags: ['TomatoTransaction'],
     }),
+
     createTomatoTransaction: build.mutation<
-      UnsavedTomatoTransaction,
-      TomatoTransaction
+      TomatoTransaction,
+      UnsavedTomatoTransaction
     >({
       query: (body) => ({
         url: `${tomatoApiUrl}/transactions`,
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['TomatoInventory'],
+      invalidatesTags: ['TomatoInventory', 'TomatoTransaction'],
     }),
 
     getTomatoTotals: build.query<TomatoTotal[], void>({
@@ -128,6 +133,7 @@ const tomatoesApiEndpoints = api.injectEndpoints({
 });
 
 export const {
+  useCreateTomatoTransactionMutation,
   useGetAllTomatoTransactionQuery,
   useGetTomatoTotalsQuery,
   useDeleteTomatoOrderMutation,

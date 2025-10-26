@@ -27,7 +27,7 @@ export type TomatoOrder = UnsavedTomatoOrder & {
 };
 
 export type TomatoTransactionParams = TomatoOrderParams & {
-  transactionStatus: string | null;
+  transactionStatus: TransactionStatusStrings | null;
 };
 
 export type TomatoOrderParams = {
