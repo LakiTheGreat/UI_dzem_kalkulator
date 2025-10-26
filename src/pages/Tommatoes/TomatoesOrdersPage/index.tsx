@@ -1,12 +1,18 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
+  Button,
   Container,
   Divider,
+  FormControl,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Skeleton,
   Stack,
   Tab,
@@ -23,7 +29,7 @@ import {
 } from '../../../api/tomatoesApi';
 import GeneralDialog from '../../../components/GeneralDialog';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import { ORDER_WIDTH } from '../../../constants';
+import { MONTHS, ORDER_WIDTH, YEARS } from '../../../constants';
 import { routesTomatoes } from '../../../constants/routes';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
@@ -36,8 +42,22 @@ import EditTomatoOrder from './form/EditTomatoOrder';
 import TomatoOrdersTable from './table/TomatoOrdersTable';
 import TomatoTransactionCard from './TomatoOrderCard';
 
+import { BG_COLOR_INPUT } from '../../../theme/palette';
+import { TomatoOrderParams } from '../../../types/tomatos';
+
 export default function TomatoesOrdersPage() {
   const userId = useAppSelector((state) => state.auth.userId);
+
+  const defaultParams: TomatoOrderParams = {
+    year: 0,
+    month: 0,
+  };
+
+  const param = {
+    ...defaultParams,
+  };
+
+  const [params, setParams] = useState<TomatoOrderParams>(param);
 
   const [toastId, setToastId] = useState<Id>('');
   const [orderId, setOrderId] = useState<number | null>(null);
@@ -47,7 +67,7 @@ export default function TomatoesOrdersPage() {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
 
-  const { data, isFetching } = useGetAllTomatoOrderQuery();
+  const { data, isFetching } = useGetAllTomatoOrderQuery(params);
   const { data: tomatoTotals, isLoading: tomatoTotalsIsLoading } =
     useGetTomatoTotalsQuery();
   const { data: tomatoPrice, isLoading: tomatoPriceIsLoading } =
@@ -85,12 +105,8 @@ export default function TomatoesOrdersPage() {
     toastId,
   });
 
-  const somethingIsLoading = isFetching || tomatoPriceIsLoading;
-
-  const calculatedTotalExpenses = data?.reduce(
-    (sum, item) => sum + item.totalExpenses * item.numOfCups,
-    0
-  );
+  const somethingIsLoading =
+    isFetching || tomatoPriceIsLoading || tomatoTotalsIsLoading;
 
   return (
     <Container>
@@ -111,86 +127,137 @@ export default function TomatoesOrdersPage() {
       <Stack gap={3}>
         <Container maxWidth='sm'>
           <Stack gap={3}>
-            <Stack gap={2} direction='row'>
-              <Stack
-                sx={{
-                  width: '100%',
-                  bgcolor: 'lightGray',
-                  height: 54,
-                  borderRadius: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Filter za godinu
+            <Stack gap={2}>
+              <Stack direction='row' gap={2}>
+                <FormControl fullWidth>
+                  <InputLabel>Godina</InputLabel>
+                  <Select
+                    sx={{ bgcolor: BG_COLOR_INPUT }}
+                    value={params.year}
+                    label='Godina'
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        year: Number(e.target.value),
+                      })
+                    }
+                  >
+                    <MenuItem value={0}>Prikaži sve</MenuItem>
+                    {YEARS?.map((year) => (
+                      <MenuItem key={year.id} value={year.value}>
+                        {year.menuItemLabel}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel>Mesec</InputLabel>
+                  <Select
+                    sx={{ bgcolor: BG_COLOR_INPUT }}
+                    value={params.month}
+                    label='Mesec'
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        month: Number(e.target.value),
+                      })
+                    }
+                  >
+                    <MenuItem value={0}>Prikaži sve</MenuItem>
+                    {MONTHS?.map((month) => (
+                      <MenuItem key={month.id} value={month.value}>
+                        {month.menuItemLabel}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Stack>
-              <Stack
-                sx={{
-                  width: '100%',
-                  bgcolor: 'lightGray',
-                  height: 54,
-                  borderRadius: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+              <Button
+                sx={{ bgcolor: BG_COLOR_INPUT }}
+                variant='outlined'
+                startIcon={<RefreshIcon />}
+                onClick={() => setParams(defaultParams)}
+                size='large'
+                loading={isFetching}
+                fullWidth
               >
-                Filter za mesec
-              </Stack>
+                Resetuj filtere
+              </Button>
             </Stack>
-            {(tomatoPriceIsLoading || !tomatoTotals) && (
-              <Skeleton variant='rounded' height={24} width={243} />
+            {somethingIsLoading && (
+              <Skeleton variant='rounded' height={96} width={255} />
             )}
-            {!tomatoTotalsIsLoading &&
+            {!somethingIsLoading &&
               tomatoTotals &&
-              tomatoTotals.map((tomatoTotal) => (
-                <Stack>
-                  <Stack direction='row' key={tomatoTotal.label}>
-                    <Typography sx={{ width: ORDER_WIDTH }}>
-                      Br. teglica od {tomatoTotal.label}:
-                    </Typography>
-                    <Typography>{tomatoTotal.totalOrdered}</Typography>
-                  </Stack>
+              tomatoTotals.map((tomatoTotal) => {
+                // ✅ Count how many items share the same label
+                const countLabels =
+                  data?.reduce((sum, item) => {
+                    if (item.label !== tomatoTotal.label) return sum;
+                    return sum + item.numOfCups;
+                  }, 0) ?? 0;
 
-                  <Stack direction='row'>
-                    <Typography sx={{ width: ORDER_WIDTH }}>
-                      Procenjen prihod:
-                    </Typography>
+                // ✅ Calculate total expenses per label
+                const calculatedTotalExpenses =
+                  data?.reduce((sum, item) => {
+                    if (item.label !== tomatoTotal.label) return sum;
+                    return sum + item.totalExpenses * item.numOfCups;
+                  }, 0) ?? 0;
 
-                    <FormattedPrice
-                      price={
-                        tomatoTotal.totalOrdered * (tomatoPrice?.value || 0)
-                      }
-                    />
-                  </Stack>
+                // ✅ Calculate total income per label
+                const calculatedTotalIncome =
+                  data?.reduce((sum, item) => {
+                    if (item.label !== tomatoTotal.label) return sum;
+                    return sum + item.numOfCups * (tomatoPrice?.value || 0);
+                  }, 0) ?? 0;
 
-                  <Stack direction='row' color='error.main'>
-                    <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-                      Ukupni rashod:
-                    </Typography>
-                    <Stack sx={{ ml: -1.3 }}>
-                      <FormattedPrice
-                        price={calculatedTotalExpenses || 0}
-                        isExpense
-                        isBold
-                      />
+                // ✅ Profit (income - expenses)
+                const profit = calculatedTotalIncome - calculatedTotalExpenses;
+
+                return (
+                  <Stack>
+                    <Stack direction='row' key={tomatoTotal.label}>
+                      <Typography sx={{ width: ORDER_WIDTH }}>
+                        Br. teglica od {tomatoTotal.label}:
+                      </Typography>
+                      <Typography>{countLabels}</Typography>
+                    </Stack>
+
+                    <Stack direction='row'>
+                      <Typography sx={{ width: ORDER_WIDTH }}>
+                        Procenjen prihod:
+                      </Typography>
+
+                      <FormattedPrice price={calculatedTotalIncome} />
+                    </Stack>
+
+                    <Stack direction='row' color='error.main'>
+                      <Typography
+                        sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
+                      >
+                        Ukupni rashod:
+                      </Typography>
+                      <Stack sx={{ ml: -1.3 }}>
+                        <FormattedPrice
+                          price={calculatedTotalExpenses || 0}
+                          isExpense
+                          isBold
+                        />
+                      </Stack>
+                    </Stack>
+
+                    <Stack direction='row' color='success.dark'>
+                      <Typography
+                        sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}
+                      >
+                        Procenjen prihod:
+                      </Typography>
+
+                      <FormattedPrice price={profit} isBold />
                     </Stack>
                   </Stack>
-
-                  <Stack direction='row' color='success.dark'>
-                    <Typography sx={{ width: ORDER_WIDTH, fontWeight: 'bold' }}>
-                      Procenjen prihod:
-                    </Typography>
-
-                    <FormattedPrice
-                      price={
-                        tomatoTotal.totalOrdered * (tomatoPrice?.value || 0) -
-                        (calculatedTotalExpenses || 0)
-                      }
-                      isBold
-                    />
-                  </Stack>
-                </Stack>
-              ))}
+                );
+              })}
           </Stack>
         </Container>
 

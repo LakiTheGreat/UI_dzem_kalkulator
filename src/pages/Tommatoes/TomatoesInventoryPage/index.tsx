@@ -3,7 +3,6 @@ import { Container, Divider, Skeleton, Stack, Typography } from '@mui/material';
 import { useGetTomatoPriceQuery } from '../../../api/constantApi';
 import { useGetTomatoTotalsQuery } from '../../../api/tomatoesApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import { ORDER_WIDTH } from '../../../constants';
 import { routesTomatoes } from '../../../constants/routes';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 import FormattedPrice from '../../../utils/FormattedPrice';
@@ -46,18 +45,22 @@ export default function TomatoesInventoryPage() {
             <Stack direction='row' gap={4} sx={{ width: '100%' }}>
               {data.map((item) => (
                 <Stack key={item.cupTypeId} sx={{ width: '100%' }} gap={1}>
-                  <Stack direction='row' sx={{ width: '100%' }}>
+                  <Stack
+                    direction='row'
+                    sx={{ width: '100%' }}
+                    justifyContent='space-around'
+                  >
                     <Stack
                       gap={1}
-                      sx={{ width: ORDER_WIDTH }}
+                      // sx={{ width: ORDER_WIDTH }}
                       alignItems='center'
                     >
                       <Typography>{item.label}:</Typography>
                       <Typography>{item.totalCups} kom. </Typography>
                     </Stack>
-                    <Stack sx={{ width: ORDER_WIDTH }} alignItems='center'>
+                    <Stack alignItems='center'>
                       <Typography textAlign='center' sx={{ flex: 1 }}>
-                        Procenjena vrednost:
+                        Procenjena prodajna vrednost:
                       </Typography>
                       <FormattedPrice
                         price={item.totalCups * (tomatoPrice?.value || 1)}

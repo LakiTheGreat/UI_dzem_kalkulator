@@ -15,20 +15,22 @@ import { useGetAllTomatoTransactionQuery } from '../../../api/tomatoesApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { routesTomatoes } from '../../../constants/routes';
 import { BG_COLOR_INPUT } from '../../../theme/palette';
-import { TomatoParams } from '../../../types/tomatos';
+import { TomatoTransactionParams } from '../../../types/tomatos';
 import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
 import TomatoTransactionCard from './TomatoTransactionCard';
 
 export default function TomatoesTransactionPage() {
-  const defaultParams: TomatoParams = {
+  const defaultParams: TomatoTransactionParams = {
     transactionStatus: 'ALL',
+    year: 0,
+    month: 0,
   };
 
   const param = {
     ...defaultParams,
   };
 
-  const [params, setParams] = useState<TomatoParams>(param);
+  const [params, setParams] = useState<TomatoTransactionParams>(param);
 
   const { data, isFetching } = useGetAllTomatoTransactionQuery(params);
 

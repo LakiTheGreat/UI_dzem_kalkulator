@@ -26,8 +26,13 @@ export type TomatoOrder = UnsavedTomatoOrder & {
   isDeleted?: boolean;
 };
 
-export type TomatoParams = {
+export type TomatoTransactionParams = TomatoOrderParams & {
   transactionStatus: string | null;
+};
+
+export type TomatoOrderParams = {
+  year: number;
+  month: number;
 };
 
 export type UnsavedTomatoTransaction = {

@@ -2,9 +2,10 @@ import { api } from '.';
 import {
   TomatoCup,
   TomatoOrder,
-  TomatoParams,
+  TomatoOrderParams,
   TomatoTotal,
   TomatoTransaction,
+  TomatoTransactionParams,
   UnsavedTomatoOrder,
   UnsavedTomatoTransaction,
 } from '../types/tomatos';
@@ -13,20 +14,22 @@ const tomatoApiUrl = '/tomatoes';
 
 const tomatoesApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
-    getAllTomatoOrder: build.query<TomatoOrder[], void>({
-      query: () => {
-        // const params = new URLSearchParams();
+    getAllTomatoOrder: build.query<TomatoOrder[], TomatoOrderParams>({
+      query: ({ year, month }) => {
+        const params = new URLSearchParams();
 
-        // if (orderTypeId && orderTypeId > 0) {
-        //   params.set('orderTypeId', String(orderTypeId));
-        // }
+        if (year && year > 0) {
+          params.set('year', String(year));
+        }
 
-        // if (transactionStatus && transactionStatus !== 'ALL') {
-        //   params.set('transactionStatus', String(transactionStatus));
-        // }
+        if (month && month > 0) {
+          params.set('month', String(month));
+        }
+
+        const query = params?.toString();
+
         return {
-          // url: `${bouquetsApiUrl}`,
-          url: `${tomatoApiUrl}`,
+          url: `${tomatoApiUrl}${query ? `?${query}` : ''}`,
         };
       },
 
@@ -50,7 +53,10 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       providesTags: ['TomatoCups'],
     }),
 
-    getAllTomatoTransaction: build.query<TomatoTransaction[], TomatoParams>({
+    getAllTomatoTransaction: build.query<
+      TomatoTransaction[],
+      TomatoTransactionParams
+    >({
       query: ({ transactionStatus }) => {
         const params = new URLSearchParams();
 
