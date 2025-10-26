@@ -8,6 +8,7 @@ import RHFTextInput from '../../../../components/RHFTextInput';
 import RHFSelectInput, {
   MenuItemType,
 } from '../../../../components/RHFSelectInput';
+import { Constant } from '../../../../types/constants';
 
 export type FormData = {
   cupTypeId: number;
@@ -21,6 +22,7 @@ type Props = {
   isLoading: boolean;
   mappedTomatoCups: MenuItemType[];
   submitIsLoading: boolean;
+  tomatoCupExpense?: Constant;
 };
 
 export default function TomatoesOrderForm({
@@ -29,11 +31,12 @@ export default function TomatoesOrderForm({
   values,
   mappedTomatoCups,
   submitIsLoading,
+  tomatoCupExpense,
 }: Props) {
   const methods = useForm<FormData>({
     defaultValues: {
       cupTypeId: values?.cupTypeId || 0,
-      totalExpenses: values?.totalExpenses || 200,
+      totalExpenses: values?.totalExpenses || 0,
       numOfCups: values?.numOfCups || 0,
     },
   });
@@ -41,11 +44,18 @@ export default function TomatoesOrderForm({
   const { handleSubmit, setValue, watch } = methods;
 
   const { numOfCups, totalExpenses } = watch();
+
   useEffect(() => {
     if (mappedTomatoCups.length) {
       setValue('cupTypeId', mappedTomatoCups[0].value);
     }
   }, [mappedTomatoCups, setValue]);
+
+  useEffect(() => {
+    if (tomatoCupExpense) {
+      setValue('totalExpenses', tomatoCupExpense.value);
+    }
+  }, [tomatoCupExpense, setValue]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

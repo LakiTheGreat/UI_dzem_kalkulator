@@ -12,12 +12,16 @@ import { useApiSuccessNotification } from '../../../../hooks/useApiSuccessNotifi
 import { UnsavedTomatoOrder } from '../../../../types/tomatos';
 import { mapTomatoCupsToMenuItems } from '../../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../../utils/toastify/setToastIsLoading';
+import { useGetTomatoOneCupExpenseQuery } from '../../../../api/constantApi';
+import { useAppSelector } from '../../../../hooks/reduxStoreHooks';
 
 type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function CreateTomatoOrder({ setOpen }: Props) {
+  const userId = useAppSelector((state) => state.auth.userId);
+
   const [toastId, setToastId] = useState<Id>('');
 
   const { data: tomatoCups, isLoading: tomatoCupsIsLoading } =
@@ -26,9 +30,12 @@ export default function CreateTomatoOrder({ setOpen }: Props) {
   const [createTomatoOrder, { data, error, isLoading: createIsLoading }] =
     useCreateTomatoOrderMutation();
 
+  const { data: tomatoCupExpense, isLoading: tomatoCupExpenseLoading } =
+    useGetTomatoOneCupExpenseQuery(userId || 0);
+
   const mappedTomatoCups = mapTomatoCupsToMenuItems(tomatoCups);
 
-  const isLoading = tomatoCupsIsLoading;
+  const isLoading = tomatoCupsIsLoading || tomatoCupExpenseLoading;
 
   const handleSubmit = (data: FormData) => {
     const req: UnsavedTomatoOrder = {
@@ -64,6 +71,7 @@ export default function CreateTomatoOrder({ setOpen }: Props) {
           isLoading={isLoading}
           mappedTomatoCups={mappedTomatoCups}
           submitIsLoading={createIsLoading}
+          tomatoCupExpense={tomatoCupExpense}
         />
       </Stack>
     </Container>

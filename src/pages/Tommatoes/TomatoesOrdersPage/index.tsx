@@ -21,8 +21,12 @@ import CreateTomatoOrder from './form/CreateTomatoOrder';
 import EditTomatoOrder from './form/EditTomatoOrder';
 import TomatoOrdersTable from './table/TomatoOrdersTable';
 import TomatoTransactionCard from './TomatoOrderCard';
+import { useAppSelector } from '../../../hooks/reduxStoreHooks';
+import { useGetTomatoPriceQuery } from '../../../api/constantApi';
 
 export default function TomatoesOrdersPage() {
+  const userId = useAppSelector((state) => state.auth.userId);
+
   const [toastId, setToastId] = useState<Id>('');
   const [orderId, setOrderId] = useState<number | null>(null);
   const [getConfirmation, Confirmation] = useConfirmDialog();
@@ -34,6 +38,9 @@ export default function TomatoesOrdersPage() {
   const { data, isFetching } = useGetAllTomatoOrderQuery();
   const [deleteTomatoOrder, { data: deleteData, error: deleteError }] =
     useDeleteTomatoOrderMutation();
+
+  const { data: tomatoPrice, isLoading: tomatoPriceIsLoading } =
+    useGetTomatoPriceQuery(userId || 0);
 
   const handleDelete = async (id: number) => {
     const isConfirmed = await getConfirmation({
@@ -64,6 +71,8 @@ export default function TomatoesOrdersPage() {
     toastId,
   });
 
+  const somethingIsLoading = isFetching || tomatoPriceIsLoading;
+
   return (
     <Container>
       <HeaderBreadcrumbs
@@ -93,7 +102,7 @@ export default function TomatoesOrdersPage() {
         </TabList>
         <TabPanel value={0}>
           <Grid container spacing={3}>
-            {isFetching && (
+            {somethingIsLoading && (
               <>
                 <Grid size={{ xs: 12, md: 6, lg: 4 }}>
                   <Skeleton variant='rounded' height={200} />
@@ -106,12 +115,13 @@ export default function TomatoesOrdersPage() {
                 </Grid>
               </>
             )}
-            {!isFetching &&
+            {!somethingIsLoading &&
               data?.map((transaction) => (
                 <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
                   <TomatoTransactionCard
                     order={transaction}
                     handleDelete={handleDelete}
+                    tomatoPrice={tomatoPrice}
                     handleEdit={(id) => {
                       setOrderId(id);
                       setOpenEdit(true);

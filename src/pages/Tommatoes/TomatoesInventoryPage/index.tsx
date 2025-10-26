@@ -57,7 +57,7 @@ export default function TomatoesInventoryPage() {
                     </Stack>
                     <Stack sx={{ width: ORDER_WIDTH }} alignItems='center'>
                       <Typography textAlign='center' sx={{ flex: 1 }}>
-                        Približna vrednost:
+                        Procenjena vrednost:
                       </Typography>
                       <FormattedPrice
                         price={item.totalCups * (tomatoPrice?.value || 1)}

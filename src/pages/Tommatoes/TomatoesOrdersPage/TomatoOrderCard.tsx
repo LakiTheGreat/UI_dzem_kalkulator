@@ -11,22 +11,31 @@ import {
 } from '@mui/material';
 
 import { ORDER_WIDTH_55 } from '../../../constants';
-import { formatLocalDateTime } from '../../../utils/formatLocalDateTime';
+import { Constant } from '../../../types/constants';
 import { TomatoOrder } from '../../../types/tomatos';
+import { formatLocalDateTime } from '../../../utils/formatLocalDateTime';
 import FormattedPrice from '../../../utils/FormattedPrice';
 
 type Props = {
   order: TomatoOrder;
+  tomatoPrice: Constant | undefined;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
 };
 
 export default function TomatoOrderCard({
   order,
-
+  tomatoPrice,
   handleDelete,
   handleEdit,
 }: Props) {
+  const totalIncome = order.numOfCups * (tomatoPrice?.value || 0);
+  const totalExpenses = order.numOfCups * order.totalExpenses;
+  const profitMargin = (
+    ((totalIncome - totalExpenses) / totalExpenses) *
+    100
+  ).toFixed(0);
+
   return (
     <Card
       key={order.id}
@@ -42,38 +51,50 @@ export default function TomatoOrderCard({
               <Typography sx={{ width: ORDER_WIDTH_55 }}>
                 Vreme unosa:
               </Typography>
-              <Typography>{formatLocalDateTime(order.createdAt)}</Typography>
+              <Typography>
+                {formatLocalDateTime(order.createdAt || '')}
+              </Typography>
             </Stack>
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH_55 }}>
                 Broj teglica:
               </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 'bold',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {order.numOfCups}
-              </Typography>
+              <Typography>{order.numOfCups}</Typography>
             </Stack>
 
             <Divider sx={{ my: 1 }} />
 
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH_55 }}>
-                Troškovi po teglici:
+                Procenjen prihod:
               </Typography>
-              <FormattedPrice price={order.totalExpenses} />
+              <FormattedPrice price={totalIncome} />
+            </Stack>
+
+            <Stack direction='row' color='error.main'>
+              <Typography
+                sx={{
+                  width: ORDER_WIDTH_55,
+                  fontWeight: 'bold',
+                }}
+              >
+                Rashod:
+              </Typography>
+              <FormattedPrice price={totalExpenses} isBold isExpense />
+            </Stack>
+
+            <Stack direction='row' color='success.dark'>
+              <Typography sx={{ width: ORDER_WIDTH_55, fontWeight: 'bold' }}>
+                Procenjen profit:
+              </Typography>
+              <FormattedPrice price={totalIncome - totalExpenses} isBold />
             </Stack>
 
             <Stack direction='row'>
               <Typography sx={{ width: ORDER_WIDTH_55 }}>
-                Ukupni troškovi:
+                Profitna marža:
               </Typography>
-              <FormattedPrice price={order.numOfCups * order.totalExpenses} />
+              <Typography>{profitMargin}%</Typography>
             </Stack>
           </Stack>
         </CardContent>

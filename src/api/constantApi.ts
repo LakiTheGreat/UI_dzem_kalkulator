@@ -23,6 +23,12 @@ const constantApiEndpoints = api.injectEndpoints({
       }),
       providesTags: ['Constant'],
     }),
+    getTomatoOneCupExpense: build.query<Constant, number>({
+      query: (userId) => ({
+        url: `${constantApiUrl}/${userId === 1 ? 8 : 7} `,
+      }),
+      providesTags: ['Constant'],
+    }),
 
     patchConstant: build.mutation<
       Constant,
@@ -41,6 +47,7 @@ const constantApiEndpoints = api.injectEndpoints({
 });
 
 export const {
+  useGetTomatoOneCupExpenseQuery,
   useGetTomatoPriceQuery,
   useGetOtherExpansesMarginQuery,
   useGetProfitMarginQuery,
