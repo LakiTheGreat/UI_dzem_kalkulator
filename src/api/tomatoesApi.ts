@@ -44,6 +44,13 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       providesTags: ['TomatoOrder'],
     }),
 
+    getTomatoTransactionById: build.query<TomatoTransaction, number>({
+      query: (id) => ({
+        url: `${tomatoApiUrl}/transactions/${id}`,
+      }),
+      providesTags: ['TomatoTransaction'],
+    }),
+
     getTomatoCups: build.query<TomatoCup[], void>({
       query: () => {
         return {
@@ -119,6 +126,18 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       }),
       invalidatesTags: ['TomatoOrder', 'TomatoInventory'],
     }),
+
+    updateTomatoTransaction: build.mutation<
+      TomatoTransaction,
+      TomatoTransaction
+    >({
+      query: (body) => ({
+        url: `${tomatoApiUrl}/transactions/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['TomatoTransaction', 'TomatoInventory'],
+    }),
     deleteTomatoOrder: build.mutation<TomatoOrder, Partial<TomatoOrder>>({
       query: (body) => ({
         url: `${tomatoApiUrl}/${body.id}`,
@@ -127,12 +146,25 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       }),
       invalidatesTags: ['TomatoOrder', 'TomatoInventory'],
     }),
+
+    deleteTomatoTransaction: build.mutation<
+      TomatoTransaction,
+      Partial<TomatoTransaction>
+    >({
+      query: (body) => ({
+        url: `${tomatoApiUrl}/transactions/${body.id}`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: ['TomatoTransaction', 'TomatoInventory'],
+    }),
   }),
 
   overrideExisting: false,
 });
 
 export const {
+  useGetTomatoTransactionByIdQuery,
   useCreateTomatoTransactionMutation,
   useGetAllTomatoTransactionQuery,
   useGetTomatoTotalsQuery,
@@ -142,4 +174,6 @@ export const {
   useCreateTomatoOrderMutation,
   useGetAllTomatoOrderQuery,
   useUpdateTomatoOrderMutation,
+  useDeleteTomatoTransactionMutation,
+  useUpdateTomatoTransactionMutation,
 } = tomatoesApiEndpoints;

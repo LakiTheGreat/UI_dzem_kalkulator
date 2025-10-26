@@ -14,23 +14,33 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { Id } from 'react-toastify';
 
-import { useGetAllTomatoTransactionQuery } from '../../../api/tomatoesApi';
+import {
+  useDeleteTomatoTransactionMutation,
+  useGetAllTomatoTransactionQuery,
+} from '../../../api/tomatoesApi';
+import GeneralDialog from '../../../components/GeneralDialog';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { MONTHS, YEARS } from '../../../constants';
 import { routesTomatoes } from '../../../constants/routes';
+import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
+import { useApiSuccessNotification } from '../../../hooks/useApiSuccessNotification';
+import useConfirmDialog from '../../../hooks/useConfirmDialog';
 import { BG_COLOR_INPUT } from '../../../theme/palette';
 import { TomatoTransactionParams } from '../../../types/tomatos';
-import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
-import TomatoTransactionCard from './TomatoTransactionCard';
-import GeneralDialog from '../../../components/GeneralDialog';
-import CreateTomatoTransaction from './form/CreateTomatoTransaction';
 import { TransactionStatusStrings } from '../../../types/transactions';
 import getStatusTranslation from '../../../utils/getStatusTranslation';
-import { Z } from 'react-router/dist/development/index-react-server-client-BQ6FxdA_';
+import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
+import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
+import CreateTomatoTransaction from './form/CreateTomatoTransaction';
+import EditTomatoTransaction from './form/EditTomatoTransaction';
+import TomatoTransactionCard from './TomatoTransactionCard';
 
 export default function TomatoesTransactionPage() {
+  const [getConfirmation, Confirmation] = useConfirmDialog();
   const [openCreate, setOpenCreate] = useState<boolean>(false);
+  const [toastId, setToastId] = useState<Id>('');
   const [transactionId, setTransactionId] = useState<number | null>(null);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
 
@@ -48,15 +58,44 @@ export default function TomatoesTransactionPage() {
 
   const { data, isFetching } = useGetAllTomatoTransactionQuery(params);
 
+  const [deleteTransaction, { data: deleteData, error: deleteError }] =
+    useDeleteTomatoTransactionMutation();
+
   const mappedStatus = mapAllTransactionStatusesToMenuItems();
 
   const handleEdit = (id: number) => {
-    console.log(id);
+    setTransactionId(id);
+    setOpenEdit(true);
   };
 
-  const handleDelete = (id: number) => {
-    console.log(id);
+  const handleDelete = async (id: number) => {
+    const isConfirmed = await getConfirmation({
+      title: 'Jesi li siguran da želiš da obrišeš ovu transakciju?',
+      contentSubtitle: 'Posle nema nazad (ima)!',
+      confirmLabel: 'Da',
+    });
+
+    const req = {
+      isDeleted: true,
+      id,
+    };
+
+    if (isConfirmed) {
+      deleteTransaction(req);
+      setToastId(setToastIsLoading(`Sačekaj....`));
+    }
   };
+
+  useApiSuccessNotification({
+    data: deleteData,
+    message: 'Serija uspešno obrisana',
+    toastId,
+  });
+
+  useApiErrorNotification({
+    error: deleteError,
+    toastId,
+  });
 
   return (
     <Container>
@@ -206,6 +245,22 @@ export default function TomatoesTransactionPage() {
           mappedStatuses={mappedStatus}
         />
       </GeneralDialog>
+      <GeneralDialog
+        open={openEdit}
+        handleClose={() => {
+          setOpenEdit(false);
+          setTransactionId(null);
+        }}
+        maxWidth='xs'
+        title={'Napravi transakciju čeri paradajza'}
+      >
+        <EditTomatoTransaction
+          setOpen={setOpenEdit}
+          mappedStatuses={mappedStatus}
+          transactionId={transactionId}
+        />
+      </GeneralDialog>
+      <Confirmation />
     </Container>
   );
 }

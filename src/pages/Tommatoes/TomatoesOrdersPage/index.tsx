@@ -78,7 +78,7 @@ export default function TomatoesOrdersPage() {
 
   const handleDelete = async (id: number) => {
     const isConfirmed = await getConfirmation({
-      title: 'Jesi li siguran da želiš da obrišeš ovu transakciju?',
+      title: 'Jesi li siguran da želiš da obrišeš ovu proizvodnu seriju?',
       contentSubtitle: 'Posle nema nazad (ima)!',
       confirmLabel: 'Da',
     });

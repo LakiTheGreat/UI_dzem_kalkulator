@@ -45,7 +45,7 @@ export type UnsavedTomatoTransaction = {
 
 export type TomatoTransaction = UnsavedTomatoTransaction & {
   id: number;
-  createdAt: string;
+  createdAt?: string;
   isDeleted?: boolean;
-  label: string;
+  label?: string;
 };
