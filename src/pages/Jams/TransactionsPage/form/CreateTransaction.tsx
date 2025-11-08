@@ -51,7 +51,6 @@ export default function CreateTransaction() {
     data,
     message: 'Transakcija uspešno kreirana',
     toastId,
-    navigateToAfter: `/${routesJam.transactions}`,
   });
 
   useApiErrorNotification({
@@ -77,6 +76,7 @@ export default function CreateTransaction() {
       {isLoading && <Skeleton height={380} variant='rounded' />}
       {!isLoading && (
         <TransactionsForm
+          data={data}
           isLoading={createIsLoading}
           onSubmit={handleSubmit}
           mappedCups={mappedCups}

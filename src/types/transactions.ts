@@ -15,6 +15,7 @@ export type UnsavedTransaction = {
   orderTypeId: number;
   status: TransactionStatusStrings;
   cupData: CupData[];
+  note: string;
 };
 
 export type UpdateTransactionReq = {

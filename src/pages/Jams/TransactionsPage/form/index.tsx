@@ -7,7 +7,11 @@ import RHFSelectInput, {
 } from '../../../../components/RHFSelectInput';
 import RHFTextInput from '../../../../components/RHFTextInput';
 import { CupData } from '../../../../types/inventory';
-import { TransactionStatusStrings } from '../../../../types/transactions';
+import {
+  TransactionStatusStrings,
+  UnsavedTransaction,
+} from '../../../../types/transactions';
+import { useEffect } from 'react';
 
 export type TransactionFormData = {
   orderTypeId: string;
@@ -23,6 +27,7 @@ type Props = {
   mappedCups: MenuItemType[] | undefined;
   mappedStatus: MenuItemType[] | undefined;
   isLoading: boolean;
+  data?: UnsavedTransaction;
 };
 
 export default function TransactionsForm({
@@ -32,6 +37,7 @@ export default function TransactionsForm({
   mappedCups,
   mappedStatus,
   isLoading,
+  data,
 }: Props) {
   const mergedCupData =
     mappedCups?.map((cup) => {
@@ -51,11 +57,18 @@ export default function TransactionsForm({
     },
   });
 
-  const { handleSubmit, register, watch } = methods;
+  const { handleSubmit, register, watch, setValue, reset } = methods;
 
   const { orderTypeId, cupData } = watch();
 
   const hasCupWithQuantity = cupData.some((cup) => Number(cup.quantity) > 0);
+
+  useEffect(() => {
+    if (data) {
+      reset();
+      setValue('note', data.note);
+    }
+  }, [data, reset, setValue]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
