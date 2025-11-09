@@ -203,6 +203,7 @@ export default function TomatoesTransactionPage() {
             </Stack>
 
             <ResetButton
+              loading={isFetching}
               sx={{ bgcolor: BG_COLOR_INPUT }}
               handleReset={() => setParams(defaultParams)}
             />
