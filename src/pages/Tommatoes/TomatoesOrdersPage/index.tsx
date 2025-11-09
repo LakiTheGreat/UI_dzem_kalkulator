@@ -1,10 +1,8 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
-  Button,
   Container,
   Divider,
   FormControl,
@@ -44,6 +42,7 @@ import TomatoTransactionCard from './TomatoOrderCard';
 
 import { BG_COLOR_INPUT } from '../../../theme/palette';
 import { TomatoOrderParams } from '../../../types/tomatos';
+import ResetButton from '../../../components/ResetButtton';
 
 export default function TomatoesOrdersPage() {
   const userId = useAppSelector((state) => state.auth.userId);
@@ -172,17 +171,11 @@ export default function TomatoesOrdersPage() {
                   </Select>
                 </FormControl>
               </Stack>
-              <Button
-                sx={{ bgcolor: BG_COLOR_INPUT }}
-                variant='outlined'
-                startIcon={<RefreshIcon />}
-                onClick={() => setParams(defaultParams)}
-                size='large'
+
+              <ResetButton
+                handleReset={() => setParams(defaultParams)}
                 loading={isFetching}
-                fullWidth
-              >
-                Resetuj filtere
-              </Button>
+              />
             </Stack>
             {somethingIsLoading && (
               <Skeleton variant='rounded' height={96} width={255} />

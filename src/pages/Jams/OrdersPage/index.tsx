@@ -1,10 +1,8 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
-  Button,
   Container,
   Divider,
   FormControl,
@@ -42,6 +40,7 @@ import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import OrderCard from './OrderCard';
 import OrderDetailsDialog from './OrderDetailsDialog';
 import OrdersTable from './table/OrdersTable';
+import ResetButton from '../../../components/ResetButtton';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
@@ -223,16 +222,11 @@ export default function OrdersPage() {
                     </Select>
                   </FormControl>
                 </Stack>
-                <Button
-                  variant='outlined'
-                  startIcon={<RefreshIcon />}
-                  onClick={() => setParams(defaultParams)}
-                  size='large'
-                  sx={{ bgcolor: BG_COLOR_INPUT }}
+
+                <ResetButton
+                  handleReset={() => setParams(defaultParams)}
                   loading={isFetching}
-                >
-                  Resetuj filtere
-                </Button>
+                />
               </Stack>
             )}
 

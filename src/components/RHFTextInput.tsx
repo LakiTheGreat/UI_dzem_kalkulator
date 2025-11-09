@@ -81,7 +81,7 @@ const RHFTextInput = forwardRef<HTMLInputElement, RHFTextInputProps>(
           };
 
           return (
-            <Stack direction='row' gap={2}>
+            <Stack direction='row' gap={2} sx={{ width: '100%' }}>
               <Stack sx={{ width: '100%' }}>
                 <TextField
                   {...rest}

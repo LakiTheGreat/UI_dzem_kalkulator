@@ -1,7 +1,9 @@
 import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import FormProvider from '../../../../components/FormProvider';
+import ResetIconButton from '../../../../components/ResetIconButton';
 import RHFSelectInput, {
   MenuItemType,
 } from '../../../../components/RHFSelectInput';
@@ -11,7 +13,6 @@ import {
   TransactionStatusStrings,
   UnsavedTransaction,
 } from '../../../../types/transactions';
-import { useEffect } from 'react';
 
 export type TransactionFormData = {
   orderTypeId: string;
@@ -39,6 +40,8 @@ export default function TransactionsForm({
   isLoading,
   data,
 }: Props) {
+  const noteRef = useRef<HTMLInputElement>(null);
+
   const mergedCupData =
     mappedCups?.map((cup) => {
       const existing = values?.cupData?.find((c) => c.cupId === cup.id);
@@ -63,6 +66,11 @@ export default function TransactionsForm({
 
   const hasCupWithQuantity = cupData.some((cup) => Number(cup.quantity) > 0);
 
+  const handleNoteReset = () => {
+    setValue('note', '');
+    noteRef.current?.focus();
+  };
+
   useEffect(() => {
     if (data) {
       reset();
@@ -73,7 +81,16 @@ export default function TransactionsForm({
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack gap={3}>
-        <RHFTextInput name='note' label='Napomena' />
+        <Stack direction='row' gap={1} sx={{ width: '100%' }}>
+          <RHFTextInput name='note' label='Napomena' ref={noteRef} />
+          <Stack justifyContent='center'>
+            <ResetIconButton
+              handleReset={handleNoteReset}
+              sx={{ width: 'fit-content' }}
+              color='primary'
+            />
+          </Stack>
+        </Stack>
 
         <RHFSelectInput
           name='orderTypeId'

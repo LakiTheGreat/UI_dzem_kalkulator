@@ -1,10 +1,8 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {
-  Button,
   Container,
   Divider,
   FormControl,
@@ -47,6 +45,7 @@ import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
 import { BG_COLOR_INPUT } from '../../../theme/palette';
 import { routesJam } from '../../../constants/routes';
+import ResetButton from '../../../components/ResetButtton';
 
 export default function TransactionsPage() {
   const isSm = useResponsive('down', 'sm');
@@ -244,16 +243,11 @@ export default function TransactionsPage() {
                     </Select>
                   </FormControl>
                 </Stack>
-                <Button
-                  sx={{ bgcolor: BG_COLOR_INPUT }}
-                  variant='outlined'
-                  startIcon={<RefreshIcon />}
-                  onClick={() => setParams(defaultParams)}
-                  size='large'
+
+                <ResetButton
+                  handleReset={() => setParams(defaultParams)}
                   loading={isFetching}
-                >
-                  Resetuj filtere
-                </Button>
+                />
               </Stack>
             )}
             <Stack gap={1}>

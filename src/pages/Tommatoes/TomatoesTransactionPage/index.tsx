@@ -1,7 +1,5 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import {
-  Button,
   Container,
   FormControl,
   Grid,
@@ -40,6 +38,7 @@ import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
 import CreateTomatoTransaction from './form/CreateTomatoTransaction';
 import EditTomatoTransaction from './form/EditTomatoTransaction';
 import TomatoTransactionCard from './TomatoTransactionCard';
+import ResetButton from '../../../components/ResetButtton';
 
 export default function TomatoesTransactionPage() {
   const userId = useAppSelector((state) => state.auth.userId);
@@ -203,17 +202,7 @@ export default function TomatoesTransactionPage() {
               </FormControl>
             </Stack>
 
-            <Button
-              sx={{ bgcolor: BG_COLOR_INPUT }}
-              variant='outlined'
-              startIcon={<RefreshIcon />}
-              onClick={() => setParams(defaultParams)}
-              size='large'
-              loading={isFetching}
-              fullWidth
-            >
-              Resetuj filtere
-            </Button>
+            <ResetButton handleReset={() => setParams(defaultParams)} />
 
             {somethingIsLoading && <Skeleton height={96} variant='rounded' />}
             {!somethingIsLoading &&
