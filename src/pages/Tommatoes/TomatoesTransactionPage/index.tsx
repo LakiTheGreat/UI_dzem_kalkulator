@@ -202,7 +202,10 @@ export default function TomatoesTransactionPage() {
               </FormControl>
             </Stack>
 
-            <ResetButton handleReset={() => setParams(defaultParams)} />
+            <ResetButton
+              sx={{ bgcolor: BG_COLOR_INPUT }}
+              handleReset={() => setParams(defaultParams)}
+            />
 
             {somethingIsLoading && <Skeleton height={96} variant='rounded' />}
             {!somethingIsLoading &&

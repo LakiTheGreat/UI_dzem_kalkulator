@@ -245,6 +245,7 @@ export default function TransactionsPage() {
                 </Stack>
 
                 <ResetButton
+                  sx={{ bgcolor: BG_COLOR_INPUT }}
                   handleReset={() => setParams(defaultParams)}
                   loading={isFetching}
                 />
