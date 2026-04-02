@@ -91,12 +91,22 @@ export default function TransactionsForm({
             />
           </Stack>
         </Stack>
-
-        <RHFSelectInput
-          name='orderTypeId'
-          label='Voće'
-          menuItems={mappedFruits || []}
-        />
+        <Stack gap={1}>
+          <RHFSelectInput
+            name='orderTypeId'
+            label='Voće'
+            menuItems={mappedFruits || []}
+            disabled={!!values}
+          />
+          <Stack>
+            <Typography variant='caption' color='text.secondary'>
+              Nije moguće promeniti voće nakon što je transakcija sačuvana.
+            </Typography>
+            <Typography variant='caption' color='text.secondary'>
+              Ako je napravljena greška, obriši transakciju i napravi novu.
+            </Typography>
+          </Stack>
+        </Stack>
         <RHFSelectInput
           name='status'
           label='Transakcija'
