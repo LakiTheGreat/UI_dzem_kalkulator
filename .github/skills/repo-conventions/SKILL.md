@@ -24,6 +24,8 @@ Read `AGENTS.md` and `docs/architecture.md` first. Use the closest existing feat
 ## Rules
 
 - **Never commit or push directly to `main`**; check `git branch --show-current` before every commit.
+- **Every pull request targets `main`, always** (`gh pr create --base main`). Never target another feature branch, even if the work depends on an unmerged PR.
+- **New branches are always created from an up-to-date `main`** (`git fetch origin`, then `git switch -c <name> origin/main`), never from another feature branch.
 - **Never commit without the owner's explicit approval, and never push without explicit approval.** Show the changes first and wait. Approval does not carry over to the next commit/push.
 - Run `npm run build` before proposing a commit; it must compile with zero TypeScript errors.
 - Keep user-facing text in Serbian, identifiers in English, files UTF-8.
