@@ -28,7 +28,7 @@ interface ChartPaletteOptions {
   red: string[];
 }
 
-declare module '@mui/material/styles/createPalette' {
+declare module '@mui/material/styles' {
   interface TypeBackground {
     neutral: string;
   }
