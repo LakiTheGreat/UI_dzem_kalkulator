@@ -40,6 +40,8 @@ Details: [docs/architecture.md](docs/architecture.md), [docs/known-issues.md](do
 ## Hard rules
 
 - **Never commit or push directly to `main`.** Check `git branch --show-current` before every commit; if it is `main`, switch to a feature branch first.
+- **Every pull request targets `main`, always** (`gh pr create --base main`). Never target another feature branch, even if the work depends on an unmerged PR.
+- **New branches are always created from an up-to-date `main`** (`git fetch origin`, then `git switch -c <name> origin/main`), never from another feature branch.
 - **Never commit without the owner's explicit approval, and never push without explicit approval.** Show the changes first, then wait. Approval does not carry over between commits/pushes.
 - Never commit secrets or `.env`. Do not paste real URLs/credentials into code or docs.
 - Real data belongs to the real user; `userId = 1` is the test user. Use only the test user for manual experiments.
