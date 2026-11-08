@@ -12,11 +12,11 @@ The backend is refactored gradually into a parallel `/api/v2` (see `BE_dzem_kalk
 | Pilot resource | `fruits` (BE side: `GET /api/v2/fruits` exists; other fruits endpoints are being added one by one). |
 | Rollback | Flip the flag back to v1. No BE redeploy needed. |
 
-## Intended design (not implemented yet)
+## Intended design (implemented for fruits)
 
-- A single config module (e.g. `src/constants/apiVersions.ts`) maps resource -> `'v1' | 'v2'`.
-- A small helper builds the URL prefix (`/fruits` or `/v2/fruits`); resource API files use it instead of a literal URL (`const fruitsUrl = '/fruits'` in `src/api/fruitsSlice.ts`).
-- Only endpoints that exist in v2 may be flagged to v2 (the flag may need to be per endpoint while the BE migration is partial).
+- `src/constants/apiVersions.ts` holds `API_VERSIONS` (resource -> endpoint -> `'v1' | 'v2'`, flag lives in code, per endpoint) and `withApiVersion(version, path)` which prefixes `/v2`.
+- Resource API files wrap their URLs with it (see `src/api/fruitsSlice.ts`). Currently only `fruits.list` is `'v2'`.
+- There is no automatic fallback: a flag pointing to a v2 route the BE does not have yields a 404.
 
 ## Rules
 
@@ -24,7 +24,6 @@ The backend is refactored gradually into a parallel `/api/v2` (see `BE_dzem_kalk
 - Do not change response types when flipping a flag; if v2 differs, it is a BE bug to fix first.
 - Test the flipped flag manually as the test user (`userId = 1`), never as the real user.
 
-## Open items
+## Decided
 
-- Where the flag lives (build-time env var, constant in code, or runtime/persisted setting). Not decided.
-- Whether the flag is per resource or per endpoint.
+- Flag is per endpoint and lives as a constant in code (rollback = change one line and redeploy).
