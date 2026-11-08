@@ -15,7 +15,7 @@ export type FruitsFormData = {
 type Props = {
   open: boolean;
   isLoading: boolean;
-  values?: FruitsFormData;
+  values?: Pick<FruitsFormData, 'label'>;
   data?: Fruit;
   handleClose: () => void;
   onSubmit: (values: FruitsFormData) => void;
