@@ -5,9 +5,9 @@ export type ApiVersion = 'v1' | 'v2';
 export const API_VERSIONS = {
   fruits: {
     list: 'v2',
-    create: 'v1',
-    patch: 'v1',
-    delete: 'v1',
+    create: 'v2',
+    patch: 'v2',
+    delete: 'v2',
   },
 } as const satisfies Record<string, Record<string, ApiVersion>>;
 
