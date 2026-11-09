@@ -1,4 +1,4 @@
-import { api } from '.';
+import { api } from ".";
 import {
   TomatoCup,
   TomatoOrder,
@@ -8,10 +8,15 @@ import {
   TomatoTransactionParams,
   UnsavedTomatoOrder,
   UnsavedTomatoTransaction,
-} from '../types/tomatos';
-import { TransactionStatusStrings } from '../types/transactions';
+} from "../types/tomatos";
+import { TransactionStatusStrings } from "../types/transactions";
 
-const tomatoApiUrl = '/tomatoes';
+import { API_VERSIONS, withApiVersion } from "../constants/apiVersions";
+
+const tomatoApiUrl = "/tomatoes";
+
+const tomatoUrl = (key: keyof typeof API_VERSIONS.tomatoes, path = "") =>
+  withApiVersion(API_VERSIONS.tomatoes[key], `${tomatoApiUrl}${path}`);
 
 const tomatoesApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
@@ -20,45 +25,45 @@ const tomatoesApiEndpoints = api.injectEndpoints({
         const params = new URLSearchParams();
 
         if (year && year > 0) {
-          params.set('year', String(year));
+          params.set("year", String(year));
         }
 
         if (month && month > 0) {
-          params.set('month', String(month));
+          params.set("month", String(month));
         }
 
         const query = params?.toString();
 
         return {
-          url: `${tomatoApiUrl}${query ? `?${query}` : ''}`,
+          url: tomatoUrl("orderList", query ? `?${query}` : ""),
         };
       },
 
-      providesTags: ['TomatoOrder'],
+      providesTags: ["TomatoOrder"],
     }),
 
     getTomatoOrderById: build.query<TomatoOrder, number>({
       query: (id) => ({
-        url: `${tomatoApiUrl}/${id}`,
+        url: tomatoUrl("orderById", `/${id}`),
       }),
-      providesTags: ['TomatoOrder'],
+      providesTags: ["TomatoOrder"],
     }),
 
     getTomatoTransactionById: build.query<TomatoTransaction, number>({
       query: (id) => ({
-        url: `${tomatoApiUrl}/transactions/${id}`,
+        url: tomatoUrl("transactionById", `/transactions/${id}`),
       }),
-      providesTags: ['TomatoTransaction'],
+      providesTags: ["TomatoTransaction"],
     }),
 
     getTomatoCups: build.query<TomatoCup[], void>({
       query: () => {
         return {
-          url: `${tomatoApiUrl}/cups`,
+          url: tomatoUrl("cups", "/cups"),
         };
       },
 
-      providesTags: ['TomatoCups'],
+      providesTags: ["TomatoCups"],
     }),
 
     getAllTomatoTransaction: build.query<
@@ -76,17 +81,20 @@ const tomatoesApiEndpoints = api.injectEndpoints({
           transactionStatus &&
           transactionStatus !== TransactionStatusStrings.ALL
         ) {
-          params.set('transactionStatus', String(transactionStatus));
+          params.set("transactionStatus", String(transactionStatus));
         }
 
         const query = params?.toString();
 
         return {
-          url: `${tomatoApiUrl}/transactions${query ? `?${query}` : ''}`,
+          url: tomatoUrl(
+            "transactionList",
+            `/transactions${query ? `?${query}` : ""}`,
+          ),
         };
       },
 
-      providesTags: ['TomatoTransaction'],
+      providesTags: ["TomatoTransaction"],
     }),
 
     createTomatoTransaction: build.mutation<
@@ -94,37 +102,37 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       UnsavedTomatoTransaction
     >({
       query: (body) => ({
-        url: `${tomatoApiUrl}/transactions`,
-        method: 'POST',
+        url: tomatoUrl("transactionCreate", "/transactions"),
+        method: "POST",
         body,
       }),
-      invalidatesTags: ['TomatoInventory', 'TomatoTransaction'],
+      invalidatesTags: ["TomatoInventory", "TomatoTransaction"],
     }),
 
     getTomatoTotals: build.query<TomatoTotal[], void>({
       query: () => {
         return {
-          url: `${tomatoApiUrl}/totals`,
+          url: tomatoUrl("totals", "/totals"),
         };
       },
 
-      providesTags: ['TomatoInventory'],
+      providesTags: ["TomatoInventory"],
     }),
     createTomatoOrder: build.mutation<TomatoOrder, UnsavedTomatoOrder>({
       query: (body) => ({
-        url: `${tomatoApiUrl}`,
-        method: 'POST',
+        url: tomatoUrl("orderCreate"),
+        method: "POST",
         body,
       }),
-      invalidatesTags: ['TomatoOrder', 'TomatoInventory'],
+      invalidatesTags: ["TomatoOrder", "TomatoInventory"],
     }),
     updateTomatoOrder: build.mutation<TomatoOrder, TomatoOrder>({
       query: (body) => ({
-        url: `${tomatoApiUrl}/${body.id}`,
-        method: 'PUT',
+        url: tomatoUrl("orderUpdate", `/${body.id}`),
+        method: "PUT",
         body,
       }),
-      invalidatesTags: ['TomatoOrder', 'TomatoInventory'],
+      invalidatesTags: ["TomatoOrder", "TomatoInventory"],
     }),
 
     updateTomatoTransaction: build.mutation<
@@ -132,19 +140,19 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       TomatoTransaction
     >({
       query: (body) => ({
-        url: `${tomatoApiUrl}/transactions/${body.id}`,
-        method: 'PUT',
+        url: tomatoUrl("transactionUpdate", `/transactions/${body.id}`),
+        method: "PUT",
         body,
       }),
-      invalidatesTags: ['TomatoTransaction', 'TomatoInventory'],
+      invalidatesTags: ["TomatoTransaction", "TomatoInventory"],
     }),
     deleteTomatoOrder: build.mutation<TomatoOrder, Partial<TomatoOrder>>({
       query: (body) => ({
-        url: `${tomatoApiUrl}/${body.id}`,
-        method: 'DELETE',
+        url: tomatoUrl("orderDelete", `/${body.id}`),
+        method: "DELETE",
         body,
       }),
-      invalidatesTags: ['TomatoOrder', 'TomatoInventory'],
+      invalidatesTags: ["TomatoOrder", "TomatoInventory"],
     }),
 
     deleteTomatoTransaction: build.mutation<
@@ -152,11 +160,11 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       Partial<TomatoTransaction>
     >({
       query: (body) => ({
-        url: `${tomatoApiUrl}/transactions/${body.id}`,
-        method: 'DELETE',
+        url: tomatoUrl("transactionDelete", `/transactions/${body.id}`),
+        method: "DELETE",
         body,
       }),
-      invalidatesTags: ['TomatoTransaction', 'TomatoInventory'],
+      invalidatesTags: ["TomatoTransaction", "TomatoInventory"],
     }),
   }),
 
