@@ -70,12 +70,16 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       TomatoTransaction[],
       TomatoTransactionParams
     >({
-      query: ({ transactionStatus }) => {
+      query: ({ year, month, transactionStatus }) => {
         const params = new URLSearchParams();
 
-        // if (orderTypeId && orderTypeId > 0) {
-        //   params.set('orderTypeId', String(orderTypeId));
-        // }
+        if (year && year > 0) {
+          params.set("year", String(year));
+        }
+
+        if (month && month > 0) {
+          params.set("month", String(month));
+        }
 
         if (
           transactionStatus &&
@@ -146,23 +150,18 @@ const tomatoesApiEndpoints = api.injectEndpoints({
       }),
       invalidatesTags: ["TomatoTransaction", "TomatoInventory"],
     }),
-    deleteTomatoOrder: build.mutation<TomatoOrder, Partial<TomatoOrder>>({
-      query: (body) => ({
-        url: tomatoUrl("orderDelete", `/${body.id}`),
+    deleteTomatoOrder: build.mutation<TomatoOrder, number>({
+      query: (id) => ({
+        url: tomatoUrl("orderDelete", `/${id}`),
         method: "DELETE",
-        body,
       }),
       invalidatesTags: ["TomatoOrder", "TomatoInventory"],
     }),
 
-    deleteTomatoTransaction: build.mutation<
-      TomatoTransaction,
-      Partial<TomatoTransaction>
-    >({
-      query: (body) => ({
-        url: tomatoUrl("transactionDelete", `/transactions/${body.id}`),
+    deleteTomatoTransaction: build.mutation<TomatoTransaction, number>({
+      query: (id) => ({
+        url: tomatoUrl("transactionDelete", `/transactions/${id}`),
         method: "DELETE",
-        body,
       }),
       invalidatesTags: ["TomatoTransaction", "TomatoInventory"],
     }),
