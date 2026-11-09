@@ -85,13 +85,8 @@ export default function TomatoesTransactionPage() {
       confirmLabel: 'Da',
     });
 
-    const req = {
-      isDeleted: true,
-      id,
-    };
-
     if (isConfirmed) {
-      deleteTransaction(req);
+      deleteTransaction(id);
       setToastId(setToastIsLoading(`Sačekaj....`));
     }
   };
