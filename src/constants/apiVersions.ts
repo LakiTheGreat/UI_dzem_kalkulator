@@ -9,6 +9,17 @@ export const API_VERSIONS = {
     patch: "v2",
     delete: "v2",
   },
+  cups: {
+    list: "v2",
+  },
+  cupCosts: {
+    list: "v2",
+    put: "v2",
+  },
+  cupValues: {
+    list: "v2",
+    put: "v2",
+  },
   tomatoes: {
     cups: "v2",
     totals: "v2",
