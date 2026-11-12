@@ -1,4 +1,5 @@
 import { api } from '.';
+import { API_VERSIONS, withApiVersion } from '../constants/apiVersions';
 import {
   Inventory,
   InventoryItem,
@@ -11,21 +12,27 @@ const inventoryApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
     getInventory: build.query<Inventory[], void>({
       query: () => ({
-        url: `${inventoryApiUrl}`,
+        url: withApiVersion(API_VERSIONS.inventory.list, inventoryApiUrl),
       }),
       providesTags: ['Inventory', 'Order'],
     }),
 
     getTotalInventory: build.query<InventoryItem[], void>({
       query: () => ({
-        url: `${inventoryApiUrl}/overview`,
+        url: withApiVersion(
+          API_VERSIONS.inventory.overview,
+          `${inventoryApiUrl}/overview`
+        ),
       }),
       providesTags: ['Inventory', 'Order'],
     }),
 
     postInventory: build.mutation<InventoryPostRequest, InventoryPostRequest>({
       query: (body) => ({
-        url: `${inventoryApiUrl}/input`,
+        url: withApiVersion(
+          API_VERSIONS.inventory.input,
+          `${inventoryApiUrl}/input`
+        ),
         method: 'POST',
         body,
       }),

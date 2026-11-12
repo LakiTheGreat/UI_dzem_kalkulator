@@ -46,18 +46,21 @@ export default function CreateOrder() {
       orderName: data.orderName,
       fruits: data.fruits.map((fruit) => ({
         grams: fruit.grams.toString(),
-        price: fruit.price.toString(),
-        total: fruit.total.toString(),
+        price: fruit.price.toString() || '0',
+        total: fruit.total.toString() || '0',
         fruitId: fruit.fruitId,
       })),
-      cups: data.cups.map((cup) => ({
-        id: cup.id,
-        cost: cup.cost,
-        label: cup.label,
-        numberOf: cup.numberOf,
-        sellingPrice: cup.sellingPrice,
-        total: cup.total,
-      })),
+      // v2 requires at least 1 jar per cup, so unused cups are not sent
+      cups: data.cups
+        .filter((cup) => Number(cup.numberOf) > 0)
+        .map((cup) => ({
+          id: cup.id,
+          cost: cup.cost,
+          label: cup.label,
+          numberOf: cup.numberOf,
+          sellingPrice: cup.sellingPrice,
+          total: cup.total,
+        })),
       otherExpensesMargin: otherExpansesMargin?.value || 1,
       baseFruitIsFree: data.baseFruitIsFree,
     };

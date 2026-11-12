@@ -1,4 +1,5 @@
 import { api } from '.';
+import { API_VERSIONS, withApiVersion } from '../constants/apiVersions';
 import {
   NewOrder,
   Order,
@@ -33,7 +34,10 @@ const orderApiEndpoints = api.injectEndpoints({
         const query = params?.toString();
 
         return {
-          url: `${ordersApiUrl}${query ? `?${query}` : ''}`,
+          url: withApiVersion(
+            API_VERSIONS.orders.list,
+            `${ordersApiUrl}${query ? `?${query}` : ''}`
+          ),
         };
       },
       providesTags: ['Order'],
@@ -41,7 +45,7 @@ const orderApiEndpoints = api.injectEndpoints({
 
     getOrderById: build.query<Order, string | number>({
       query: (id) => ({
-        url: `${ordersApiUrl}/${id}`,
+        url: withApiVersion(API_VERSIONS.orders.byId, `${ordersApiUrl}/${id}`),
         method: 'GET',
       }),
       providesTags: ['Order'],
@@ -49,7 +53,7 @@ const orderApiEndpoints = api.injectEndpoints({
 
     createNewOrder: build.mutation<Order, NewOrder>({
       query: (body) => ({
-        url: `${ordersApiUrl}`,
+        url: withApiVersion(API_VERSIONS.orders.create, ordersApiUrl),
         method: 'POST',
         body,
       }),
@@ -58,7 +62,10 @@ const orderApiEndpoints = api.injectEndpoints({
 
     patchOrder: build.mutation<Order, OrderPatchRequest>({
       query: (body) => ({
-        url: `${ordersApiUrl}/${body.id}`,
+        url: withApiVersion(
+          API_VERSIONS.orders.update,
+          `${ordersApiUrl}/${body.id}`
+        ),
         method: 'PUT',
         body,
       }),
@@ -67,7 +74,7 @@ const orderApiEndpoints = api.injectEndpoints({
 
     deleteOrder: build.mutation<Order, number>({
       query: (id) => ({
-        url: `${ordersApiUrl}/${id}`,
+        url: withApiVersion(API_VERSIONS.orders.delete, `${ordersApiUrl}/${id}`),
         method: 'DELETE',
       }),
       invalidatesTags: ['Order'],

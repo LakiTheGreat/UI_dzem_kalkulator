@@ -44,6 +44,25 @@ export const API_VERSIONS = {
     transactionUpdate: "v2",
     transactionDelete: "v2",
   },
+  orders: {
+    list: "v2",
+    byId: "v2",
+    create: "v2",
+    update: "v2",
+    delete: "v2",
+  },
+  transactions: {
+    list: "v2",
+    byId: "v2",
+    create: "v2",
+    update: "v2",
+    delete: "v2",
+  },
+  inventory: {
+    list: "v2",
+    overview: "v2",
+    input: "v2",
+  },
 } as const satisfies Record<string, Record<string, ApiVersion>>;
 
 export const withApiVersion = (version: ApiVersion, path: string) =>
