@@ -4,6 +4,7 @@ import { Id } from 'react-toastify';
 import { useCreateFruitMutation } from '../../../../../api/fruitsSlice';
 import setToastIsLoading from '../../../../../utils/toastify/setToastIsLoading';
 import { useApiSuccessNotification } from '../../../../../hooks/useApiSuccessNotification';
+import { useApiErrorNotification } from '../../../../../hooks/useApiErrorNotification';
 import { FruitForm, FruitsFormData } from './FruitForm';
 
 type Props = {
@@ -14,8 +15,10 @@ type Props = {
 export default function CreateFruit({ open, handleClose }: Props) {
   const [toastId, setToastId] = useState<Id>('');
 
-  const [createFruit, { data: createFruitData, isLoading }] =
-    useCreateFruitMutation();
+  const [
+    createFruit,
+    { data: createFruitData, error: createFruitError, isLoading },
+  ] = useCreateFruitMutation();
 
   const handleCreate = (values: FruitsFormData) => {
     createFruit({ label: values.label });
@@ -28,6 +31,8 @@ export default function CreateFruit({ open, handleClose }: Props) {
     message: 'Voćka uspešno kreirana',
     toastId,
   });
+
+  useApiErrorNotification({ error: createFruitError, toastId });
 
   return (
     <FruitForm

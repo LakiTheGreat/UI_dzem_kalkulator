@@ -61,11 +61,18 @@ export default function FruitsSettings() {
     }
   };
 
+  // Keep the current selection after a refetch; fall back to the first listed fruit.
   useEffect(() => {
-    if (data && data.length > 0) {
-      setSelectedId(data[0].id.toString());
+    const listed = userId === 1 ? data : filterFruits(data);
+
+    if (
+      listed &&
+      listed.length > 0 &&
+      !listed.some((f) => f.id.toString() === selectedId)
+    ) {
+      setSelectedId(listed[0].id.toString());
     }
-  }, [data]);
+  }, [data, userId, selectedId]);
 
   useApiSuccessNotification({
     data: deleteFruitData,
