@@ -68,7 +68,7 @@ export default function FruitsSettings() {
     if (
       listed &&
       listed.length > 0 &&
-      !listed.some((f) => f.id.toString() === selectedId)
+      !listed.some((f) => f.id === Number(selectedId))
     ) {
       setSelectedId(listed[0].id.toString());
     }
