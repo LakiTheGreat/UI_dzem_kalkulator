@@ -12,9 +12,18 @@ React 18 + TypeScript (strict), Create React App (`react-scripts` 5), MUI 7 + Da
 |---|---|
 | Dev server | `npm start` (README says `npm run dev`, that script does not exist) |
 | Production build | `npm run build` (`prebuild` writes `src/version.ts` from git commit count) |
-| Tests | `npm test` (react-scripts/Jest; **no tests exist yet**) |
+| Tests | `npm test` (react-scripts/Jest; **no unit tests exist yet**) |
+| E2E tests | `npm run test:e2e` (Playwright, see below) |
 
 There is no linter config beyond CRA's `react-app` ESLint preset and no formatter config. Validate changes with `npm run build` (must compile with zero TypeScript errors).
+
+## E2E tests (Playwright)
+
+`e2e/*.spec.ts`, config in `playwright.config.ts`. Like the BE tests they use the real database, act **only as test user `userId = 1`** (login is skipped by seeding the persisted auth state) and restore what they change. Currently covered: `constants` only.
+
+- Start the backend locally first (`npm run build` + `npm start` in `BE_dzem_kalkulator`, port 3333 from its `.env`).
+- `npm run test:e2e` starts its own UI dev server on port 3000 (stop any running `npm start` first) with `REACT_APP_API_URL` set to `E2E_API_URL` (default `http://localhost:3333/api`). The config refuses a non-local API URL, so the real backend can never be hit.
+- First run on a machine: `npx playwright install chromium`.
 
 ## Environment
 
