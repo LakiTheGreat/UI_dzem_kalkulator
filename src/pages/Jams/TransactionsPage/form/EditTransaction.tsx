@@ -45,16 +45,18 @@ export default function EditTransaction() {
     cupsWithDataIsLoading || fruitLoading || transactionIsLoading;
 
   const handleSubmit = (data: TransactionFormData) => {
-    console.log(data.note);
     const transformed = {
       id: Number(id),
       note: data.note,
       status: data.status,
       orderTypeId: Number(data.orderTypeId),
-      cupData: data.cupData.map((cup) => ({
-        ...cup,
-        quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
-      })),
+      // v2 rejects 0, so cups without jars are not sent
+      cupData: data.cupData
+        .filter((cup) => Number(cup.quantity) > 0)
+        .map((cup) => ({
+          ...cup,
+          quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
+        })),
     };
 
     updateTransaction(transformed);

@@ -1,4 +1,5 @@
 import { api } from '.';
+import { API_VERSIONS, withApiVersion } from '../constants/apiVersions';
 import {
   Transaction,
   TransactionParams,
@@ -33,7 +34,10 @@ const transactionsApiEndpoints = api.injectEndpoints({
         const query = params?.toString();
 
         return {
-          url: `${transactionsApiUrl}${query ? `?${query}` : ''}`,
+          url: withApiVersion(
+            API_VERSIONS.transactions.list,
+            `${transactionsApiUrl}${query ? `?${query}` : ''}`
+          ),
         };
       },
 
@@ -41,13 +45,16 @@ const transactionsApiEndpoints = api.injectEndpoints({
     }),
     getTransactionById: build.query<Transaction, string>({
       query: (id) => ({
-        url: `${transactionsApiUrl}/${id}`,
+        url: withApiVersion(
+          API_VERSIONS.transactions.byId,
+          `${transactionsApiUrl}/${id}`
+        ),
       }),
       providesTags: ['Inventory', 'Transactions'],
     }),
     createTransaction: build.mutation<UnsavedTransaction, UnsavedTransaction>({
       query: (body) => ({
-        url: `${transactionsApiUrl}`,
+        url: withApiVersion(API_VERSIONS.transactions.create, transactionsApiUrl),
         method: 'POST',
         body,
       }),
@@ -56,7 +63,10 @@ const transactionsApiEndpoints = api.injectEndpoints({
     updateTransaction: build.mutation<UnsavedTransaction, UpdateTransactionReq>(
       {
         query: (body) => ({
-          url: `${transactionsApiUrl}/${body.id}`,
+          url: withApiVersion(
+            API_VERSIONS.transactions.update,
+            `${transactionsApiUrl}/${body.id}`
+          ),
           method: 'PUT',
           body,
         }),
@@ -65,9 +75,11 @@ const transactionsApiEndpoints = api.injectEndpoints({
     ),
     deleteTransaction: build.mutation<UnsavedTransaction, number>({
       query: (id) => ({
-        url: `${transactionsApiUrl}/${id}`,
+        url: withApiVersion(
+          API_VERSIONS.transactions.delete,
+          `${transactionsApiUrl}/${id}`
+        ),
         method: 'DELETE',
-        body: { isDeleted: true },
       }),
       invalidatesTags: ['Inventory', 'Transactions'],
     }),

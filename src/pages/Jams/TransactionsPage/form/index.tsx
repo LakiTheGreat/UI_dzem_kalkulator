@@ -96,16 +96,7 @@ export default function TransactionsForm({
             name='orderTypeId'
             label='Voće'
             menuItems={mappedFruits || []}
-            disabled={!!values}
           />
-          <Stack>
-            <Typography variant='caption' color='text.secondary'>
-              Nije moguće promeniti voće nakon što je transakcija sačuvana.
-            </Typography>
-            <Typography variant='caption' color='text.secondary'>
-              Ako je napravljena greška, obriši transakciju i napravi novu.
-            </Typography>
-          </Stack>
         </Stack>
         <RHFSelectInput
           name='status'

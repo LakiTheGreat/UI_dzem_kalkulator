@@ -58,18 +58,21 @@ export default function EditOrder() {
       orderName: data.orderName,
       fruits: data.fruits.map((fruit) => ({
         grams: fruit.grams.toString(),
-        price: fruit.price.toString(),
-        total: fruit.total.toString(),
+        price: fruit.price.toString() || '0',
+        total: fruit.total.toString() || '0',
         fruitId: fruit.fruitId,
       })),
-      cups: data.cups.map((cup) => ({
-        id: cup.id,
-        cost: cup.cost,
-        label: cup.label,
-        numberOf: cup.numberOf,
-        sellingPrice: cup.sellingPrice,
-        total: cup.total,
-      })),
+      // v2 requires at least 1 jar per cup, so unused cups are not sent
+      cups: data.cups
+        .filter((cup) => Number(cup.numberOf) > 0)
+        .map((cup) => ({
+          id: cup.id,
+          cost: cup.cost,
+          label: cup.label,
+          numberOf: cup.numberOf,
+          sellingPrice: cup.sellingPrice,
+          total: cup.total,
+        })),
       otherExpensesMargin: otherExpansesMargin?.value || 1,
       baseFruitIsFree: data.baseFruitIsFree,
     };
@@ -125,7 +128,18 @@ export default function EditOrder() {
             orderTypeId: String(singleOrder.orderTypeId),
             baseFruitIsFree: singleOrder.baseFruitIsFree,
             fruits: singleOrder.fruits,
-            cups: singleOrder.cups,
+            // The form matches cups by index, so saved orders (which only hold used cups) are padded
+            cups: (cupsWithData ?? []).map(
+              (cup) =>
+                singleOrder.cups.find((saved) => saved.id === cup.id) ?? {
+                  id: cup.id,
+                  label: cup.label,
+                  numberOf: 0,
+                  cost: cup.cost,
+                  sellingPrice: cup.sellingPrice,
+                  total: 0,
+                }
+            ),
           }}
         />
       )}

@@ -37,10 +37,13 @@ export default function CreateTransaction() {
     const transformed = {
       ...data,
       orderTypeId: Number(data.orderTypeId),
-      cupData: data.cupData.map((cup) => ({
-        ...cup,
-        quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
-      })),
+      // v2 rejects 0, so cups without jars are not sent
+      cupData: data.cupData
+        .filter((cup) => Number(cup.quantity) > 0)
+        .map((cup) => ({
+          ...cup,
+          quantity: -Math.abs(Number(cup.quantity)), // ensure quantity is negative
+        })),
     };
 
     createTransaction(transformed);

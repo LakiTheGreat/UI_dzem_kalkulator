@@ -193,7 +193,12 @@ export default function OrderForm({
           disabled={
             !orderTypeId || //Mora da postoji vrsta džema
             !cups.some((cup) => Number(cup.numberOf) > 0) || //Mora biti uneta makar jedna tegla
-            fruits.some((fruit) => !fruit.grams || Number(fruit.grams) <= 0) // Ni jedno voce ne sme da bude bez gramaze
+            fruits.some(
+              (fruit) =>
+                !fruit.fruitId || // Svako voće mora biti izabrano
+                !fruit.grams ||
+                Number(fruit.grams) <= 0
+            ) // Ni jedno voce ne sme da bude bez gramaze
           }
         >
           Sačuvaj
