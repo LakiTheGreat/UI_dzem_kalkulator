@@ -19,7 +19,7 @@ There is no linter config beyond CRA's `react-app` ESLint preset and no formatte
 
 ## E2E tests (Playwright)
 
-`e2e/*.spec.ts`, config in `playwright.config.ts`. Like the BE tests they use the real database, act **only as test user `userId = 1`** (login is skipped by seeding the persisted auth state) and restore what they change. Currently covered: `constants` only.
+`e2e/*.spec.ts`, config in `playwright.config.ts`. Like the BE tests they use the real database, act **only as test user `userId = 1`** (login is skipped by seeding the persisted auth state) and restore what they change. Currently covered: `constants`, `fruits`, `cupCosts`/`cupValues` (`cupPrices.spec.ts`), `tomatoes` (orders + transactions). `cups` has no screen of its own.
 
 - Start the backend locally first (`npm run build` + `npm start` in `BE_dzem_kalkulator`, port 3333 from its `.env`).
 - `npm run test:e2e` starts its own UI dev server on port 3000 (stop any running `npm start` first) with `REACT_APP_API_URL` set to `E2E_API_URL` (default `http://localhost:3333/api`). The config refuses a non-local API URL, so the real backend can never be hit.

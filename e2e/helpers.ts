@@ -40,3 +40,27 @@ export async function restoreConstant(
     data: { value: original.value, label: original.label },
   });
 }
+
+export const SAVE_BUTTON = /Sa.{1,2}uvaj/; // the UI string uses a decomposed "č"
+
+export const uniqueLabel = (name: string) => `zz_test_${Date.now()}_${name}`;
+
+export async function apiGet<T>(request: APIRequestContext, path: string) {
+  const res = await request.get(api(path), { headers: apiHeaders });
+  if (!res.ok()) throw new Error(`GET ${path} -> ${res.status()}`);
+  return (await res.json()) as T;
+}
+
+export async function apiPost<T>(
+  request: APIRequestContext,
+  path: string,
+  data: object
+) {
+  const res = await request.post(api(path), { headers: apiHeaders, data });
+  if (!res.ok()) throw new Error(`POST ${path} -> ${res.status()}`);
+  return (await res.json()) as T;
+}
+
+export async function apiDelete(request: APIRequestContext, path: string) {
+  await request.delete(api(path), { headers: apiHeaders });
+}
