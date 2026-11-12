@@ -63,7 +63,7 @@ export default function EditBouquetTransaction() {
         heading={'Transakcije'}
         links={[
           {
-            name: 'Džemovi',
+            name: 'Jestivi buketi',
             href: `/${routesBouquets.root}`,
           },
           {

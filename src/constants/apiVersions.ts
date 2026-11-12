@@ -24,6 +24,12 @@ export const API_VERSIONS = {
     byId: "v2",
     patch: "v2",
   },
+  bouquets: {
+    list: "v2",
+    byId: "v2",
+    create: "v2",
+    update: "v2",
+  },
   tomatoes: {
     cups: "v2",
     totals: "v2",
