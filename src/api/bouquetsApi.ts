@@ -1,4 +1,5 @@
 import { api } from '.';
+import { API_VERSIONS, withApiVersion } from '../constants/apiVersions';
 import { BouquetFormData } from '../pages/Bouquets/BouquetPage/form';
 
 import { BouquetParams, BouquetTransaction } from '../types/bouguets';
@@ -13,17 +14,14 @@ const bouquetsApiEndpoints = api.injectEndpoints({
     >({
       query: ({ transactionStatus }) => {
         const params = new URLSearchParams();
-
-        // if (orderTypeId && orderTypeId > 0) {
-        //   params.set('orderTypeId', String(orderTypeId));
-        // }
-
         if (transactionStatus && transactionStatus !== 'ALL') {
           params.set('transactionStatus', String(transactionStatus));
         }
         return {
-          // url: `${bouquetsApiUrl}`,
-          url: `${bouquetsApiUrl}?${params.toString()}`,
+          url: withApiVersion(
+            API_VERSIONS.bouquets.list,
+            `${bouquetsApiUrl}?${params.toString()}`
+          ),
         };
       },
 
@@ -31,7 +29,7 @@ const bouquetsApiEndpoints = api.injectEndpoints({
     }),
     getBouquetTransactionById: build.query<BouquetTransaction, string>({
       query: (id) => ({
-        url: `${bouquetsApiUrl}/${id}`,
+        url: withApiVersion(API_VERSIONS.bouquets.byId, `${bouquetsApiUrl}/${id}`),
       }),
       providesTags: ['Bouquet'],
     }),
@@ -40,7 +38,7 @@ const bouquetsApiEndpoints = api.injectEndpoints({
       BouquetFormData
     >({
       query: (body) => ({
-        url: `${bouquetsApiUrl}`,
+        url: withApiVersion(API_VERSIONS.bouquets.create, bouquetsApiUrl),
         method: 'POST',
         body,
       }),
@@ -51,7 +49,10 @@ const bouquetsApiEndpoints = api.injectEndpoints({
       BouquetTransaction
     >({
       query: (body) => ({
-        url: `${bouquetsApiUrl}/${body.id}`,
+        url: withApiVersion(
+          API_VERSIONS.bouquets.update,
+          `${bouquetsApiUrl}/${body.id}`
+        ),
         method: 'PUT',
         body,
       }),

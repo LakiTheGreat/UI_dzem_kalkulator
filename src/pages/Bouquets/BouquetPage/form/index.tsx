@@ -47,11 +47,12 @@ export default function BouquetForm({
   const { totalExpense, income, profit, profitMargin } = watch();
 
   useEffect(() => {
-    if (totalExpense && income) {
-      setValue('profit', income - totalExpense);
+    if (Number(totalExpense) > 0) {
+      const newProfit = Number(income) - Number(totalExpense);
+      setValue('profit', newProfit);
       setValue(
         'profitMargin',
-        Math.round(((income - totalExpense) / totalExpense) * 100)
+        Math.round((newProfit / Number(totalExpense)) * 100)
       );
     } else {
       setValue('profit', 0);
@@ -88,7 +89,7 @@ export default function BouquetForm({
           type='submit'
           variant='contained'
           loading={isLoading}
-          disabled={!profit || !profitMargin}
+          disabled={!(Number(totalExpense) > 0)}
         >
           Sačuvaj
         </Button>
