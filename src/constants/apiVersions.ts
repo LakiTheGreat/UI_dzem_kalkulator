@@ -20,6 +20,10 @@ export const API_VERSIONS = {
     list: "v2",
     put: "v2",
   },
+  constants: {
+    byId: "v2",
+    patch: "v2",
+  },
   tomatoes: {
     cups: "v2",
     totals: "v2",
