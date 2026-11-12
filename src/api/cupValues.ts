@@ -1,4 +1,5 @@
 import { api } from '.';
+import { API_VERSIONS, withApiVersion } from '../constants/apiVersions';
 import { Cup } from '../types/cups';
 
 const cupValuesUrl = '/cupValues';
@@ -7,7 +8,7 @@ const cupValuesApiEndpoints = api.injectEndpoints({
   endpoints: (build) => ({
     getAllCupValues: build.query<Cup[], void>({
       query: () => ({
-        url: `${cupValuesUrl}`,
+        url: withApiVersion(API_VERSIONS.cupValues.list, cupValuesUrl),
       }),
       providesTags: ['Cups'],
     }),
@@ -16,7 +17,10 @@ const cupValuesApiEndpoints = api.injectEndpoints({
       { id: number; value: number; label: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `${cupValuesUrl}/${id}`,
+        url: withApiVersion(
+          API_VERSIONS.cupValues.put,
+          `${cupValuesUrl}/${id}`
+        ),
         method: 'PUT',
         body,
       }),
