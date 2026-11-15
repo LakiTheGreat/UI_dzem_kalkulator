@@ -201,6 +201,7 @@ test('deleting a transaction returns the stock', async ({ page }) => {
   const tx = await seedTransaction(page, fruitA, [2, 0]);
   const note = (await apiGet<{ note: string }>(page.request, `/v2/transactions/${tx.id}`)).note;
   await page.goto('/jams/transactions');
+  await page.getByLabel('Prikaži komande').check();
 
   await page
     .locator('.MuiCard-root', { hasText: note })
@@ -286,6 +287,7 @@ test('deletes an order from the list', async ({ page }) => {
     `/v2/orders/${order.id}`
   );
   await page.goto('/jams/orders');
+  await page.getByLabel('Prikaži komande').check();
 
   await page
     .locator('.MuiCard-root', { hasText: orderName })

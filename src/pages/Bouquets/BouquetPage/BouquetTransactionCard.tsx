@@ -21,12 +21,14 @@ type Props = {
   transaction: BouquetTransaction;
   handleDelete: (bouquet: BouquetTransaction) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 export default function BouquetTransactionCard({
   transaction,
   handleDelete,
   handleEdit,
+  showActions = true,
 }: Props) {
   const { palette } = useTheme();
   return (
@@ -105,10 +107,12 @@ export default function BouquetTransactionCard({
           </Stack>
         </CardContent>
 
-        <CardActionButtons
-          onEdit={() => handleEdit(transaction.id)}
-          onDelete={() => handleDelete(transaction)}
-        />
+        {showActions && (
+          <CardActionButtons
+            onEdit={() => handleEdit(transaction.id)}
+            onDelete={() => handleDelete(transaction)}
+          />
+        )}
       </Stack>
     </Card>
   );

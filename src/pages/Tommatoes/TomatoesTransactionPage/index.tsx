@@ -39,6 +39,7 @@ import CreateTomatoTransaction from './form/CreateTomatoTransaction';
 import EditTomatoTransaction from './form/EditTomatoTransaction';
 import TomatoTransactionCard from './TomatoTransactionCard';
 import ResetButton from '../../../components/ResetButtton';
+import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
 
 export default function TomatoesTransactionPage() {
   const userId = useAppSelector((state) => state.auth.userId);
@@ -48,6 +49,7 @@ export default function TomatoesTransactionPage() {
   const [toastId, setToastId] = useState<Id>('');
   const [transactionId, setTransactionId] = useState<number | null>(null);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [showActions, setShowActions] = useState(false);
 
   const defaultParams: TomatoTransactionParams = {
     transactionStatus: TransactionStatusStrings.ALL,
@@ -279,6 +281,7 @@ export default function TomatoesTransactionPage() {
             {/* </Stack> */}
           </Stack>
         </Container>
+        <ShowActionsSwitch checked={showActions} onChange={setShowActions} />
         <Grid container spacing={3}>
           {isFetching && (
             <>
@@ -302,6 +305,7 @@ export default function TomatoesTransactionPage() {
                   handleDelete={handleDelete}
                   handleEdit={handleEdit}
                   tomatoExpence={tomatoExpence}
+                  showActions={showActions}
                 />
               </Grid>
             ))}

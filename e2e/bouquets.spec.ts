@@ -123,6 +123,7 @@ test('edits a transaction', async ({ page }) => {
 test('deletes a transaction from the list', async ({ page }) => {
   const row = await seed(page);
   await page.goto('/bouquets');
+  await page.getByLabel('Prikaži komande').check();
 
   await card(page, row.note).getByTestId('DeleteOutlineIcon').click();
   await page.getByRole('button', { name: 'Da', exact: true }).click();

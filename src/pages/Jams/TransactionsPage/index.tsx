@@ -25,6 +25,7 @@ import {
   useGetTransactionsQuery,
 } from '../../../api/transactionsApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
 import { MONTHS, ORDER_WIDTH, YEARS } from '../../../constants';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
@@ -54,6 +55,7 @@ export default function TransactionsPage() {
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [toastId, setToastId] = useState<Id>('');
   const [value, setValue] = useState<number>(0);
+  const [showActions, setShowActions] = useState(false);
 
   const defaultParams = {
     orderTypeId: 0,
@@ -343,12 +345,17 @@ export default function TransactionsPage() {
               </Stack>
             )}
 
-            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 } }}>
+            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
+              <ShowActionsSwitch
+                checked={showActions}
+                onChange={setShowActions}
+              />
               {!isFetching && data && data.length > 0 && (
                 <TransactionDayGroups
                   transactions={data}
                   handleDelete={handleDelete}
                   handleEdit={handleEdit}
+                  showActions={showActions}
                 />
               )}
               {data?.length === 0 && (

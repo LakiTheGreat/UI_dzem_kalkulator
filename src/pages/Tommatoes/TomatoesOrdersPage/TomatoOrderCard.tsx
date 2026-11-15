@@ -19,6 +19,7 @@ type Props = {
   tomatoPrice: Constant | undefined;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 export default function TomatoOrderCard({
@@ -26,6 +27,7 @@ export default function TomatoOrderCard({
   tomatoPrice,
   handleDelete,
   handleEdit,
+  showActions = true,
 }: Props) {
   const totalIncome = order.numOfCups * (tomatoPrice?.value || 0);
   const totalExpenses = order.numOfCups * order.totalExpenses;
@@ -95,10 +97,12 @@ export default function TomatoOrderCard({
           </Stack>
         </CardContent>
 
-        <CardActionButtons
-          onEdit={() => handleEdit(order.id)}
-          onDelete={() => handleDelete(order.id)}
-        />
+        {showActions && (
+          <CardActionButtons
+            onEdit={() => handleEdit(order.id)}
+            onDelete={() => handleDelete(order.id)}
+          />
+        )}
       </Stack>
     </Card>
   );

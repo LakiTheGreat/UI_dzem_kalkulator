@@ -19,6 +19,7 @@ type Props = {
   transaction: Transaction;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 export default function TransactionCard({
@@ -26,6 +27,7 @@ export default function TransactionCard({
 
   handleDelete,
   handleEdit,
+  showActions = true,
 }: Props) {
   const { palette } = useTheme();
 
@@ -94,10 +96,12 @@ export default function TransactionCard({
           </Stack>
         </CardContent>
 
-        <CardActionButtons
-          onEdit={() => handleEdit(transaction.id)}
-          onDelete={() => handleDelete(transaction.id)}
-        />
+        {showActions && (
+          <CardActionButtons
+            onEdit={() => handleEdit(transaction.id)}
+            onDelete={() => handleDelete(transaction.id)}
+          />
+        )}
       </Stack>
     </Card>
   );

@@ -1,5 +1,6 @@
+/* eslint-disable testing-library/no-node-access -- the accordion summary has no accessible query for its slots */
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import {
   Transaction,
@@ -22,12 +23,13 @@ const tx = (
   note,
 });
 
-const renderGroups = (transactions: Transaction[]) =>
+const renderGroups = (transactions: Transaction[], showActions = true) =>
   render(
     <TransactionDayGroups
       transactions={transactions}
       handleDelete={jest.fn()}
       handleEdit={jest.fn()}
+      showActions={showActions}
     />
   );
 
@@ -82,5 +84,18 @@ describe('TransactionDayGroups', () => {
 
     expect(summaries()[0]).toHaveTextContent('· Bazar na Vraćaru');
     expect(summaries()[1]).not.toHaveTextContent('·');
+  });
+
+  it('shows the Izmeni/Obriši buttons only when showActions is on', () => {
+    const data = [tx('2026-11-14T10:00:00', [])];
+
+    const { unmount } = renderGroups(data, true);
+    expect(screen.getByRole('button', { name: 'Izmeni' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Obriši' })).toBeInTheDocument();
+    unmount();
+
+    renderGroups(data, false);
+    expect(screen.queryByRole('button', { name: 'Izmeni' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Obriši' })).toBeNull();
   });
 });

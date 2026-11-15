@@ -21,6 +21,7 @@ type Props = {
   tomatoExpence: Constant | undefined;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 export default function TomatoTransactionCard({
@@ -28,6 +29,7 @@ export default function TomatoTransactionCard({
   handleDelete,
   handleEdit,
   tomatoExpence,
+  showActions = true,
 }: Props) {
   const { palette } = useTheme();
 
@@ -142,10 +144,12 @@ export default function TomatoTransactionCard({
           </Stack>
         </CardContent>
 
-        <CardActionButtons
-          onEdit={() => handleEdit(transaction.id)}
-          onDelete={() => handleDelete(transaction.id)}
-        />
+        {showActions && (
+          <CardActionButtons
+            onEdit={() => handleEdit(transaction.id)}
+            onDelete={() => handleDelete(transaction.id)}
+          />
+        )}
       </Stack>
     </Card>
   );

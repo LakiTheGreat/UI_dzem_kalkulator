@@ -17,6 +17,7 @@ type Props = {
   transactions: Transaction[];
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 type DayGroup = {
@@ -75,6 +76,7 @@ export default function TransactionDayGroups({
   transactions,
   handleDelete,
   handleEdit,
+  showActions = true,
 }: Props) {
   const groups = useMemo(() => groupByDay(transactions), [transactions]);
   // Every group gets the same slots (212ml left, 370ml right) so columns line up.
@@ -140,6 +142,7 @@ export default function TransactionDayGroups({
                     transaction={transaction}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
+                    showActions={showActions}
                   />
                 </Grid>
               ))}

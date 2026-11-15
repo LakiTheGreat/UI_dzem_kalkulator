@@ -90,6 +90,7 @@ test('creates a production order', async ({ page, request }) => {
 test('deletes a production order', async ({ page, request }) => {
   const order = await seedOrder(request, SEEDED_ORDER_CUPS);
   await page.goto('/tomatoes/orders');
+  await page.getByLabel('Prikaži komande').check();
 
   const card = cardWith(page, String(SEEDED_ORDER_CUPS));
   await card.getByTestId('DeleteOutlineIcon').click();
@@ -130,6 +131,7 @@ test('creates and deletes a transaction', async ({ page, request }) => {
   createdTransactionIds.push(created!.id);
 
   const card = cardWith(page, note);
+  await page.getByLabel('Prikaži komande').check();
   await card.getByTestId('DeleteOutlineIcon').click();
   await page.getByRole('button', { name: 'Da', exact: true }).click();
 

@@ -23,6 +23,7 @@ import {
   useUpdateBouquetTransactionMutation,
 } from '../../../api/bouquetsApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
 import { ORDER_WIDTH } from '../../../constants';
 import { routesBouquets } from '../../../constants/routes';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
@@ -39,6 +40,7 @@ import BouquetTable from './table/BouquetTable';
 
 export default function BouquetPage() {
   const navigate = useNavigate();
+  const [showActions, setShowActions] = useState(false);
 
   const param = {
     transactionStatus: 'ALL',
@@ -206,13 +208,15 @@ export default function BouquetPage() {
               <Typography>Broj proizvedenih buketa: {data?.length}</Typography>
             )}
 
-            <TabPanel value={0}>
+            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 } }}>
+              <ShowActionsSwitch checked={showActions} onChange={setShowActions} />
               <Grid container spacing={3}>
                 {!isFetching &&
                   data?.map((transaction) => (
                     <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
                       <BouquetTransactionCard
                         transaction={transaction}
+                        showActions={showActions}
                         handleDelete={handleDelete}
                         handleEdit={handleEdit}
                       />

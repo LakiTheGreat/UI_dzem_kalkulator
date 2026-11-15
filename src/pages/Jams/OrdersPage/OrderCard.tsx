@@ -21,6 +21,7 @@ type Props = {
   setSelectedId: Dispatch<SetStateAction<number | null>>;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 export default function OrderCard({
@@ -28,6 +29,7 @@ export default function OrderCard({
   setSelectedId,
   handleDelete,
   handleEdit,
+  showActions = true,
 }: Props) {
   const { palette } = useTheme();
 
@@ -128,10 +130,12 @@ export default function OrderCard({
           </Stack>
         </CardContent>
 
-        <CardActionButtons
-          onEdit={() => handleEdit(order.id)}
-          onDelete={() => handleDelete(order.id)}
-        />
+        {showActions && (
+          <CardActionButtons
+            onEdit={() => handleEdit(order.id)}
+            onDelete={() => handleDelete(order.id)}
+          />
+        )}
       </Stack>
     </Card>
   );
