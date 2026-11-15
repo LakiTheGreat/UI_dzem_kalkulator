@@ -100,7 +100,10 @@ export default function TransactionDayGroups({
           }}
           slotProps={{ transition: { unmountOnExit: true } }}
         >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ px: 2 }}
+          >
             <Stack
               direction={{ xs: 'column', sm: 'row' }}
               columnGap={3}
@@ -129,7 +132,7 @@ export default function TransactionDayGroups({
               </Stack>
             </Stack>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails sx={{ px: 2 }}>
             <Grid container spacing={3}>
               {group.transactions.map((transaction) => (
                 <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>

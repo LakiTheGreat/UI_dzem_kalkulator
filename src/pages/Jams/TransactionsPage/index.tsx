@@ -343,7 +343,7 @@ export default function TransactionsPage() {
               </Stack>
             )}
 
-            <TabPanel value={0}>
+            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 } }}>
               {!isFetching && data && data.length > 0 && (
                 <TransactionDayGroups
                   transactions={data}
