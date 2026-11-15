@@ -26,6 +26,7 @@ import {
   useGetAllOrdersQuery,
 } from '../../../api/ordersApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
 import { MONTHS, ORDER_WIDTH, YEARS } from '../../../constants';
 import { routesJam } from '../../../constants/routes';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
@@ -47,6 +48,7 @@ export default function OrdersPage() {
   const userId = useAppSelector((state) => state.auth.userId);
 
   const [value, setValue] = useState<number>(0);
+  const [showActions, setShowActions] = useState(false);
 
   const [toastId, setToastId] = useState<Id>('');
   const [getConfirmation, Confirmation] = useConfirmDialog();
@@ -302,13 +304,20 @@ export default function OrdersPage() {
               </Typography>
             )}
 
-            <TabPanel value={0}>
+            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
+              {!isFetching && (
+                <ShowActionsSwitch
+                  checked={showActions}
+                  onChange={setShowActions}
+                />
+              )}
               <Grid container spacing={3}>
                 {!isFetching &&
                   data?.orders?.map((order) => (
                     <Grid size={{ xs: 12, md: 6, lg: 4 }} key={order.id}>
                       <OrderCard
                         order={order}
+                        showActions={showActions}
                         setSelectedId={setSelectedId}
                         handleDelete={handleDelete}
                         handleEdit={handleEdit}

@@ -1,5 +1,6 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
+  Box,
   Container,
   FormControl,
   Grid,
@@ -39,6 +40,8 @@ import CreateTomatoTransaction from './form/CreateTomatoTransaction';
 import EditTomatoTransaction from './form/EditTomatoTransaction';
 import TomatoTransactionCard from './TomatoTransactionCard';
 import ResetButton from '../../../components/ResetButtton';
+import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
+import DayAccordionGroups from '../../../components/DayAccordionGroups';
 
 export default function TomatoesTransactionPage() {
   const userId = useAppSelector((state) => state.auth.userId);
@@ -48,6 +51,7 @@ export default function TomatoesTransactionPage() {
   const [toastId, setToastId] = useState<Id>('');
   const [transactionId, setTransactionId] = useState<number | null>(null);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [showActions, setShowActions] = useState(false);
 
   const defaultParams: TomatoTransactionParams = {
     transactionStatus: TransactionStatusStrings.ALL,
@@ -279,6 +283,14 @@ export default function TomatoesTransactionPage() {
             {/* </Stack> */}
           </Stack>
         </Container>
+        {!isFetching && (
+          <Box sx={{ mt: -1, mb: -4 }}>
+            <ShowActionsSwitch
+              checked={showActions}
+              onChange={setShowActions}
+            />
+          </Box>
+        )}
         <Grid container spacing={3}>
           {isFetching && (
             <>
@@ -293,18 +305,28 @@ export default function TomatoesTransactionPage() {
               </Grid>
             </>
           )}
-          {!isFetching &&
-            data &&
-            data.map((transaction) => (
-              <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
-                <TomatoTransactionCard
-                  transaction={transaction}
-                  handleDelete={handleDelete}
-                  handleEdit={handleEdit}
-                  tomatoExpence={tomatoExpence}
-                />
-              </Grid>
-            ))}
+          {!isFetching && data && data.length > 0 && (
+            <Grid size={12}>
+              <DayAccordionGroups
+                items={data}
+                getKey={(t) => t.id}
+                getDate={(t) => t.createdAt}
+                getNote={(t) => t.note}
+                renderTotals={(items) =>
+                  `Teglica: ${items.reduce((sum, t) => sum + t.numOfCups, 0)}`
+                }
+                renderItem={(transaction) => (
+                  <TomatoTransactionCard
+                    transaction={transaction}
+                    handleDelete={handleDelete}
+                    handleEdit={handleEdit}
+                    tomatoExpence={tomatoExpence}
+                    showActions={showActions}
+                  />
+                )}
+              />
+            </Grid>
+          )}
           {data?.length === 0 && (
             <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
               Nema još ništa.

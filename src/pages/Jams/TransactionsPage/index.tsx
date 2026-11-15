@@ -25,6 +25,8 @@ import {
   useGetTransactionsQuery,
 } from '../../../api/transactionsApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
+import DayAccordionGroups from '../../../components/DayAccordionGroups';
 import { MONTHS, ORDER_WIDTH, YEARS } from '../../../constants';
 import { useAppSelector } from '../../../hooks/reduxStoreHooks';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
@@ -40,7 +42,8 @@ import filterFruits from '../../../utils/filterFruits';
 import getStatusTranslation from '../../../utils/getStatusTranslation';
 import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
-import TransactionDayGroups from './TransactionDayGroups';
+import CupTotalsSlots, { getCupLabels } from './CupTotalsSlots';
+import TransactionCard from './TransactionCard';
 import TransactionTable from './table/TransactionTable';
 import { BG_COLOR_INPUT } from '../../../theme/palette';
 import { routesJam } from '../../../constants/routes';
@@ -54,6 +57,7 @@ export default function TransactionsPage() {
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [toastId, setToastId] = useState<Id>('');
   const [value, setValue] = useState<number>(0);
+  const [showActions, setShowActions] = useState(false);
 
   const defaultParams = {
     orderTypeId: 0,
@@ -343,12 +347,33 @@ export default function TransactionsPage() {
               </Stack>
             )}
 
-            <TabPanel value={0}>
+            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
+              {!isFetching && (
+                <ShowActionsSwitch
+                  checked={showActions}
+                  onChange={setShowActions}
+                />
+              )}
               {!isFetching && data && data.length > 0 && (
-                <TransactionDayGroups
-                  transactions={data}
-                  handleDelete={handleDelete}
-                  handleEdit={handleEdit}
+                <DayAccordionGroups
+                  items={data}
+                  getKey={(t) => t.id}
+                  getDate={(t) => t.createdAt}
+                  getNote={(t) => t.note}
+                  renderTotals={(items) => (
+                    <CupTotalsSlots
+                      transactions={items}
+                      labels={getCupLabels(data)}
+                    />
+                  )}
+                  renderItem={(transaction) => (
+                    <TransactionCard
+                      transaction={transaction}
+                      handleDelete={handleDelete}
+                      handleEdit={handleEdit}
+                      showActions={showActions}
+                    />
+                  )}
                 />
               )}
               {data?.length === 0 && (

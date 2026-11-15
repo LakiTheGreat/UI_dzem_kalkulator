@@ -1,15 +1,12 @@
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Card,
-  CardActions,
   CardContent,
   Divider,
-  IconButton,
   Stack,
   Typography,
 } from '@mui/material';
 
+import CardActionButtons from '../../../components/CardActionButtons';
 import { ORDER_WIDTH_55 } from '../../../constants';
 import { Constant } from '../../../types/constants';
 import { TomatoOrder } from '../../../types/tomatos';
@@ -22,6 +19,7 @@ type Props = {
   tomatoPrice: Constant | undefined;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 export default function TomatoOrderCard({
@@ -29,6 +27,7 @@ export default function TomatoOrderCard({
   tomatoPrice,
   handleDelete,
   handleEdit,
+  showActions = true,
 }: Props) {
   const totalIncome = order.numOfCups * (tomatoPrice?.value || 0);
   const totalExpenses = order.numOfCups * order.totalExpenses;
@@ -98,22 +97,11 @@ export default function TomatoOrderCard({
           </Stack>
         </CardContent>
 
-        <CardActions>
-          <Stack
-            direction='row'
-            justifyContent='center'
-            sx={{ width: '100%' }}
-            gap={3}
-          >
-            <IconButton onClick={() => handleEdit(order.id)}>
-              <EditIcon />
-            </IconButton>
-
-            <IconButton onClick={() => handleDelete(order.id)}>
-              <DeleteIcon />
-            </IconButton>
-          </Stack>
-        </CardActions>
+        <CardActionButtons
+          show={showActions}
+          onEdit={() => handleEdit(order.id)}
+          onDelete={() => handleDelete(order.id)}
+        />
       </Stack>
     </Card>
   );

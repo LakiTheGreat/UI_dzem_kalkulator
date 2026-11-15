@@ -1,19 +1,16 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Card,
-  CardActions,
   CardContent,
   Divider,
-  IconButton,
   Stack,
   Typography,
   useTheme,
 } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 
+import CardActionButtons from '../../../components/CardActionButtons';
 import { ORDER_WIDTH } from '../../../constants';
 import { Order } from '../../../types/orders';
 import FormattedPrice from '../../../utils/FormattedPrice';
@@ -24,6 +21,7 @@ type Props = {
   setSelectedId: Dispatch<SetStateAction<number | null>>;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  showActions?: boolean;
 };
 
 export default function OrderCard({
@@ -31,6 +29,7 @@ export default function OrderCard({
   setSelectedId,
   handleDelete,
   handleEdit,
+  showActions = true,
 }: Props) {
   const { palette } = useTheme();
 
@@ -131,30 +130,11 @@ export default function OrderCard({
           </Stack>
         </CardContent>
 
-        <CardActions>
-          <Stack
-            direction='row'
-            justifyContent='center'
-            sx={{ width: '100%' }}
-            gap={3}
-          >
-            {/* <IconButton
-            onClick={() => {
-              setSelectedId(order.id);
-            }}
-          >
-            <RemoveRedEyeIcon />
-          </IconButton> */}
-
-            <IconButton onClick={() => handleEdit(order.id)}>
-              <EditIcon />
-            </IconButton>
-
-            <IconButton onClick={() => handleDelete(order.id)}>
-              <DeleteIcon />
-            </IconButton>
-          </Stack>
-        </CardActions>
+        <CardActionButtons
+          show={showActions}
+          onEdit={() => handleEdit(order.id)}
+          onDelete={() => handleDelete(order.id)}
+        />
       </Stack>
     </Card>
   );

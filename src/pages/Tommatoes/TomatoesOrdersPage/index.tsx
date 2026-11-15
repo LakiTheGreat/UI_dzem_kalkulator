@@ -43,9 +43,11 @@ import TomatoTransactionCard from './TomatoOrderCard';
 import { BG_COLOR_INPUT } from '../../../theme/palette';
 import { TomatoOrderParams } from '../../../types/tomatos';
 import ResetButton from '../../../components/ResetButtton';
+import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
 
 export default function TomatoesOrdersPage() {
   const userId = useAppSelector((state) => state.auth.userId);
+  const [showActions, setShowActions] = useState(false);
 
   const defaultParams: TomatoOrderParams = {
     year: 0,
@@ -268,7 +270,13 @@ export default function TomatoesOrdersPage() {
             <Typography>Broj proizvodnih serija: {data?.length}</Typography>
           )}
 
-          <TabPanel value={0}>
+          <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
+            {!somethingIsLoading && (
+              <ShowActionsSwitch
+                checked={showActions}
+                onChange={setShowActions}
+              />
+            )}
             <Grid container spacing={3}>
               {somethingIsLoading && (
                 <>
@@ -288,6 +296,7 @@ export default function TomatoesOrdersPage() {
                   <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
                     <TomatoTransactionCard
                       order={transaction}
+                      showActions={showActions}
                       handleDelete={handleDelete}
                       tomatoPrice={tomatoPrice}
                       handleEdit={(id) => {
