@@ -5,7 +5,6 @@ import TabPanel from '@mui/lab/TabPanel';
 import {
   Container,
   FormControl,
-  Grid,
   IconButton,
   InputLabel,
   MenuItem,
@@ -24,6 +23,7 @@ import {
 } from '../../../api/bouquetsApi';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import ShowActionsSwitch from '../../../components/ShowActionsSwitch';
+import DayAccordionGroups from '../../../components/DayAccordionGroups';
 import { ORDER_WIDTH } from '../../../constants';
 import { routesBouquets } from '../../../constants/routes';
 import { useApiErrorNotification } from '../../../hooks/useApiErrorNotification';
@@ -210,24 +210,28 @@ export default function BouquetPage() {
 
             <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 } }}>
               <ShowActionsSwitch checked={showActions} onChange={setShowActions} />
-              <Grid container spacing={3}>
-                {!isFetching &&
-                  data?.map((transaction) => (
-                    <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
-                      <BouquetTransactionCard
-                        transaction={transaction}
-                        showActions={showActions}
-                        handleDelete={handleDelete}
-                        handleEdit={handleEdit}
-                      />
-                    </Grid>
-                  ))}
-                {data?.length === 0 && (
-                  <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
-                    Još nema ni jedne transakcije.
-                  </Typography>
-                )}
-              </Grid>
+              {!isFetching && data && data.length > 0 && (
+                <DayAccordionGroups
+                  items={data}
+                  getKey={(t) => t.id}
+                  getDate={(t) => t.createdAt}
+                  getNote={(t) => t.note}
+                  renderTotals={(items) => `Buketa: ${items.length}`}
+                  renderItem={(transaction) => (
+                    <BouquetTransactionCard
+                      transaction={transaction}
+                      showActions={showActions}
+                      handleDelete={handleDelete}
+                      handleEdit={handleEdit}
+                    />
+                  )}
+                />
+              )}
+              {data?.length === 0 && (
+                <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
+                  Još nema ni jedne transakcije.
+                </Typography>
+              )}
             </TabPanel>
 
             <TabPanel value={1}>
