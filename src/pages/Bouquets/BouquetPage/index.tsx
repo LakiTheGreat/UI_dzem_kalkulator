@@ -208,8 +208,13 @@ export default function BouquetPage() {
               <Typography>Broj proizvedenih buketa: {data?.length}</Typography>
             )}
 
-            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 } }}>
-              <ShowActionsSwitch checked={showActions} onChange={setShowActions} />
+            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
+              {!isFetching && (
+                <ShowActionsSwitch
+                  checked={showActions}
+                  onChange={setShowActions}
+                />
+              )}
               {!isFetching && data && data.length > 0 && (
                 <DayAccordionGroups
                   items={data}

@@ -97,12 +97,11 @@ export default function TomatoOrderCard({
           </Stack>
         </CardContent>
 
-        {showActions && (
-          <CardActionButtons
-            onEdit={() => handleEdit(order.id)}
-            onDelete={() => handleDelete(order.id)}
-          />
-        )}
+        <CardActionButtons
+          show={showActions}
+          onEdit={() => handleEdit(order.id)}
+          onDelete={() => handleDelete(order.id)}
+        />
       </Stack>
     </Card>
   );

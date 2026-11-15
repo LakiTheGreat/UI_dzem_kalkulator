@@ -107,12 +107,11 @@ export default function BouquetTransactionCard({
           </Stack>
         </CardContent>
 
-        {showActions && (
-          <CardActionButtons
-            onEdit={() => handleEdit(transaction.id)}
-            onDelete={() => handleDelete(transaction)}
-          />
-        )}
+        <CardActionButtons
+          show={showActions}
+          onEdit={() => handleEdit(transaction.id)}
+          onDelete={() => handleDelete(transaction)}
+        />
       </Stack>
     </Card>
   );

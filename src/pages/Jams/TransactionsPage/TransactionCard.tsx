@@ -96,12 +96,11 @@ export default function TransactionCard({
           </Stack>
         </CardContent>
 
-        {showActions && (
-          <CardActionButtons
-            onEdit={() => handleEdit(transaction.id)}
-            onDelete={() => handleDelete(transaction.id)}
-          />
-        )}
+        <CardActionButtons
+          show={showActions}
+          onEdit={() => handleEdit(transaction.id)}
+          onDelete={() => handleDelete(transaction.id)}
+        />
       </Stack>
     </Card>
   );

@@ -213,6 +213,26 @@ test('deleting a transaction returns the stock', async ({ page }) => {
   expect(await stock(page, fruitA.id)).toMatchObject({ [cups[0].label]: 5 });
 });
 
+test('"Prikaži komande" switch shows and hides the card buttons', async ({ page }) => {
+  await seedOrder(page, fruitA, [5, 0]);
+  const tx = await seedTransaction(page, fruitA, [2, 0]);
+  const note = (await apiGet<{ note: string }>(page.request, `/v2/transactions/${tx.id}`)).note;
+  await page.goto('/jams/transactions');
+
+  const card = page.locator('.MuiCard-root', { hasText: note });
+  const switchInput = page.getByLabel('Prikaži komande');
+
+  await expect(switchInput).not.toBeChecked();
+  await expect(card.getByRole('button', { name: 'Obriši' })).toBeHidden();
+
+  await switchInput.check();
+  await expect(card.getByRole('button', { name: 'Izmeni' })).toBeVisible();
+  await expect(card.getByRole('button', { name: 'Obriši' })).toBeVisible();
+
+  await switchInput.uncheck();
+  await expect(card.getByRole('button', { name: 'Obriši' })).toBeHidden();
+});
+
 test('inventory page shows the stock per fruit and in total', async ({ page }) => {
   await seedOrder(page, fruitA, [4, 2]);
   const before = await apiGet<{ label: string; numberOf: number }[]>(

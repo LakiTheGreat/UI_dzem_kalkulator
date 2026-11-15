@@ -270,8 +270,13 @@ export default function TomatoesOrdersPage() {
             <Typography>Broj proizvodnih serija: {data?.length}</Typography>
           )}
 
-          <TabPanel value={0}>
-            <ShowActionsSwitch checked={showActions} onChange={setShowActions} />
+          <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
+            {!somethingIsLoading && (
+              <ShowActionsSwitch
+                checked={showActions}
+                onChange={setShowActions}
+              />
+            )}
             <Grid container spacing={3}>
               {somethingIsLoading && (
                 <>

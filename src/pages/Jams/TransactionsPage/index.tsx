@@ -348,10 +348,12 @@ export default function TransactionsPage() {
             )}
 
             <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
-              <ShowActionsSwitch
-                checked={showActions}
-                onChange={setShowActions}
-              />
+              {!isFetching && (
+                <ShowActionsSwitch
+                  checked={showActions}
+                  onChange={setShowActions}
+                />
+              )}
               {!isFetching && data && data.length > 0 && (
                 <DayAccordionGroups
                   items={data}

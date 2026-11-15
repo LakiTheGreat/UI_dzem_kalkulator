@@ -1,5 +1,6 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
+  Box,
   Container,
   FormControl,
   Grid,
@@ -282,7 +283,14 @@ export default function TomatoesTransactionPage() {
             {/* </Stack> */}
           </Stack>
         </Container>
-        <ShowActionsSwitch checked={showActions} onChange={setShowActions} />
+        {!isFetching && (
+          <Box sx={{ mt: -1, mb: -4 }}>
+            <ShowActionsSwitch
+              checked={showActions}
+              onChange={setShowActions}
+            />
+          </Box>
+        )}
         <Grid container spacing={3}>
           {isFetching && (
             <>

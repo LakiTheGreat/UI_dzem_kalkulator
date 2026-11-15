@@ -130,12 +130,11 @@ export default function OrderCard({
           </Stack>
         </CardContent>
 
-        {showActions && (
-          <CardActionButtons
-            onEdit={() => handleEdit(order.id)}
-            onDelete={() => handleDelete(order.id)}
-          />
-        )}
+        <CardActionButtons
+          show={showActions}
+          onEdit={() => handleEdit(order.id)}
+          onDelete={() => handleDelete(order.id)}
+        />
       </Stack>
     </Card>
   );

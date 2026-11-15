@@ -304,8 +304,13 @@ export default function OrdersPage() {
               </Typography>
             )}
 
-            <TabPanel value={0}>
-              <ShowActionsSwitch checked={showActions} onChange={setShowActions} />
+            <TabPanel value={0} sx={{ px: { xs: 0, sm: 3 }, pt: 0 }}>
+              {!isFetching && (
+                <ShowActionsSwitch
+                  checked={showActions}
+                  onChange={setShowActions}
+                />
+              )}
               <Grid container spacing={3}>
                 {!isFetching &&
                   data?.orders?.map((order) => (
