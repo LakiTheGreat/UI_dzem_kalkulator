@@ -356,3 +356,12 @@ test('transactions list filters by jam type', async ({ page }) => {
   await expect(card(noteA)).toBeVisible();
   await expect(card(noteB)).toHaveCount(0);
 });
+
+test('transaction type filter lists "Prikaži sve" once', async ({ page }) => {
+  await page.goto('/jams/transactions');
+  await page
+    .locator('.MuiFormControl-root', { hasText: 'Vrsta transakcije' })
+    .getByRole('combobox')
+    .click();
+  await expect(page.getByRole('option', { name: 'Prikaži sve' })).toHaveCount(1);
+});

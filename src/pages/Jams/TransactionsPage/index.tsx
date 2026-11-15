@@ -94,7 +94,7 @@ export default function TransactionsPage() {
   const sumData = getCupsTotals();
 
   const filteredFruits = userId === 1 ? fruits : filterFruits(fruits);
-  const mappedStatus = mapAllTransactionStatusesToMenuItems();
+  const mappedStatus = mapAllTransactionStatusesToMenuItems({ includeAll: true });
 
   const handleEdit = (id: number) => {
     navigate(`/${routesJam.transactions}/${id}`);
@@ -190,7 +190,6 @@ export default function TransactionsPage() {
                         })
                       }
                     >
-                      <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
                       {mappedStatus?.map((status) => (
                         <MenuItem key={status.value} value={status.value}>
                           {getStatusTranslation(status.value)}

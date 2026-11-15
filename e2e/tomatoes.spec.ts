@@ -141,3 +141,12 @@ test('creates and deletes a transaction', async ({ page, request }) => {
     )
     .toBe(false);
 });
+
+test('transaction type filter lists "Prikaži sve" once', async ({ page }) => {
+  await page.goto('/tomatoes/transactions');
+  await page
+    .locator('.MuiFormControl-root', { hasText: 'Vrsta transakcije' })
+    .getByRole('combobox')
+    .click();
+  await expect(page.getByRole('option', { name: 'Prikaži sve' })).toHaveCount(1);
+});

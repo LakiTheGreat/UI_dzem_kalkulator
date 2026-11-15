@@ -72,6 +72,7 @@ export default function TomatoesTransactionPage() {
     useDeleteTomatoTransactionMutation();
 
   const mappedStatus = mapAllTransactionStatusesToMenuItems();
+  const filterStatuses = mapAllTransactionStatusesToMenuItems({ includeAll: true });
 
   const handleEdit = (id: number) => {
     setTransactionId(id);
@@ -188,7 +189,7 @@ export default function TomatoesTransactionPage() {
                     })
                   }
                 >
-                  {mappedStatus?.map((status) => (
+                  {filterStatuses.map((status) => (
                     <MenuItem key={status.value} value={status.value}>
                       {getStatusTranslation(status.value)}
                     </MenuItem>

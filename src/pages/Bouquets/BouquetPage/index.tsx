@@ -46,7 +46,7 @@ export default function BouquetPage() {
 
   const [params, setParams] = useState<BouquetParams>(param);
 
-  const mappedStatus = mapBouquetTransactionStatusesToMenuItems();
+  const mappedStatus = mapBouquetTransactionStatusesToMenuItems({ includeAll: true });
 
   const [getConfirmation, Confirmation] = useConfirmDialog();
   const [toastId, setToastId] = useState<Id>('');
@@ -132,7 +132,6 @@ export default function BouquetPage() {
                       })
                     }
                   >
-                    <MenuItem value={'ALL'}>Prikaži sve</MenuItem>
                     {mappedStatus?.map((status) => (
                       <MenuItem key={status.value} value={status.value}>
                         {getStatusTranslation(status.value)}

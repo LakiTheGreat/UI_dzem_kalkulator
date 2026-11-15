@@ -146,3 +146,17 @@ test('filters the list by transaction type', async ({ page }) => {
   await expect(card(page, gift.note)).toBeVisible();
   await expect(card(page, sold.note)).toHaveCount(0);
 });
+
+test('status filter lists "Prikaži sve" once and the form does not offer it', async ({
+  page,
+}) => {
+  await page.goto('/bouquets');
+  await page.getByRole('combobox').click();
+  await expect(page.getByRole('option', { name: 'Prikaži sve' })).toHaveCount(1);
+  await page.keyboard.press('Escape');
+
+  await page.goto('/bouquets/new');
+  await page.getByRole('combobox').click();
+  await expect(page.getByRole('option', { name: 'Poklon' })).toBeVisible();
+  await expect(page.getByRole('option', { name: 'Prikaži sve' })).toHaveCount(0);
+});
