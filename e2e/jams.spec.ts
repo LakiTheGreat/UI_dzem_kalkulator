@@ -56,11 +56,16 @@ const seedOrder = (page: Page, fruit: Fruit, numberOf: number[]) =>
     fruits: [{ fruitId: fruit.id, grams: '1000', price: '200', total: '200' }],
   });
 
-const seedTransaction = (page: Page, fruit: Fruit, quantity: number[]) =>
+const seedTransaction = (
+  page: Page,
+  fruit: Fruit,
+  quantity: number[],
+  note = uniqueLabel('tx')
+) =>
   apiPost<{ id: number }>(page.request, '/v2/transactions', {
     orderTypeId: fruit.id,
     status: 'SOLD',
-    note: uniqueLabel('tx'),
+    note,
     cupData: cups
       .map((c, i) => ({ cupId: c.id, quantity: quantity[i] }))
       .filter((c) => c.quantity > 0),
@@ -355,4 +360,45 @@ test('transactions list filters by jam type', async ({ page }) => {
   await pick(page, JAM_TYPE_SELECT, fruitA.label);
   await expect(card(noteA)).toBeVisible();
   await expect(card(noteB)).toHaveCount(0);
+});
+
+test('transaction type filter lists "Prikaži sve" once', async ({ page }) => {
+  await page.goto('/jams/transactions');
+  await page
+    .locator('.MuiFormControl-root', { hasText: 'Vrsta transakcije' })
+    .getByRole('combobox')
+    .click();
+  await expect(page.getByRole('option', { name: 'Prikaži sve' })).toHaveCount(1);
+});
+
+test('transactions cards are grouped per day with counts and jar totals', async ({
+  page,
+}) => {
+  await seedOrder(page, fruitA, [10, 10]);
+  await seedTransaction(page, fruitA, [2, 0]);
+  await seedTransaction(page, fruitA, [3, 1]);
+  await page.goto('/jams/transactions');
+  await pick(page, JAM_TYPE_SELECT, fruitA.label);
+
+  const day = page.locator('.MuiAccordion-root');
+  await expect(day).toHaveCount(1);
+  await expect(day.getByText(`${cups[0].label}: 5`)).toBeVisible();
+  await expect(day.getByText(`${cups[1].label}: 1`)).toBeVisible();
+  await expect(day.locator('.MuiCard-root')).toHaveCount(2);
+});
+
+test('day header shows the note shared by most transactions of that day', async ({
+  page,
+}) => {
+  const shared = uniqueLabel('bazar');
+  await seedOrder(page, fruitA, [10, 10]);
+  await seedTransaction(page, fruitA, [1, 0], shared);
+  await seedTransaction(page, fruitA, [1, 0], shared);
+  await seedTransaction(page, fruitA, [1, 0]);
+  await page.goto('/jams/transactions');
+  await pick(page, JAM_TYPE_SELECT, fruitA.label);
+
+  await expect(
+    page.locator('.MuiAccordionSummary-root').getByText(shared)
+  ).toBeVisible();
 });

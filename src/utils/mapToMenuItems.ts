@@ -46,20 +46,37 @@ export const mapCupsWithDataToMenuItems = (
   );
 };
 
-export const mapAllTransactionStatusesToMenuItems = (): MenuItemType[] => {
-  return Object.values(TransactionStatusStrings).map((status) => ({
-    id: status,
-    value: status,
-    menuItemLabel: getStatusTranslation(status),
-  }));
+const allStatusesMenuItem: MenuItemType = {
+  id: TransactionStatusStrings.ALL,
+  value: TransactionStatusStrings.ALL,
+  menuItemLabel: getStatusTranslation(TransactionStatusStrings.ALL),
 };
 
-export const mapBouquetTransactionStatusesToMenuItems = (): MenuItemType[] => {
-  return Object.values(BouquetTransactionEnum).map((status) => ({
+type StatusMenuItemsOptions = { includeAll?: boolean };
+
+// includeAll adds "Prikaži sve" (filters only; forms must not offer it as a status)
+export const mapAllTransactionStatusesToMenuItems = ({
+  includeAll = false,
+}: StatusMenuItemsOptions = {}): MenuItemType[] => {
+  const items = Object.values(TransactionStatusStrings)
+    .filter((status) => status !== TransactionStatusStrings.ALL)
+    .map((status) => ({
+      id: status,
+      value: status,
+      menuItemLabel: getStatusTranslation(status),
+    }));
+  return includeAll ? [allStatusesMenuItem, ...items] : items;
+};
+
+export const mapBouquetTransactionStatusesToMenuItems = ({
+  includeAll = false,
+}: StatusMenuItemsOptions = {}): MenuItemType[] => {
+  const items = Object.values(BouquetTransactionEnum).map((status) => ({
     id: status,
     value: status,
     menuItemLabel: getStatusTranslation(status),
   }));
+  return includeAll ? [allStatusesMenuItem, ...items] : items;
 };
 
 export const mapTomatoCupsToMenuItems = (

@@ -20,8 +20,8 @@ export default function HeaderBreadcrumbs({
 }: Props) {
   return (
     <Box sx={{ mb: 5, ...sx }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', height: 72 }}>
-        <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', minHeight: 72 }}>
+        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
           <Typography variant='h4' gutterBottom>
             {heading}
           </Typography>
