@@ -6,7 +6,6 @@ import {
   Container,
   Divider,
   FormControl,
-  Grid,
   IconButton,
   InputLabel,
   MenuItem,
@@ -41,7 +40,7 @@ import filterFruits from '../../../utils/filterFruits';
 import getStatusTranslation from '../../../utils/getStatusTranslation';
 import { mapAllTransactionStatusesToMenuItems } from '../../../utils/mapToMenuItems';
 import setToastIsLoading from '../../../utils/toastify/setToastIsLoading';
-import TransactionCard from './TransactionCard';
+import TransactionDayGroups from './TransactionDayGroups';
 import TransactionTable from './table/TransactionTable';
 import { BG_COLOR_INPUT } from '../../../theme/palette';
 import { routesJam } from '../../../constants/routes';
@@ -345,23 +344,18 @@ export default function TransactionsPage() {
             )}
 
             <TabPanel value={0}>
-              <Grid container spacing={3}>
-                {!isFetching &&
-                  data?.map((transaction) => (
-                    <Grid size={{ xs: 12, md: 6, lg: 4 }} key={transaction.id}>
-                      <TransactionCard
-                        transaction={transaction}
-                        handleDelete={handleDelete}
-                        handleEdit={handleEdit}
-                      />
-                    </Grid>
-                  ))}
-                {data?.length === 0 && (
-                  <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
-                    Još nema ni jedne takve transakcije.
-                  </Typography>
-                )}
-              </Grid>
+              {!isFetching && data && data.length > 0 && (
+                <TransactionDayGroups
+                  transactions={data}
+                  handleDelete={handleDelete}
+                  handleEdit={handleEdit}
+                />
+              )}
+              {data?.length === 0 && (
+                <Typography textAlign='center' sx={{ mt: 3, width: '100%' }}>
+                  Još nema ni jedne takve transakcije.
+                </Typography>
+              )}
             </TabPanel>
 
             <TabPanel value={1}>
