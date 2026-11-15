@@ -1,16 +1,13 @@
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Card,
-  CardActions,
   CardContent,
   Divider,
-  IconButton,
   Stack,
   Typography,
   useTheme,
 } from '@mui/material';
 
+import CardActionButtons from '../../../components/CardActionButtons';
 import { ORDER_WIDTH } from '../../../constants';
 import {
   BouquetTransaction,
@@ -108,30 +105,10 @@ export default function BouquetTransactionCard({
           </Stack>
         </CardContent>
 
-        <CardActions>
-          <Stack
-            direction='row'
-            justifyContent='center'
-            sx={{ width: '100%' }}
-            gap={3}
-          >
-            {/* <IconButton
-            onClick={() => {
-              setSelectedId(order.id);
-            }}
-          >
-            <RemoveRedEyeIcon />
-          </IconButton> */}
-
-            <IconButton onClick={() => handleEdit(transaction.id)}>
-              <EditIcon />
-            </IconButton>
-
-            <IconButton onClick={() => handleDelete(transaction)}>
-              <DeleteIcon />
-            </IconButton>
-          </Stack>
-        </CardActions>
+        <CardActionButtons
+          onEdit={() => handleEdit(transaction.id)}
+          onDelete={() => handleDelete(transaction)}
+        />
       </Stack>
     </Card>
   );
