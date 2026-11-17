@@ -115,6 +115,17 @@ test.afterEach(async ({ request }) => {
     );
     for (const order of orders) await apiDelete(request, `/v2/orders/${order.id}`);
 
+    // A fruit with stock cannot be deleted, so cancel out what is left (manual corrections).
+    const left = (await apiGet<FruitStock[]>(request, '/v2/inventory'))
+      .find((f) => f.orderTypeId === fruit.id)
+      ?.cups.filter((c) => c.numberOf !== 0);
+    if (left?.length) {
+      await apiPost(request, '/v2/inventory/input', {
+        orderTypeId: fruit.id,
+        cupData: left.map((c) => ({ cupId: c.cupId, quantity: -c.numberOf })),
+      });
+    }
+
     await request.delete(api(`/v2/fruits/${fruit.id}`), { headers: apiHeaders });
   }
 });
